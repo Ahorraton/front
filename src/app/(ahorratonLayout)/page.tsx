@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { FC, useState } from "react";
 import { Box, Button, Typography, Grid, IconButton, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import Card from '@mui/material/Card';
@@ -19,13 +19,17 @@ interface Product {
 
 const URI = 'http://localhost:8000/products'; /**Move to a better place */
 
-const SearchBar = ({setSearchQuery}) => (
+interface SearchBarProps {
+  setSearchQuery: (query: string) => void;
+}
+
+const SearchBar: FC<SearchBarProps> = ({ setSearchQuery }) => (
   <form>
     <TextField
       id="search-bar"
       className="text"
       onInput={(e) => {
-        setSearchQuery(e.target.value);
+        setSearchQuery((e.target as HTMLInputElement).value);
       }}
       label="Enter a city name"
       variant="outlined"
@@ -105,12 +109,13 @@ export default function Home() {
         <SearchBar setSearchQuery={setSearchQuery} />
 
         
-        <Button
+        {/* <Button
           variant='contained'
           onClick={handleClick}
           color='primary'>
           Click me!
-        </Button>
+        </Button> */}
+
         <Box>
           {error && <p>{error}</p>}
 
