@@ -3,11 +3,12 @@ import { styled, Container, Box } from "@mui/material";
 import React, { useState } from "react";
 import Header from "./layout/Header";
 import Sidebar from "./layout/Sidebar";
+import Footer from "./layout/Footer";
 
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
-  minHeight: "100vh",
+  minHeight: "90vh",
   width: "100%",
 }));
 
@@ -34,6 +35,7 @@ export default function RootLayout({
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   return (
+    <div>
     <MainWrapper className="mainwrapper">
       {/* ------------------------------------------- */}
       {/* Sidebar */}
@@ -69,6 +71,9 @@ export default function RootLayout({
           {/* ------------------------------------------- */}
         </Container>
       </PageWrapper>
+      
     </MainWrapper>
+    <Footer/>
+    </div>
   );
 }
