@@ -7,22 +7,14 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
+import SearchBar from "./layout/SearchBar";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  price_per_unit: number;
-  image: string;
-  description: string;
-}
+import Product from './components/types/Product'
+
+
 
 const URI = 'http://localhost:8000/products'; /**Move to a better place */
 
-interface SearchBarProps {
-  setSearchQuery: (query: string) => void;
-  handleClick: () => void;
-}
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
@@ -77,31 +69,7 @@ export default function Home() {
       });
   }
 
-  const SearchBar: FC<SearchBarProps> = ({ setSearchQuery, handleClick }) => {
-    const handleSubmit = (e: FormEvent) => {
-      e.preventDefault();
-      handleClick();
-    };
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <TextField
-          id="search-bar"
-          className="text"
-          onInput={(e) => {
-            setSearchQuery((e.target as HTMLInputElement).value);
-          }}
-          label="Enter a city name"
-          variant="outlined"
-          placeholder="Search..."
-          size="small"
-        />
-        <IconButton type="submit" aria-label="search">
-          <SearchIcon style={{ fill: "blue" }} />
-        </IconButton>
-      </form>
-    );
-  };
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -111,9 +79,8 @@ export default function Home() {
         <Typography variant="h1" align="center" gutterBottom>
           Buscar 
         </Typography>
-
       
-        <SearchBar setSearchQuery={setSearchQuery} handleClick={handleClick}/>
+        <SearchBar set={setSearchQuery}/>
 
         <Box>
           {error && <p>{error}</p>}
