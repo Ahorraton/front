@@ -20,7 +20,7 @@ export default function Footer() {
         <Typography variant="body2" color="text.secondary" align="center">
           {"Copyright © "}
           <Link color="inherit" href="https://your-website.com/">
-            Your Website
+            Ahorraton.INC
           </Link>{" "}
           {new Date().getFullYear()}
           {"."}

@@ -2,7 +2,7 @@
 import { styled, Container, Box } from "@mui/material";
 import React, { useState } from "react";
 import Header from "./layout/Header";
-import Sidebar from "./layout/Sidebar";
+import Sidebar from "./layout/sidebar/Sidebar";
 import Footer from "./layout/Footer";
 
 
@@ -25,8 +25,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-
-
 export default function RootLayout({
   children,
 }: {
@@ -40,11 +38,11 @@ export default function RootLayout({
       {/* ------------------------------------------- */}
       {/* Sidebar */}
       {/* ------------------------------------------- */}
-      {/* <Sidebar
+      <Sidebar
         isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
         onSidebarClose={() => setMobileSidebarOpen(false)}
-      /> */}
+      /> 
       {/* ------------------------------------------- */}
       {/* Main Wrapper */}
       {/* ------------------------------------------- */}

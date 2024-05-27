@@ -76,7 +76,7 @@ export default function Home() {
     } else {
       params.delete('q');
     }
-    
+
     const product_searched = params.toString().split('=')[1];
 
     const limit = 1000;
@@ -96,8 +96,6 @@ export default function Home() {
       }
     }
   };
-
-  
 
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
