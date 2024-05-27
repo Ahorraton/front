@@ -1,7 +1,10 @@
 "use client"
-import { FC, FormEvent, useState } from "react";
+import { useState } from "react";
 import { Box, Button, Typography, Grid, IconButton, TextField } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+
+import { fetch_async } from './async/commun/fetch_async'
+import { BASE_TEST_URL } from './async/commun/urls'
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -12,13 +15,10 @@ import SearchBar from "./layout/SearchBar";
 import Product from './components/types/Product'
 
 
-
-const URI = 'http://localhost:8000/products'; /**Move to a better place */
-
-
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Manually added products
   const initialProducts: Product[] = [
@@ -56,22 +56,48 @@ export default function Home() {
     }
   ];
 
-  const handleClick = () => {
-    fetch(URI)
-      .then(response => response.json())
-      .then(data => {
-        const productsArray = data as Product[];
-        console.log(productsArray);
-        setProducts([...products, ...productsArray]);
-      })
-      .catch(error => {
-        setError(error.message);
-      });
-  }
+  const handleClick = async () => {
+    console.log("Estoy en handle Click")
+    console.log(searchQuery)
+    // fetch(URI)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     const productsArray = data as Product[];
+    //     console.log(productsArray);
+    //     setProducts([...products, ...productsArray]);
+    //   })
+    //   .catch(error => {
+    //     setError(error.message);
+    //   });
 
+    const params = new URLSearchParams(window.location.search);
+    if (searchQuery) {
+      params.set('q', searchQuery);
+    } else {
+      params.delete('q');
+    }
+    
+    const product_searched = params.toString().split('=')[1];
 
+    const limit = 1000;
+    const offset = 0;
 
-  const [searchQuery, setSearchQuery] = useState("");
+    if (product_searched != undefined) {
+      
+      console.log(product_searched)
+      let url = BASE_TEST_URL + product_searched; // + ?limit=${limit}&offset=${offset}`;
+    
+      try{
+        const res: [] = await fetch_async(url, 'product');
+        setProducts(res);
+      } catch(e:unknown){
+        setError("error");
+        throw new Error(String(e))
+      }
+    }
+  };
+
+  
 
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
@@ -80,7 +106,7 @@ export default function Home() {
           Buscar 
         </Typography>
       
-        <SearchBar set={setSearchQuery}/>
+        <SearchBar set={setSearchQuery} handleSearch={handleClick}/>
 
         <Box>
           {error && <p>{error}</p>}

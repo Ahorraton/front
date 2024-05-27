@@ -23,12 +23,12 @@ identityService.defaults.headers.common['Content-Type'] = 'application/json';
 identityService.defaults.headers.common.Accept = 'application/json';
 
 export const client = {
-  content: contentService,
-  identity: identityService,
+    product: contentService,
+    identity: identityService,
 };
 
 export async function fetch_async(url: string, service: string) {
-  const cliente = service === 'content' ? client.content : client.identity;
+  const cliente = service === 'product' ? client.product : client.identity;
 
   let data: any = null;
   try {
@@ -45,7 +45,7 @@ export async function fetch_async(url: string, service: string) {
 export async function put_async(url: string, service: string) {
   let resp: any = null;
 
-  const cliente = service === 'content' ? client.content : client.identity;
+  const cliente = service === 'product' ? client.product : client.identity;
 
   try {
     const response = await cliente.put(url, null);
@@ -60,7 +60,7 @@ export async function put_async(url: string, service: string) {
 export async function post_async(url: string, service: string) {
   let resp: any = null;
 
-  const cliente = service === 'content' ? client.content : client.identity;
+  const cliente = service === 'product' ? client.product : client.identity;
 
   try {
     const response = await cliente.post(url, null);
@@ -79,7 +79,7 @@ export async function post_async_with_body(
 ) {
   let resp: any = null;
 
-  const cliente = service === 'content' ? client.content : client.identity;
+  const cliente = service === 'product' ? client.product : client.identity;
 
   try {
     const response = await cliente.post(url, datos);
@@ -94,7 +94,7 @@ export async function post_async_with_body(
 export async function delete_async(url: string, service: string) {
   let resp: any = null;
 
-  const cliente = service === 'content' ? client.content : client.identity;
+  const cliente = service === 'product' ? client.product : client.identity;
 
   try {
     const response = await cliente.delete(url);
