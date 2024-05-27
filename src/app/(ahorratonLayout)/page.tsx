@@ -1,5 +1,5 @@
 "use client"
-import { FC, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import { Box, Button, Typography, Grid, IconButton, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import Card from '@mui/material/Card';
@@ -21,27 +21,8 @@ const URI = 'http://localhost:8000/products'; /**Move to a better place */
 
 interface SearchBarProps {
   setSearchQuery: (query: string) => void;
+  handleClick: () => void;
 }
-
-const SearchBar: FC<SearchBarProps> = ({ setSearchQuery }) => (
-  <form>
-    <TextField
-      id="search-bar"
-      className="text"
-      onInput={(e) => {
-        setSearchQuery((e.target as HTMLInputElement).value);
-      }}
-      label="Enter a city name"
-      variant="outlined"
-      placeholder="Search..."
-      size="small"
-    />
-    <IconButton type="submit" aria-label="search">
-      <SearchIcon style={{ fill: "blue" }} />
-    </IconButton>
-  </form>
-);
-
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
@@ -96,6 +77,32 @@ export default function Home() {
       });
   }
 
+  const SearchBar: FC<SearchBarProps> = ({ setSearchQuery, handleClick }) => {
+    const handleSubmit = (e: FormEvent) => {
+      e.preventDefault();
+      handleClick();
+    };
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <TextField
+          id="search-bar"
+          className="text"
+          onInput={(e) => {
+            setSearchQuery((e.target as HTMLInputElement).value);
+          }}
+          label="Enter a city name"
+          variant="outlined"
+          placeholder="Search..."
+          size="small"
+        />
+        <IconButton type="submit" aria-label="search">
+          <SearchIcon style={{ fill: "blue" }} />
+        </IconButton>
+      </form>
+    );
+  };
+
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -106,20 +113,12 @@ export default function Home() {
         </Typography>
 
       
-        <SearchBar setSearchQuery={setSearchQuery} />
-
-        
-        {/* <Button
-          variant='contained'
-          onClick={handleClick}
-          color='primary'>
-          Click me!
-        </Button> */}
+        <SearchBar setSearchQuery={setSearchQuery} handleClick={handleClick}/>
 
         <Box>
           {error && <p>{error}</p>}
 
-          {searchQuery &&
+          {searchQuery=="coca" &&
           <Grid container spacing={2}>
             {[...initialProducts, ...products].map(product => (
               <Grid item key={product.id} xs={12} sm={10} md={4} lg={3}>
