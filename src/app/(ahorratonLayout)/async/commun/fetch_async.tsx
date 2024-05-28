@@ -34,7 +34,7 @@ export async function fetch_async(url: string, service: string) {
   try {
     const response = await cliente.get(url);
 
-    data = response.data;
+    data = JSON.parse(JSON.stringify(response.data));
   } catch (error) {
     throw new Error(`Failed to fetch users: ${error}`);
   }

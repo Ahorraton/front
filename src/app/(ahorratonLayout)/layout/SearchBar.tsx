@@ -23,9 +23,8 @@ export default function SearchBar({
                         }
                       }
                     }
-                    label="Enter product name"
                     variant="outlined"
-                    placeholder="Search..."
+                    placeholder="Coca cola, leche, etc."
                     size="small"
                     spellCheck={false}
             />
