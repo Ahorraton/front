@@ -38,6 +38,11 @@ export default function Home() {
         const res = await fetch_async(endpoint_url);
         const products_result : Product[] = res.products;
         setProducts(products_result);
+
+        if(products_result.length === 0){
+          setError("Empty List")
+        }
+
       } catch(e:unknown){
         setError("error");
         throw new Error(String(e))
@@ -48,6 +53,7 @@ export default function Home() {
   useEffect(() => {
     if (searchQuery.length === 0){
       setProducts([])
+      setError(null)
     }
   }, [searchQuery]);
 
@@ -62,7 +68,9 @@ export default function Home() {
         <br/>
         <Box>
           <Grid container spacing={2}>
-            {products.map(product => (
+          {products.length === 0 && error ? (
+          <Typography variant="h6" align="center">No products available</Typography>
+        ) : (products.map(product => (
               <Grid item key={product.id} xs={12} sm={10} md={4} lg={3}>
                 <Card sx={{ maxWidth: 350, width: '100%', margin: 'auto' }}>
                   <CardMedia
@@ -87,7 +95,8 @@ export default function Home() {
                   </CardActions>
                 </Card>
               </Grid>
-            ))}
+            ))
+          )}
           </Grid>
         </Box>
       </Box>
