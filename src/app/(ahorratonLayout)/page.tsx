@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { fetch_async } from './async/common/fetch_async'
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
@@ -28,7 +28,7 @@ export default function Home() {
       params.delete('q');
     }
 
-    const product_searched = params.toString().split('=')[1];
+    const product_searched: string | undefined = params.toString().split('=')[1];
 
     if (product_searched != undefined) {
       
@@ -37,7 +37,6 @@ export default function Home() {
       try{
         const res = await fetch_async(endpoint_url);
         const products_result : Product[] = res.products;
-        console.log(products_result);
         setProducts(products_result);
       } catch(e:unknown){
         setError("error");
@@ -45,6 +44,12 @@ export default function Home() {
       }
     }
   };
+
+  useEffect(() => {
+    if (searchQuery.length === 0){
+      setProducts([])
+    }
+  }, [searchQuery]);
 
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
