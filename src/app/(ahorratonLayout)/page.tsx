@@ -2,7 +2,6 @@
 import { useState } from "react";
 
 import { fetch_async } from './async/commun/fetch_async'
-import { BASE_TEST_URL } from './async/commun/urls'
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
 import SearchBar from "./layout/SearchBar";
 import Product from './components/types/Product'
@@ -33,10 +32,10 @@ export default function Home() {
 
     if (product_searched != undefined) {
       
-      let url = BASE_TEST_URL + 'products/' + searchQuery + '?offset=0' + '&limit=10';
+      let endpoint_url =  'products/' + searchQuery + '?offset=0' + '&limit=10';
     
       try{
-        const res = await fetch_async(url, 'product');
+        const res = await fetch_async(endpoint_url);
         const products_result : Product[] = res.products;
         console.log(products_result);
         setProducts(products_result);
