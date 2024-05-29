@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 
-import { fetch_async } from './async/commun/fetch_async'
+import { fetch_async } from './async/common/fetch_async'
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
 import SearchBar from "./layout/SearchBar";
 import Product from './components/types/Product'
@@ -32,7 +32,7 @@ export default function Home() {
 
     if (product_searched != undefined) {
       
-      let endpoint_url =  'products/' + searchQuery + '?offset=0' + '&limit=10';
+      let endpoint_url =  '/products/' + searchQuery + '?offset=0' + '&limit=10';
     
       try{
         const res = await fetch_async(endpoint_url);
