@@ -3,6 +3,8 @@ export default interface Product {
     name: string;
     price: number;
     price_per_unit: number;
-    image: string;
-    description: string;
+    image_url: string;
+    created_at: string;
+    market: string;
+    updated_at: string;
   }

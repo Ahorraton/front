@@ -19,8 +19,8 @@ export default function Footer() {
       <Container maxWidth="sm">
         <Typography variant="body2" color="text.secondary" align="center">
           {"Copyright © "}
-          <Link color="inherit" href="https://your-website.com/">
-            Your Website
+          <Link color="inherit" href="https://google.com/">
+            Ahorraton.INC
           </Link>{" "}
           {new Date().getFullYear()}
           {"."}
