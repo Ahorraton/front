@@ -14,7 +14,7 @@ const PageContainer = ({ title, description, children }: Props) => (
     <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
-      </Helmet>
+    </Helmet>
 
     <Box
     display="flex"

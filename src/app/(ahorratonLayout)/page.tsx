@@ -32,7 +32,7 @@ export default function Home() {
 
     if (product_searched != undefined) {
       
-      let endpoint_url =  '/products/' + searchQuery + '?offset=0' + '&limit=10';
+      let endpoint_url =  '/products/' + searchQuery + '?offset=0' + '&limit=100';
     
       try{
         const res = await fetch_async(endpoint_url);
@@ -83,6 +83,9 @@ export default function Home() {
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {product.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {product.market}
                     </Typography>
                   </CardContent>
                   <CardActions>
