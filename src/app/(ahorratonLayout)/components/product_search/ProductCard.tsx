@@ -1,5 +1,9 @@
 import React from 'react';
-import { Box , Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { Card, CardMedia, CardContent } from '@mui/material';
 import Product from '../types/Product';
 import './product_card.css';
@@ -42,16 +46,26 @@ const ProductCard = ({ product } : { product: Product }) => {
                 alt={product.name}
                 image={marketImage()}
             />
-            <CardContent>
+            <CardContent className='product-row'>
                     <Typography gutterBottom variant="h5" component="div">
                         {product.name}
                     </Typography>
             </CardContent>
             <Box className='product-row'>
-                <Button size="small">Agregar a carrito</Button>
-                <Typography variant="h6" component="div">
+                <Typography variant="h4" component="div">
                     ${product.price}
                 </Typography>
+                <Box display='flex' flexDirection='row' alignItems='center'>
+                    <IconButton color="primary" aria-label="remove from shopping cart">
+                        <RemoveCircleIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div">
+                        0
+                    </Typography>
+                    <IconButton color="primary" aria-label="add to shopping cart">
+                        <AddCircleIcon />
+                    </IconButton>
+                </Box>
             </Box>
         </Card>
     );

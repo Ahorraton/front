@@ -9,6 +9,7 @@ import './landing_page.css'
 
 import { Box, Typography } from "@mui/material";
 import ProductGrid from "./components/product_search/ProductGrid";
+import CheckBoxGrid from "./components/product_search/MarketGridFilter";
 
 
 
@@ -63,6 +64,8 @@ export default function Home() {
       
         <SearchBar set={setSearchQuery} handleSearch={handleClick}/>
         <br/>
+        <CheckBoxGrid />
+        <br/>
         <Box>
           {products.length === 0 && error ? (
             <Typography variant="h6" align="center">No products available</Typography>
@@ -73,4 +76,4 @@ export default function Home() {
       </Box>
     </PageContainer>
   );
-}
+};
