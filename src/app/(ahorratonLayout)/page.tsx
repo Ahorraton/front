@@ -8,7 +8,7 @@ import Product from './components/types/Product'
 import './landing_page.css'
 
 import { Box, Typography } from "@mui/material";
-import ProductGrid from "./components/general/ProductGrid";
+import ProductGrid from "./components/product_search/ProductGrid";
 
 
 

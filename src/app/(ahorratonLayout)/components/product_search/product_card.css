@@ -1,0 +1,6 @@
+.product-row {
+    display: flex;
+    justify-content: space-around;
+    padding: 5%;
+    align-items: center;
+}

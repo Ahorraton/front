@@ -7,9 +7,9 @@ import Footer from "./layout/Footer";
 
 
 const MainWrapper = styled("div")(() => ({
-  minHeight: "90vh",
   display: "flex",
   flexDirection: "column",
+  minHeight: "100vh",
 }));
 
 export default function RootLayout({
@@ -20,11 +20,11 @@ export default function RootLayout({
   return (
     <div>
       <MainWrapper className="mainwrapper">
-          <Container>
-            {children}
-          </Container>
+        <Container>
+          {children}
+        </Container>
+        <Footer />
       </MainWrapper>
-      <Footer />
     </div>
   );
 }

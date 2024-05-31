@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
-        maxHeight: "10vh",
+        marginTop: "auto",
         backgroundColor: (theme) =>
           theme.palette.mode === "light"
             ? theme.palette.grey[200]
