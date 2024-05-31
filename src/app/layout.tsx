@@ -1,7 +1,8 @@
 "use client";
-import { baselightTheme } from "./(ahorratonLayout)/theme/DefaultColors";
+import { baselightTheme } from "./(ahorratonLayout)/theme/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+
 
 export default function RootLayout({
   children,

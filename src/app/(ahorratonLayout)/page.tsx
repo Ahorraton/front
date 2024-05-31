@@ -5,15 +5,12 @@ import { fetch_async } from './async/common/fetch_async'
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
 import SearchBar from "./layout/SearchBar";
 import Product from './components/types/Product'
+import './landing_page.css'
 
-import { Box, Button, Typography, Grid } from "@mui/material";
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
+import { Box, Typography } from "@mui/material";
+import ProductGrid from "./components/general/ProductGrid";
 
 
-const IMAGE = "https://i5.walmartimages.com/asr/e9ff8590-58ad-44f4-8a74-99aff8a72ea9.1bb69167e16a3d0209eb310e758fcb36.jpeg";
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null);
@@ -59,48 +56,19 @@ export default function Home() {
 
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
-      <Box alignContent={"center"} alignItems={"center"}>
+      <Box className='page-layout'>
         <Typography variant="h1" align="center" gutterBottom>
-          Ahorraton 🐭
+          Ahorratón 🐭
         </Typography>
       
         <SearchBar set={setSearchQuery} handleSearch={handleClick}/>
         <br/>
         <Box>
-          <Grid container spacing={2}>
           {products.length === 0 && error ? (
-          <Typography variant="h6" align="center">No products available</Typography>
-        ) : (products.map(product => (
-              <Grid item key={product.id} xs={12} sm={10} md={4} lg={3}>
-                <Card sx={{ maxWidth: 350, width: '100%', margin: 'auto' }}>
-                  <CardMedia
-                    component="img"
-                    alt={product.name}
-                    height="200%"
-                    width="100%"
-                    image={IMAGE}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {product.market}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Box display='flex' justifyContent='space-around'>
-                      <Button size="small">Agregar a carrito</Button>
-                      <Typography variant="h6" component="div">
-                        ${product.price}
-                      </Typography>
-                    </Box>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))
+            <Typography variant="h6" align="center">No products available</Typography>
+          ) : (
+            <ProductGrid products={products}/>
           )}
-          </Grid>
         </Box>
       </Box>
     </PageContainer>

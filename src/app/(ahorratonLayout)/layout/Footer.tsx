@@ -8,6 +8,7 @@ export default function Footer() {
   return (
     <Box
       sx={{
+        maxHeight: "10vh",
         backgroundColor: (theme) =>
           theme.palette.mode === "light"
             ? theme.palette.grey[200]
@@ -19,8 +20,8 @@ export default function Footer() {
       <Container maxWidth="sm">
         <Typography variant="body2" color="text.secondary" align="center">
           {"Copyright © "}
-          <Link color="inherit" href="https://google.com/">
-            Ahorraton.INC
+          <Link color="inherit" href="https://github.com/Ahorraton">
+            Ahorratón
           </Link>{" "}
           {new Date().getFullYear()}
           {"."}
