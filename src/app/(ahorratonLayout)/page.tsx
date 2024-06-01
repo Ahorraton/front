@@ -5,11 +5,11 @@ import { fetch_async } from './async/common/fetch_async'
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
 import SearchBar from "./layout/SearchBar";
 import Product from './components/types/Product'
+import ProductGrid from "./components/product_search/ProductGrid";
+import ProductFilters from "./components/product_search/GridFilter";
 import './landing_page.css'
 
 import { Box, Typography } from "@mui/material";
-import ProductGrid from "./components/product_search/ProductGrid";
-import CheckBoxGrid from "./components/product_search/MarketGridFilter";
 
 
 
@@ -64,7 +64,7 @@ export default function Home() {
       
         <SearchBar set={setSearchQuery} handleSearch={handleClick}/>
         <br/>
-        <CheckBoxGrid />
+        <ProductFilters />
         <br/>
         <Box>
           {products.length === 0 && error ? (

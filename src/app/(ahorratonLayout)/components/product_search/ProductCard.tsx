@@ -3,7 +3,6 @@ import { Box, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import { Card, CardMedia, CardContent } from '@mui/material';
 import Product from '../types/Product';
 import './product_card.css';
