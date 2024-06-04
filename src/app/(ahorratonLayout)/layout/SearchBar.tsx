@@ -1,6 +1,6 @@
 'use client';
 
-import {  IconButton, TextField } from "@mui/material";
+import { IconButton, TextField, Box } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchBar({
@@ -12,26 +12,29 @@ export default function SearchBar({
 }) {
 
   return (
-        <div>
-                <TextField
-                    id="search-bar"
-                    className="text"
-                    onChange={(e) => set((e.target as HTMLInputElement).value)}
-                    onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
-                        if (event.key === 'Enter') {
-                          handleSearch();
-                        }
-                      }
+        <Box width='100%'>
+          <Box display='flex' flexDirection='row'>
+            <TextField
+                id="search-bar"
+                className="text"
+                onChange={(e) => set((e.target as HTMLInputElement).value)}
+                onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+                    if (event.key === 'Enter') {
+                      handleSearch();
                     }
-                    variant="outlined"
-                    placeholder="Coca cola, leche, etc."
-                    size="small"
-                    spellCheck={false}
+                  }
+                }
+                variant="outlined"
+                placeholder="Coca cola, leche, etc."
+                size="small"
+                spellCheck={false}
+                color='secondary'
+                fullWidth
             />
-
             <IconButton type="submit" aria-label="search" onClick={handleSearch}>
-                <SearchIcon style={{ fill: "blue" }} />
+                <SearchIcon style={{ fill: "black" }} />
             </IconButton>
-        </div>
+          </Box>
+        </Box>
   );
 }

@@ -1,0 +1,13 @@
+.nav-bar-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 1%;
+}
+
+
+.title-layout {
+    display: flex;
+    justify-content: center;
+    width: 20vw;
+}

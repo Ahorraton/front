@@ -1,9 +1,8 @@
 "use client";
 import { styled, Container, Box } from "@mui/material";
-import React, { useState } from "react";
-import Header from "./layout/Header";
-import Sidebar from "./layout/sidebar/Sidebar";
+import React from "react";
 import Footer from "./layout/Footer";
+import NavBar from "./layout/NavBar";
 
 
 const MainWrapper = styled("div")(() => ({
@@ -20,6 +19,7 @@ export default function RootLayout({
   return (
     <div>
       <MainWrapper className="mainwrapper">
+        <NavBar />
         <Container>
           {children}
         </Container>
