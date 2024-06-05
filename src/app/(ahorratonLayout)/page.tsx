@@ -1,78 +1,59 @@
 "use client"
-import { useEffect, useState } from "react";
-
-import { fetch_async } from './async/common/fetch_async'
+import React, { useEffect } from "react";
+import { Box, Skeleton, Typography } from "@mui/material";
+import { Grid } from '@mui/material';
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
-import SearchBar from "./layout/SearchBar";
-import Product from './components/types/Product'
-import ProductGrid from "./components/product_search/ProductGrid";
-import ProductFilters from "./components/product_search/GridFilter";
+import Product from '@/app/(ahorratonLayout)/components/types/Product';
+import { fetch_async } from '@/app/(ahorratonLayout)/async/common/fetch_async';
+import ProductGrid from '@/app/(ahorratonLayout)/components/product_search/ProductGrid';
 import './landing_page.css'
-
-import { Box, Typography } from "@mui/material";
 
 
 
 export default function Home() {
-  const [error, setError] = useState<string | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [products, setProducts] = React.useState<Product[]>([]);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const handleClick = async () => {
-    const params = new URLSearchParams(window.location.search);
-    if (searchQuery) {
-      params.set('q', searchQuery);
-    } else {
-      params.delete('q');
-    }
-
-    const product_searched: string | undefined = params.toString().split('=')[1];
-
-    if (product_searched != undefined) {
-      
-      let endpoint_url =  '/products/' + searchQuery + '?offset=0' + '&limit=100';
-    
-      try{
-        const res = await fetch_async(endpoint_url);
-        const products_result : Product[] = res.products;
-        setProducts(products_result);
-
-        if(products_result.length === 0){
-          setError("Empty List")
-        }
-
-      } catch(e:unknown){
-        setError("error");
-        throw new Error(String(e))
-      }
-    }
-  };
+  const skeletonGridItems = Array.from({ length: 8 }, (_, i) => (
+    <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
+      <Skeleton variant="rounded" animation='wave' height={350} width={280} />
+    </Grid>
+  ));
 
   useEffect(() => {
-    if (searchQuery.length === 0){
-      setProducts([])
-      setError(null)
-    }
-  }, [searchQuery]);
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch_async('/products/' + 'coca' + '?offset=0' + '&limit=8');
+        const products_result : Product[] = res.products;
+        setProducts(products_result);
+        setLoading(false);
+      } catch (e: unknown) {
+        setError("error");
+        throw new Error(String(e));
+      }
+    };
+
+    fetchProducts();
+  }
+  , []);
 
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
       <Box className='page-layout'>
-        <Typography variant="h1" align="center" gutterBottom>
-          Ahorratón 🐭
-        </Typography>
-      
-        <SearchBar set={setSearchQuery} handleSearch={handleClick}/>
-        <br/>
-        <ProductFilters />
-        <br/>
-        <Box>
-          {products.length === 0 && error ? (
-            <Typography variant="h6" align="center">No products available</Typography>
+      {
+        loading ? (
+          <Grid container spacing={2}>
+            {skeletonGridItems}
+          </Grid>
+        ) : (
+          products.length === 0 ? (
+            <Typography variant="h6" align="center">No se encontraron productos.</Typography>
           ) : (
             <ProductGrid products={products}/>
-          )}
-        </Box>
+          )
+        )
+      }
       </Box>
     </PageContainer>
   );

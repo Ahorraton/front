@@ -10,7 +10,6 @@ import './product_card.css';
 const ProductCard = ({ product } : { product: Product }) => {
 
     const marketImage = () => {
-        console.log(product.market)
         if (product.image_url) {
             return product.image_url;
         }

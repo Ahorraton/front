@@ -1,23 +1,32 @@
 'use client';
-
+import React from "react";
+import { useState } from "react";
 import { IconButton, TextField, Box } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchBar({
+  starting_query,
   set,
-  handleSearch
 }: {
-  set: (e:string) => void,
-  handleSearch: () => void;
+  starting_query: string | null;
+  set: (e:string | null) => void,
 }) {
 
+  const [search, setSearch] = useState<string | null>(starting_query);
+
+  const handleSearch = () => {
+    set(search);
+    window.location.href = `/buscar?query=${search}`;
+  }
+  
   return (
         <Box width='100%'>
-          <Box display='flex' flexDirection='row'>
+          <Box display='flex' flexDirection='row' alignItems='center'>
             <TextField
                 id="search-bar"
                 className="text"
-                onChange={(e) => set((e.target as HTMLInputElement).value)}
+                value={search}
+                onChange={(e) => setSearch((e.target as HTMLInputElement).value)}
                 onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
                     if (event.key === 'Enter') {
                       handleSearch();
@@ -37,4 +46,4 @@ export default function SearchBar({
           </Box>
         </Box>
   );
-}
+};

@@ -13,7 +13,7 @@ const baselightTheme = createTheme({
     secondary: {
       main: '#FFB81C',
       light: '#FFD54F',
-      dark: '#FF8F00',
+      dark: '#FFA000',
     },
     text: {
       primary: "#000000",
@@ -83,10 +83,18 @@ const baselightTheme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: "#6CACE4",
+          backgroundImage: `linear-gradient(#6CACE4 10%, #FFFFFF 100%)`,
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          borderColor: '#FFD54F',
+          borderColor: '#6CACE4',
         },
         root: {
           backgroundColor: 'white',

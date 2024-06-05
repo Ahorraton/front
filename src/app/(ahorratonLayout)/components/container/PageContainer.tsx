@@ -20,8 +20,6 @@ const PageContainer = ({ title, description, children }: Props) => (
     display="flex"
     justifyContent="center"
     alignItems="center"
-    minHeight="50vh"
-    padding="20px"
     >
       
       {children}

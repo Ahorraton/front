@@ -1,38 +1,34 @@
 import React from "react";
-import { AppBar, Box, Typography, Button } from "@mui/material";
+import { AppBar, Box, Typography, Button, ButtonBase } from "@mui/material";
 import SearchBar from "./SearchBar";
 import "./nav_bar.css";
 
-const NavBar = () => {
-    const handleSearch = () => {
-        console.log("Searching...");
-    }
-
-    const set = (e: string) => {
-        console.log(e);
-    }
+const NavBar = ({query_param} : {query_param: string | null}) => {
+    /** This is for keeping the query when it changes pages */
+    const [query, setQuery] = React.useState<string | null>(query_param); 
 
     return (
-        <AppBar position="sticky" color='primary'>
+        <AppBar position="sticky" color="primary" elevation={0}>
             <Box className="nav-bar-layout">
-                <Box className='title-layout'>
-                    <Typography variant="h1" align="center" gutterBottom>
-                        Ahorratón 🐭
-                    </Typography>
+                {/** These components HAVE to sum up 100vw */}
+                <Box className='title-layout' width='20vw'>
+                    <ButtonBase disableRipple href="/">
+                        <Typography variant="h1">
+                            Ahorratón 🐭
+                        </Typography>
+                    </ButtonBase>
                 </Box>
                 <Box width='70vw'>
-                    <SearchBar set={set} handleSearch={handleSearch} />
+                    <SearchBar starting_query={query} set={setQuery} />
                 </Box>
                 <Box
                     display='flex'
-                    justifyContent='flex-end'
+                    justifyContent='center'
                     width='10vw'
                     >
-                    <Button>
-                        <Typography color='black' variant="h6" align="center" gutterBottom>
-                            Sobre nosotros
-                        </Typography>
-                    </Button>
+                    <Typography variant="h6" align="center">
+                        Sobre nosotros
+                    </Typography>
                 </Box>
             </Box>
         </AppBar>

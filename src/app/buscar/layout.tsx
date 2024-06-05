@@ -1,8 +1,9 @@
 "use client";
 import { styled, Container } from "@mui/material";
 import React from "react";
-import Footer from "./layout/Footer";
-import NavBar from "./layout/NavBar";
+import NavBar from "../(ahorratonLayout)/layout/NavBar";
+import Footer from "../(ahorratonLayout)/layout/Footer";
+import { useSearchParams } from 'next/navigation'
 
 
 const MainWrapper = styled("div")(() => ({
@@ -16,10 +17,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const searchParams = useSearchParams()
+  const query = searchParams.get('query')
   return (
     <div>
       <MainWrapper className="mainwrapper">
-        <NavBar query_param={null}/>
+        <NavBar query_param={query}/>
         <Container>
           {children}
         </Container>
