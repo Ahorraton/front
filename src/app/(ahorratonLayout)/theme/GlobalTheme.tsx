@@ -63,7 +63,7 @@ const baselightTheme = createTheme({
       fontWeight: 400,
     },
     body1: {
-      fontSize: "0.875rem",
+      fontSize: "1.0rem", // At least one to prevent zooming on inputs.
       fontWeight: 400,
       lineHeight: "1.334rem",
     },
@@ -88,6 +88,7 @@ const baselightTheme = createTheme({
         body: {
           backgroundColor: "#6CACE4",
           backgroundImage: `linear-gradient(#6CACE4 10%, #FFFFFF 100%)`,
+          backgroundAttachment: 'fixed',
         },
       },
     },

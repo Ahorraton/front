@@ -35,14 +35,18 @@ export default function SearchBar({
                 }
                 variant="outlined"
                 placeholder="Coca cola, leche, etc."
-                size="small"
                 spellCheck={false}
+                size='small'
                 color='secondary'
                 fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <IconButton type="submit" aria-label="search" onClick={handleSearch}>
+                      <SearchIcon style={{ fill: "black" }} />
+                    </IconButton>
+                  ),
+                }}
             />
-            <IconButton type="submit" aria-label="search" onClick={handleSearch}>
-                <SearchIcon style={{ fill: "black" }} />
-            </IconButton>
           </Box>
         </Box>
   );
