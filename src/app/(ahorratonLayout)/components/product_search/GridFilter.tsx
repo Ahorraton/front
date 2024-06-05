@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Filters from "@/app/buscar/types/Filters";
 import './filter_styles.css';
 
-const ProductFilters = ({setter, fetchFunc}: {setter: (filters: any) => void, fetchFunc: (filters: Filters | null) => void}) => {
+const ProductFilters = ({fetchFunc}: { fetchFunc: (filters: Filters | null) => void}) => {
     const markets = ['coto', 'disco', 'vea', 'carrefour', 'jumbo', 'dia'];
     const [minPrice, setMinPrice] = useState<number>(0);
     const [maxPrice, setMaxPrice] = useState<number>(15000);

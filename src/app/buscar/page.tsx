@@ -35,7 +35,6 @@ const Search = () => {
      * it saves the filters done in the children component 
      * even if IT re-renders.
      * */
-
     const [filters, setFilters] = React.useState<Filters | null>({markets: [], min_price: null, max_price: null});
     const searchParams = useSearchParams()
     const query = searchParams.get('query')
@@ -86,7 +85,7 @@ const Search = () => {
     return(
         <PageContainer title="Buscar" description="Buscar">
             <Box className='page-layout'>
-                <ProductFilters setter={setFilters} fetchFunc={fetchProducts} />
+                <ProductFilters fetchFunc={fetchProducts} />
                 <br/>
                 <Box>
                     {products.length === 0 || error ? (
