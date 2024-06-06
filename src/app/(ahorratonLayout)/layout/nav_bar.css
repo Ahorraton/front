@@ -6,6 +6,17 @@
     padding-bottom: 1%;
 }
 
+.nav-bar-layout-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1%;
+}
+
+.about-us-layout {
+    display: flex;
+    justify-content: center;
+}
 
 .title-layout {
     display: flex;

@@ -23,6 +23,7 @@ export default function RootLayout({
     <div>
       <MainWrapper className="mainwrapper">
         <NavBar query_param={query}/>
+        <br />
         <Container>
           {children}
         </Container>

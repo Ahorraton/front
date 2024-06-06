@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
-import { AppBar, Box, Typography, ButtonBase, useMediaQuery } from "@mui/material";
-import SearchBar from "./SearchBar";
+import { AppBar, Box, Typography, useMediaQuery } from "@mui/material";
+import NavBarMobile from "./NavBarMobile";
+import NavBarDesktop from "./NavBarDesktop";
 import "./nav_bar.css";
 
 const NavBar = ({query_param} : {query_param: string | null}) => {
@@ -22,48 +23,14 @@ const NavBar = ({query_param} : {query_param: string | null}) => {
                 </Typography>
             </Box>
         );
-    }; // Don't show the NavBar until it's ready.
+    }; // Don't show the NavBar until it's ready. (mega placeholder)
 
     return (
         <AppBar position='sticky' color='primary' elevation={0}>
             {isMobile ? (
-                <Box display='flex' flexDirection='column' alignItems='center' paddingTop='1%'>
-                    <Box className='title-layout'>
-                        <ButtonBase disableRipple href="/">
-                            <Typography variant="h1">
-                                Ahorratón 🐭
-                            </Typography>
-                        </ButtonBase>
-                    </Box>
-                    <br />
-                    <Box width='80vw'>
-                        <SearchBar starting_query={query} set={setQuery} />
-                    </Box>
-                    <br />
-                </Box>
+                <NavBarMobile query={query} setQuery={setQuery} />
             ) : (
-                <Box className="nav-bar-layout">
-                    {/** These components HAVE to sum up 100vw */}
-                    <Box className='title-layout' width='20vw'>
-                        <ButtonBase disableRipple href="/">
-                            <Typography variant="h1">
-                                Ahorratón 🐭
-                            </Typography>
-                        </ButtonBase>
-                    </Box>
-                    <Box width='70vw'>
-                        <SearchBar starting_query={query} set={setQuery} />
-                    </Box>
-                    <Box
-                        display='flex'
-                        justifyContent='center'
-                        width='10vw'
-                        >
-                        <Typography variant="h6" align="center">
-                            Sobre nosotros
-                        </Typography>
-                    </Box>
-                </Box>
+                <NavBarDesktop query={query} setQuery={setQuery} />
             )
             }
         </AppBar>
