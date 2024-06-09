@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -8,6 +8,8 @@ import Product from '../types/Product';
 import './product_card.css';
 
 const ProductCard = ({ product } : { product: Product }) => {
+
+    const [prodCount, setProdCount] = React.useState<number>(0);
 
     const marketImage = () => {
         if (product.image_url) {
@@ -54,13 +56,13 @@ const ProductCard = ({ product } : { product: Product }) => {
                     ${product.price}
                 </Typography>
                 <Box display='flex' flexDirection='row' alignItems='center'>
-                    <IconButton color="primary" aria-label="remove from shopping cart">
+                    <IconButton color="primary" aria-label="remove from shopping cart" onClick={() => {prodCount > 0 && setProdCount(prodCount - 1)}}>
                         <RemoveCircleIcon />
                     </IconButton>
                     <Typography variant="h6" component="div">
-                        0
+                        {prodCount}
                     </Typography>
-                    <IconButton color="primary" aria-label="add to shopping cart">
+                    <IconButton color="primary" aria-label="add to shopping cart" onClick={() => setProdCount(prodCount+1)}>
                         <AddCircleIcon />
                     </IconButton>
                 </Box>
