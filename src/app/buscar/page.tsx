@@ -55,7 +55,7 @@ const Search = () => {
         }
         try{
             const res = await fetch_async(uri);
-            const products_result : Product[] = res.products;
+            const products_result : Product[] = res.products ? res.products : [];
             setLoadMore(products_result.length < res.count);
             setProducts(products_result);
             setFilters(filters_fetch);
@@ -73,7 +73,7 @@ const Search = () => {
         }
         try{
             const res = await fetch_async(uri);
-            const products_result : Product[] = res.products;
+            const products_result : Product[] = res.products ? res.products : [];
             setLoadMore(products.length + products_result.length < res.count);
             setProducts([...products, ...products_result]);
         } catch(e:unknown){

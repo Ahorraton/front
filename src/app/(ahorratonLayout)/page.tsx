@@ -25,7 +25,7 @@ export default function Home() {
     const fetchProducts = async () => {
       try {
         const res = await fetch_async('/products/' + 'coca' + '?offset=0' + '&limit=8');
-        const products_result : Product[] = res.products;
+        const products_result : Product[] = res.products ? res.products : [];
         setProducts(products_result);
         setLoading(false);
       } catch (e: unknown) {
