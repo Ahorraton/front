@@ -1,30 +1,15 @@
 "use client";
-import { styled, Container } from "@mui/material";
 import React from "react";
-import Footer from "./layout/Footer";
-import NavBar from "./layout/NavBar";
 
 
-const MainWrapper = styled("div")(() => ({
-  display: "flex",
-  flexDirection: "column",
-  minHeight: "100vh",
-}));
-
-export default function RootLayout({
+export default function AhorratonLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <div>
-      <MainWrapper className="mainwrapper">
-        <NavBar query_param={null}/>
-        <Container>
-          {children}
-        </Container>
-        <Footer />
-      </MainWrapper>
+      {children}
     </div>
   );
 }
