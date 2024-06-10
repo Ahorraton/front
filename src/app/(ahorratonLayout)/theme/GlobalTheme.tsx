@@ -1,53 +1,23 @@
 import { createTheme } from "@mui/material/styles";
+import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
 const baselightTheme = createTheme({
   direction: "ltr",
   palette: {
+    mode: 'light',
     primary: {
-      main: "#5D87FF",
-      light: "#ECF2FF",
-      dark: "#4570EA",
+      main: "#6CACE4",
+      light: "#255cab",
+      dark: "#bcdaf4",
     },
     secondary: {
-      main: "#49BEFF",
-      light: "#E8F7FF",
-      dark: "#23afdb",
-    },
-    success: {
-      main: "#13DEB9",
-      light: "#E6FFFA",
-      dark: "#02b3a9",
-      contrastText: "#ffffff",
-    },
-    info: {
-      main: "#539BFF",
-      light: "#EBF3FE",
-      dark: "#1682d4",
-      contrastText: "#ffffff",
-    },
-    error: {
-      main: "#FA896B",
-      light: "#FDEDE8",
-      dark: "#f3704d",
-      contrastText: "#ffffff",
-    },
-    warning: {
-      main: "#FFAE1F",
-      light: "#FEF5E5",
-      dark: "#ae8e59",
-      contrastText: "#ffffff",
-    },
-    grey: {
-      100: "#F2F6FA",
-      200: "#EAEFF4",
-      300: "#DFE5EF",
-      400: "#7C8FAC",
-      500: "#5A6A85",
-      600: "#2A3547",
+      main: '#FFB81C',
+      light: '#FFD54F',
+      dark: '#FFA000',
     },
     text: {
-      primary: "#2A3547",
-      secondary: "#5A6A85",
+      primary: "#000000",
+      secondary: "#000000",
     },
     action: {
       disabledBackground: "rgba(73,82,88,0.12)",
@@ -57,24 +27,21 @@ const baselightTheme = createTheme({
     divider: "#e5eaef",
   },
   typography: {
-    fontFamily: 'Ubuntu, sans-serif',
+    fontFamily: 'Montserrat, sans-serif',
     h1: {
       fontWeight: 600,
       fontSize: "2.25rem",
       lineHeight: "2.75rem",
-      fontFamily: 'Ubuntu, sans-serif',
     },
     h2: {
       fontWeight: 600,
       fontSize: "1.875rem",
       lineHeight: "2.25rem",
-      fontFamily: 'Ubuntu, sans-serif',
     },
     h3: {
       fontWeight: 600,
       fontSize: "1.5rem",
       lineHeight: "1.75rem",
-      fontFamily: 'Ubuntu, sans-serif',
     },
     h4: {
       fontWeight: 600,
@@ -96,7 +63,7 @@ const baselightTheme = createTheme({
       fontWeight: 400,
     },
     body1: {
-      fontSize: "0.875rem",
+      fontSize: "1.0rem", // At least one to prevent zooming on inputs.
       fontWeight: 400,
       lineHeight: "1.334rem",
     },
@@ -118,20 +85,30 @@ const baselightTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        ".MuiPaper-elevation9, .MuiPopover-root .MuiPaper-elevation": {
-          boxShadow:
-            "rgb(145 158 171 / 30%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px !important",
+        body: {
+          backgroundColor: "#6CACE4",
+          backgroundImage: `linear-gradient(#6CACE4 10%, #FFFFFF 100%)`,
+          backgroundAttachment: 'fixed',
         },
       },
     },
-    MuiCard: {
+    MuiOutlinedInput: {
       styleOverrides: {
+        notchedOutline: {
+          borderColor: '#6CACE4',
+        },
         root: {
-          borderRadius: "7px",
+          backgroundColor: 'white',
+          [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+            borderColor: '#FFB81C',
+          },
+          [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
+            borderColor: '#FFB81C',
+          },
         },
       },
     },
-  },
+  }
 });
 
 export { baselightTheme };

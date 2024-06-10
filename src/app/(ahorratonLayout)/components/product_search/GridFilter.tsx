@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Filters from "@/app/buscar/types/Filters";
 import './filter_styles.css';
 
-const ProductFilters = () => {
+const ProductFilters = ({fetchFunc}: { fetchFunc: (filters: Filters | null) => void}) => {
     const markets = ['coto', 'disco', 'vea', 'carrefour', 'jumbo', 'dia'];
     const [minPrice, setMinPrice] = useState<number>(0);
     const [maxPrice, setMaxPrice] = useState<number>(15000);
@@ -19,6 +20,14 @@ const ProductFilters = () => {
             setSelectedMarkets([...selectedMarkets, market]);
         }
     };
+
+    const handleApplyClick = () => {
+        fetchFunc({
+            markets: selectedMarkets,
+            min_price: minPrice,
+            max_price: maxPrice,
+        });
+    }
 
     return (
         <Accordion>
@@ -42,6 +51,7 @@ const ProductFilters = () => {
                 <Box className='accordion-row'>
                     {markets.map((market) => (
                             <FormControlLabel
+                                key={market}
                                 control={
                                     <Checkbox
                                         checked={selectedMarkets.includes(market)}
@@ -77,6 +87,15 @@ const ProductFilters = () => {
                             marginBottom: '5%',
                         }}
                     />
+                </Box>
+                <br/>
+                <Box className='accordion-row'>
+                    <Button
+                        variant='contained'
+                        color='secondary'
+                        onClick={handleApplyClick}>
+                        Aplicar
+                    </Button>
                 </Box>
             </AccordionDetails>
         </Accordion>
