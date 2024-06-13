@@ -10,7 +10,7 @@ import './filter_styles.css';
 const ProductFilters = ({fetchFunc}: { fetchFunc: (filters: Filters | null) => void}) => {
     const markets = ['coto', 'disco', 'vea', 'carrefour', 'jumbo', 'dia'];
     const [minPrice, setMinPrice] = useState<number>(0);
-    const [maxPrice, setMaxPrice] = useState<number>(15000);
+    const [maxPrice, setMaxPrice] = useState<number>(Number.MAX_SAFE_INTEGER);
     const [selectedMarkets, setSelectedMarkets] = useState<string[]>(markets);
 
     const handleMarketChange = (market: string) => {
@@ -20,6 +20,30 @@ const ProductFilters = ({fetchFunc}: { fetchFunc: (filters: Filters | null) => v
             setSelectedMarkets([...selectedMarkets, market]);
         }
     };
+
+    const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, max: boolean = true) => {
+        const value = e.target.value;
+        if (!/^\d*$/.test(value)) {
+            return;
+        }
+        if (value === '') {
+            if (max) {
+                setMaxPrice(Number.MAX_SAFE_INTEGER);
+            }
+            else {
+                setMinPrice(0);
+            }
+        } else {
+            const price = Number(value);
+            if (price >= 0) {
+                if (max) {
+                    setMaxPrice(price);
+                } else {
+                    setMinPrice(price);
+                }
+            }
+        }
+    }
 
     const handleApplyClick = () => {
         fetchFunc({
@@ -74,7 +98,8 @@ const ProductFilters = ({fetchFunc}: { fetchFunc: (filters: Filters | null) => v
                     <TextField
                         label="Mínimo"
                         type="tel"
-                        onChange={(e) => setMinPrice(Number(e.target.value))}
+                        value={minPrice === 0 ? '' : minPrice}
+                        onChange={(e) => handleTextChange(e, false)}
                         sx = {{
                             marginBottom: '5%',
                         }}
@@ -82,7 +107,8 @@ const ProductFilters = ({fetchFunc}: { fetchFunc: (filters: Filters | null) => v
                     <TextField
                         label="Máximo"
                         type="tel"
-                        onChange={(e) => setMaxPrice(Number(e.target.value))}
+                        value={maxPrice === Number.MAX_SAFE_INTEGER ? '' : maxPrice}
+                        onChange={(e) => handleTextChange(e, true)}
                         sx = {{
                             marginBottom: '5%',
                         }}
