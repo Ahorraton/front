@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect } from "react";
 import { Box, Skeleton, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { Grid } from '@mui/material';
 import PageContainer from '@/app/(ahorratonLayout)/components/container/PageContainer';
 import Product from '@/app/(ahorratonLayout)/components/types/Product';
@@ -41,6 +42,9 @@ export default function Home() {
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
       <Box className='page-layout'>
+      <Button>
+        <a href="/comparar">prueba</a>
+      </Button>
       {
         loading ? (
           <Grid container spacing={2}>
