@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const searchParams = useSearchParams()
-  const query = searchParams.get('query')
+  const query = searchParams.get('query') || ""
   return (
     <html lang="en">
       <body>

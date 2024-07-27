@@ -1,41 +1,32 @@
 "use client"
 import React, { useEffect } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
-import "./compare.css";
+import Product from "@/app/comparar/types/Product"
+import "@/app/comparar/compare.css";
 
-
-const ProductRow = () => {
+const ProductRow = ({ product } : { product: Product }) => {
+    const price_and_market = product.market_price.split(',');
     return (
         <Paper className = 'card-layout'>
             <Box className = 'product-layout'>
                 <Typography justifyContent='center' align='center' variant="h1">
-                    Product Name
+                    {product.names_list.split(',')[0]}
                 </Typography>
                 <Box className = 'product-row'>
-                    <Box>
-                        <Typography>
-                            Imagen
-                        </Typography>
-                    </Box>
+                    <Box
+                        component='img'
+                        src={product.image_url}
+                        sx={{
+                            width: '10%',
+                            height: '10%',
+                        }}
+                        />
                     <Box className = 'market-row'>
-                        <Typography variant="h2">
-                            Coto
-                        </Typography>
-                        <Typography variant="h2">
-                            Vea
-                        </Typography>
-                        <Typography variant="h2">
-                            Carrefour
-                        </Typography>
-                        <Typography variant="h2">
-                            Disco
-                        </Typography>
-                        <Typography variant="h2">
-                            Dia
-                        </Typography>
-                        <Typography variant="h2">
-                            Jumbo
-                        </Typography>
+                        {price_and_market.map((price_market: string) => (
+                            <Typography variant="h6">
+                                {price_market}
+                            </Typography>
+                        ))}
                     </Box>
                     <Box className = 'row-actions'>
                         <Button>

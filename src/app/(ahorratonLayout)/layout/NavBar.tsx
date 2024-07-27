@@ -5,9 +5,9 @@ import NavBarMobile from "./NavBarMobile";
 import NavBarDesktop from "./NavBarDesktop";
 import "./nav_bar.css";
 
-const NavBar = ({query_param} : {query_param: string | null}) => {
+const NavBar = ({query_param} : {query_param: string}) => {
     /** This is for keeping the query when it changes pages */
-    const [query, setQuery] = React.useState<string | null>(query_param);
+    const [query, setQuery] = React.useState<string>(query_param);
     const [isReady, setIsReady] = React.useState(false);
     const isMobile = useMediaQuery("(max-width: 600px)");
 

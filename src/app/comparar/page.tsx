@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import ProductRow from "./ProductRow";
 import PageContainer from "../(ahorratonLayout)/components/container/PageContainer";
-import Product from "../(ahorratonLayout)/components/types/Product";
 import { fetch_async } from "../(ahorratonLayout)/async/common/fetch_async";
+import Product from "./types/Product";
 
 import "./compare.css";
 
@@ -16,7 +16,7 @@ const Compare = () => {
     useEffect(() => {
         const fetchProducts = async () => {
           try {
-            const res = await fetch_async('/products/' + 'yerba' + '?offset=0' + '&limit=8');
+            const res = await fetch_async('/products_ean/' + 'Pepsi 2L' + '?offset=0' + '&limit=8');
             const products_result : Product[] = res.products ? res.products : [];
             setProducts(products_result);
             setLoading(false);
@@ -30,14 +30,14 @@ const Compare = () => {
       }
     , []);
 
-    console.log(products);
-
     return (
         <PageContainer title="Comparar" description="Compara precios de productos">
             <Box className = "compare-layout">
-                <ProductRow />
-                <ProductRow />
-                <ProductRow />
+                {loading && <p>Cargando...</p>}
+                {error && <p>Error</p>}
+                {products.map((product: Product) => (
+                    <ProductRow key={product.ean} product={product} />
+                ))}
             </Box>
         </PageContainer>
     );

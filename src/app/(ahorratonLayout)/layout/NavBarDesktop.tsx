@@ -8,8 +8,8 @@ const NavBarDesktop = ({
         setQuery
     }
     : {
-        query: string | null,
-        setQuery: React.Dispatch<React.SetStateAction<string | null>>
+        query: string,
+        setQuery: React.Dispatch<React.SetStateAction<string>>
     }) => {
     return (
         <Box className="nav-bar-layout">

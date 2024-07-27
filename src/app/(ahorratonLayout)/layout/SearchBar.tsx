@@ -8,11 +8,11 @@ export default function SearchBar({
   starting_query,
   set,
 }: {
-  starting_query: string | null;
-  set: (e:string | null) => void,
+  starting_query: string;
+  set: (e:string) => void,
 }) {
 
-  const [search, setSearch] = useState<string | null>(starting_query);
+  const [search, setSearch] = useState<string>(starting_query);
 
   const handleSearch = () => {
     set(search);
