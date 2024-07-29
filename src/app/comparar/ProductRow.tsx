@@ -3,9 +3,10 @@ import React, { useEffect } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import Product from "@/app/comparar/types/Product"
 import "@/app/comparar/compare.css";
+import Price from "@/app/comparar/Price";
 
 const ProductRow = ({ product } : { product: Product }) => {
-    const price_and_market = product.market_price.split(',');
+    const price_and_market = product.market_price.split(',').map(pair => pair.trim());
     return (
         <Paper className = 'card-layout'>
             <Box className = 'product-layout'>
@@ -17,15 +18,12 @@ const ProductRow = ({ product } : { product: Product }) => {
                         component='img'
                         src={product.image_url}
                         sx={{
-                            width: '10%',
-                            height: '10%',
+                            width: '15vw',
                         }}
                         />
                     <Box className = 'market-row'>
                         {price_and_market.map((price_market: string) => (
-                            <Typography variant="h6">
-                                {price_market}
-                            </Typography>
+                            <Price market_price = {price_market} />
                         ))}
                     </Box>
                     <Box className = 'row-actions'>

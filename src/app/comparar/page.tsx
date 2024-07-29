@@ -16,7 +16,7 @@ const Compare = () => {
     useEffect(() => {
         const fetchProducts = async () => {
           try {
-            const res = await fetch_async('/products_ean/' + 'Pepsi 2L' + '?offset=0' + '&limit=8');
+            const res = await fetch_async('/products_ean/' + 'Mañanitas' + '?offset=0' + '&limit=8');
             const products_result : Product[] = res.products ? res.products : [];
             setProducts(products_result);
             setLoading(false);

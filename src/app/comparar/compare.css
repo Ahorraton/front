@@ -24,20 +24,18 @@
 }
 
 .row-image {
-    width: 10%; /* Suma 100 con market-row y row-actions*/
     display: flex;
     justify-content: center;
 }
 
 .row-actions {
-    width: 10%; /* Suma 100 con market-row e imagen*/
     display: flex;
     flex-direction: column;
 }
 
 .market-row {
-    width: 80%; /* Suma 100 con row-actions e imagen*/
     display: flex;
+    width: 100%;
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
