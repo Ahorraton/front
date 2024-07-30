@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import ProductRow from "./ProductRow";
 import PageContainer from "../(ahorratonLayout)/components/container/PageContainer";
 import { fetch_async } from "../(ahorratonLayout)/async/common/fetch_async";
@@ -35,9 +35,13 @@ const Compare = () => {
             <Box className = "compare-layout">
                 {loading && <p>Cargando...</p>}
                 {error && <p>Error</p>}
-                {products.map((product: Product) => (
-                    <ProductRow key={product.ean} product={product} />
-                ))}
+                <Grid container spacing={2}>
+                  {products.map((product: Product) => (
+                    <Grid item key={product.ean} xs={12} sm={6} md={4} lg={6}>
+                      <ProductRow key={product.ean} product={product} />
+                    </Grid>
+                  ))}
+                </Grid>
             </Box>
         </PageContainer>
     );

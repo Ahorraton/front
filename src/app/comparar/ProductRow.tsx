@@ -64,17 +64,18 @@ const ProductRow = ({ product } : { product: Product }) => {
     return (
         <Paper className = 'card-layout'>
             <Box className = 'product-layout'>
-                <Typography justifyContent='center' align='center' variant="h1">
+                <Typography justifyContent='center' align='center' variant="h3">
                     {product.names_list.split(',')[0]}
                 </Typography>
+                <Box
+                    component='img'
+                    src={product.image_url}
+                    sx={{
+                        maxWidth: 'auto',
+                        height: '30vh',
+                    }}
+                    />
                 <Box className = 'product-row'>
-                    <Box
-                        component='img'
-                        src={product.image_url}
-                        sx={{
-                            width: '15vw',
-                        }}
-                        />
                     <Box className = 'market-row'>
                     {price_and_market.map((price_market: string) => {
                         const market_price_vec = price_market.split(' ');
@@ -89,15 +90,15 @@ const ProductRow = ({ product } : { product: Product }) => {
                             />;
                     })}
                     </Box>
-                    <Box className = 'row-actions'>
-                        <Button>
-                            Ma
-                        </Button>
-                        <Button>
-                            Meno
-                        </Button>
-                    </Box>
                 </Box>
+                {/* <Box className = 'row-actions'>
+                    <Button>
+                        Ma
+                    </Button>
+                    <Button>
+                        Meno
+                    </Button>
+                </Box> */}
             </Box>
         </Paper>
     )

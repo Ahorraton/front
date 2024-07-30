@@ -17,10 +17,11 @@ const Price = ({ logo, price, color }: { logo: string; price: string, color: str
                         marginTop: '2%',
                     }} />
                 <Typography
-                    variant="h6"
                     className="price"
                     sx={{
                         color: color,
+                        fontSize: '1.0em',
+                        fontWeight: 'bold',
                     }}>
                     ${price}
                 </Typography>
