@@ -1,0 +1,26 @@
+.price-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    height: 33vh;
+}
+
+.price-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    height: 90%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.price-column:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.price {
+    padding: 5%;
+}
