@@ -15,9 +15,12 @@ const NavBarDesktop = ({
         <Box className="nav-bar-layout">
             {/** These components HAVE to sum up 100vw */}
             <Box className='title-layout' width='20vw'>
-                <ButtonBase disableRipple href="/">
+                <ButtonBase disableRipple href="/" className="title-hover">
                     <Typography variant="h1">
-                        Ahorratón 🐭
+                        Ahorratón
+                    </Typography>
+                    <Typography variant="h1" className='spin-on-hover'>
+                        🐭
                     </Typography>
                 </ButtonBase>
             </Box>
