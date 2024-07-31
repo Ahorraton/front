@@ -61,7 +61,7 @@ const ProductRow = ({ product } : { product: Product }) => {
     };
 
     return (
-        <Paper className = 'card-layout'>
+        <Paper className = 'card-layout' elevation={8}>
             <Box className = 'product-layout'>
                 <Box sx = {{
                     borderBottom: '1px solid #e0e0e0',
