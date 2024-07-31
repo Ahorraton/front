@@ -28,7 +28,6 @@ const hexToRgb = (hex: string): number[] => {
 };
 
 const marketImage = (market: string) => {
-    console.log(market);
     switch(market) {
         case 'disco':
             return '/images/logos/logo_disco.svg';
@@ -64,9 +63,14 @@ const ProductRow = ({ product } : { product: Product }) => {
     return (
         <Paper className = 'card-layout'>
             <Box className = 'product-layout'>
-                <Typography justifyContent='center' align='center' variant="h3">
-                    {product.names_list.split(',')[0]}
-                </Typography>
+                <Box sx = {{
+                    borderBottom: '1px solid #e0e0e0',
+                    width: '100%'
+                }}>
+                    <Typography justifyContent='center' align='center' variant="h3" padding='2%'>
+                        {product.names_list.split(',')[0]}
+                    </Typography>
+                </Box>
                 <Box
                     component='img'
                     src={product.image_url}
@@ -87,6 +91,7 @@ const ProductRow = ({ product } : { product: Product }) => {
                             logo={logo}
                             price={price}
                             color={color}
+                            cheapest={parseFloat(price) === minPrice}
                             />;
                     })}
                     </Box>

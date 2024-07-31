@@ -4,10 +4,14 @@ import { Box, Typography } from "@mui/material"
 import Paper from '@mui/material/Paper';
 import '@/app/comparar/price.css'
 
-const Price = ({ logo, price, color }: { logo: string; price: string, color: string}) => {
+const Price = (
+    { logo, price, color, cheapest }:
+    { logo: string; price: string, color: string, cheapest: boolean}
+) => {
+    const classNameCheapest = cheapest ? 'price-column-cheapest' : 'price-column';
     return (
         <Box className = 'price-layout'>
-            <Paper className='price-column'>
+            <Paper className={classNameCheapest}>
                 <Box
                     component='img'
                     src={logo}

@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect } from "react";
 import { Box, Grid } from "@mui/material";
-import ProductRow from "./ProductRow";
-import PageContainer from "../(ahorratonLayout)/components/container/PageContainer";
-import { fetch_async } from "../(ahorratonLayout)/async/common/fetch_async";
+import ProductRow from "@/app/comparar/ProductRow";
+import ProductPaper from "@/app/comparar/ProductPaper";
+import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
+import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
 import Product from "./types/Product";
 
 import "./compare.css";
@@ -39,6 +40,7 @@ const Compare = () => {
                   {products.map((product: Product) => (
                     <Grid item key={product.ean} xs={12} sm={6} md={4} lg={6}>
                       <ProductRow key={product.ean} product={product} />
+                      {/* <ProductPaper key={product.ean} product={product} /> */}
                     </Grid>
                   ))}
                 </Grid>

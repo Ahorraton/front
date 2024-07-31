@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 33%;
+    margin: 5%;
 }
 
 .price-column {
@@ -21,22 +21,12 @@
     cursor: pointer;
 }
 
-.price-column-cheapest {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1%;
-    height: 90%;
+.price-column-selected {
+    transform: scale(1.1);
     border: 3px;
     border-style: solid;
     border-color: #FFD700;
-    transition: transform 0.3s ease-in-out;
-}
-
-.price-column-cheapest:hover {
-    transform: scale(1.1);
-    cursor: pointer;
+    cursor: pointer
 }
 
 .price {
