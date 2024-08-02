@@ -6,11 +6,15 @@ import './nav_bar.css';
 
 const NavBarMobile = ({
         query,
-        setQuery
+        setQuery,
+        compareSearch,
+        setCompareSearch,
     }
     : {
         query: string,
-        setQuery: React.Dispatch<React.SetStateAction<string>>
+        setQuery: React.Dispatch<React.SetStateAction<string>>,
+        compareSearch: boolean,
+        setCompareSearch: (e:boolean) => void,
     }) => {
     return (
         <Box className='nav-bar-layout-mobile'>
@@ -23,7 +27,12 @@ const NavBarMobile = ({
             </Box>
             <br />
             <Box width='80vw'>
-                <SearchBar starting_query={query} set={setQuery} />
+                <SearchBar
+                    starting_query={query}
+                    set={setQuery}
+                    compareSearch={compareSearch}
+                    setCompareSearch={setCompareSearch}
+                    />
             </Box>
             <br />
         </Box>

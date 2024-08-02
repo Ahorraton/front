@@ -42,9 +42,6 @@ export default function Home() {
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
       <Box className='page-layout'>
-      <Button>
-        <a href="/comparar">prueba</a>
-      </Button>
       {
         loading ? (
           <Grid container spacing={2}>

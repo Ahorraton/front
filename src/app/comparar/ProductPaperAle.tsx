@@ -46,7 +46,7 @@ const marketImage = (market: string) => {
     }
 }
 
-const ProductRow = ({ product } : { product: Product }) => {
+const ProductPaperAle = ({ product } : { product: Product }) => {
     const price_and_market = product.market_price.split(',').map(pair => pair.trim());
     const prices = price_and_market.map(price_market => parseFloat(price_market.split(' ')[1]));
     const minPrice = Math.min(...prices);
@@ -103,4 +103,4 @@ const ProductRow = ({ product } : { product: Product }) => {
     )
 }
 
-export default ProductRow;
+export default ProductPaperAle;

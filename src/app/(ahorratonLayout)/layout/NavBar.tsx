@@ -5,7 +5,15 @@ import NavBarMobile from "./NavBarMobile";
 import NavBarDesktop from "./NavBarDesktop";
 import "./nav_bar.css";
 
-const NavBar = ({query_param} : {query_param: string}) => {
+const NavBar = ({
+        query_param,
+        compareSearch,
+        setCompareSearch,
+    } : {
+        query_param: string,
+        compareSearch: boolean,
+        setCompareSearch: (e:boolean) => void,
+    }) => {
     /** This is for keeping the query when it changes pages */
     const [query, setQuery] = React.useState<string>(query_param);
     const [isReady, setIsReady] = React.useState(false);
@@ -28,9 +36,19 @@ const NavBar = ({query_param} : {query_param: string}) => {
     return (
         <AppBar position='sticky' color='primary' elevation={0}>
             {isMobile ? (
-                <NavBarMobile query={query} setQuery={setQuery} />
+                <NavBarMobile
+                    query={query}
+                    setQuery={setQuery}
+                    compareSearch={compareSearch}
+                    setCompareSearch={setCompareSearch}
+                    />
             ) : (
-                <NavBarDesktop query={query} setQuery={setQuery} />
+                <NavBarDesktop
+                    query={query}
+                    setQuery={setQuery}
+                    compareSearch={compareSearch}
+                    setCompareSearch={setCompareSearch}
+                    />
             )
             }
         </AppBar>

@@ -5,11 +5,15 @@ import './nav_bar.css';
 
 const NavBarDesktop = ({
         query,
-        setQuery
+        setQuery,
+        compareSearch,
+        setCompareSearch,
     }
     : {
         query: string,
-        setQuery: React.Dispatch<React.SetStateAction<string>>
+        setQuery: React.Dispatch<React.SetStateAction<string>>,
+        compareSearch: boolean,
+        setCompareSearch: (e:boolean) => void,
     }) => {
     return (
         <Box className="nav-bar-layout">
@@ -25,7 +29,12 @@ const NavBarDesktop = ({
                 </ButtonBase>
             </Box>
             <Box width='70vw'>
-                <SearchBar starting_query={query} set={setQuery} />
+                <SearchBar
+                    starting_query={query}
+                    set={setQuery}
+                    compareSearch={compareSearch}
+                    setCompareSearch={setCompareSearch}
+                    />
             </Box>
             <Box className='about-us-layout' width='10vw' >
                 <Typography variant="h6" align="center">
