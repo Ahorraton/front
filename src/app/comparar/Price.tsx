@@ -11,7 +11,7 @@ const Price = (
     const classNameCheapest = cheapest ? 'price-column-cheapest' : 'price-column';
     return (
         <Box className = 'price-layout'>
-            <Paper className={classNameCheapest}>
+            <Paper className={classNameCheapest} elevation={3}>
                 <Box
                     component='img'
                     src={logo}
