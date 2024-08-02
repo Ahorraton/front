@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Button } from "@mui/material";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
 import ProductPaper from "@/app/comparar/ProductPaper";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
@@ -16,7 +16,7 @@ const Compare = () => {
     const [loading, setLoading] = React.useState<boolean>(true);
     const [products, setProducts] = React.useState<Product[]>([]);
     const [error, setError] = React.useState<string | null>(null);
-    
+    const [loadMore, setLoadMore] = React.useState<boolean>(true);
     const query = useSearchParams().get('query');
   
     useEffect(() => {
@@ -35,12 +35,26 @@ const Compare = () => {
       try {
         const res = await fetch_async(uri);
         const products_result : Product[] = res.products ? res.products : [];
-        setProducts(products_result);
         setLoading(false);
+        setLoadMore(products.length + products_result.length < res.count);
+        setProducts([...products, ...products_result]);
       } catch (e: unknown) {
         setError("error");
         throw new Error(String(e));
       }
+    };
+
+    const fetchMoreProducts = async () => {
+        let uri = '/products_ean/' + query + `?offset=${products.length}` + `&limit=${LIMIT}`;
+        try {
+          const res = await fetch_async(uri);
+          const products_result : Product[] = res.products ? res.products : [];
+          setLoadMore(products.length + products_result.length < res.count);
+          setProducts([...products, ...products_result]);
+        } catch (e: unknown) {
+          setError("error");
+          throw new Error(String(e));
+        }
     };
 
     return (
@@ -56,6 +70,17 @@ const Compare = () => {
                     </Grid>
                   ))}
                 </Grid>
+                <br />
+                {loadMore && (
+                    <Box display="flex" justifyContent="center">
+                        <Button
+                          variant='contained'
+                          color='secondary'
+                          onClick={fetchMoreProducts}>
+                          Cargar más
+                        </Button>
+                    </Box>
+                )}
             </Box>
         </PageContainer>
     );

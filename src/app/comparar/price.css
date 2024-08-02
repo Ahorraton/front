@@ -13,7 +13,7 @@
     margin: 1%;
     height: 90%;
     padding: 5%;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out !important;
 }
 
 .price-market-logo {
@@ -38,7 +38,7 @@
     border: 3px;
     border-style: solid;
     border-color: #FFD700;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out !important;
 }
 
 .price-column-cheapest:hover {
