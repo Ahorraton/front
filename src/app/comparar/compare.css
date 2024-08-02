@@ -7,6 +7,14 @@
 .card-layout {
     margin-top: 1%;
     margin-bottom: 1%;
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.card-title-box {
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
 }
 
 .product-layout {
@@ -24,6 +32,12 @@
     align-items: center;
     margin-top: 3%;
     width: 100%;
+}
+
+.product-image {
+    max-width: 40%;
+    height: auto;
+    object-fit: cover;
 }
 
 .row-image {

@@ -9,7 +9,7 @@ const NavBar = ({query_param} : {query_param: string}) => {
     /** This is for keeping the query when it changes pages */
     const [query, setQuery] = React.useState<string>(query_param);
     const [isReady, setIsReady] = React.useState(false);
-    const isMobile = useMediaQuery("(max-width: 600px)");
+    const isMobile = useMediaQuery("(max-width: 768px)");
 
     useEffect(() => {
         setIsReady(true);

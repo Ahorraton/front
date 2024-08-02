@@ -38,7 +38,7 @@ const Compare = () => {
                 {error && <p>Error</p>}
                 <Grid container spacing={2}>
                   {products.map((product: Product) => (
-                    <Grid item key={product.ean} xs={12} sm={6} md={4} lg={6}>
+                    <Grid item key={product.ean} xs={12} sm={6} md={6} lg={6}>
                       <ProductRow key={product.ean} product={product} />
                       {/* <ProductPaper key={product.ean} product={product} /> */}
                     </Grid>

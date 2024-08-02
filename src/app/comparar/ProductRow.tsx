@@ -63,37 +63,31 @@ const ProductRow = ({ product } : { product: Product }) => {
     return (
         <Paper className = 'card-layout' elevation={8}>
             <Box className = 'product-layout'>
-                <Box sx = {{
-                    borderBottom: '1px solid #e0e0e0',
-                    width: '100%'
-                }}>
+                <Box className = 'card-title-box'>
                     <Typography justifyContent='center' align='center' variant="h3" padding='2%'>
                         {product.names_list.split(',')[0]}
                     </Typography>
                 </Box>
-                <Box
-                    component='img'
-                    src={product.image_url}
-                    sx={{
-                        maxWidth: 'auto',
-                        height: '30vh',
-                    }}
-                    />
                 <Box className = 'product-row'>
+                    <Box
+                        component='img'
+                        src={product.image_url}
+                        className = 'product-image'
+                        />
                     <Box className = 'market-row'>
-                    {price_and_market.map((price_market: string) => {
-                        const market_price_vec = price_market.split(' ');
-                        const logo = marketImage(market_price_vec[0]); /* Suponiendo que no existe market con espacio en el nombre */
-                        const price = market_price_vec[1];
-                        const color = getColorForPrice(parseFloat(price));
-                        return <Price
-                            key={price_market}
-                            logo={logo}
-                            price={price}
-                            color={color}
-                            cheapest={parseFloat(price) === minPrice}
-                            />;
-                    })}
+                        {price_and_market.map((price_market: string) => {
+                            const market_price_vec = price_market.split(' ');
+                            const logo = marketImage(market_price_vec[0]); /* Suponiendo que no existe market con espacio en el nombre */
+                            const price = market_price_vec[1];
+                            const color = getColorForPrice(parseFloat(price));
+                            return <Price
+                                key={price_market}
+                                logo={logo}
+                                price={price}
+                                color={color}
+                                cheapest={parseFloat(price) === minPrice}
+                                />;
+                        })}
                     </Box>
                 </Box>
                 {/* <Box className = 'row-actions'>

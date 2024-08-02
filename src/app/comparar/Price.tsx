@@ -15,17 +15,12 @@ const Price = (
                 <Box
                     component='img'
                     src={logo}
-                    sx={{
-                        width: '10vw',
-                        height: 'auto',
-                        marginTop: '2%',
-                    }} />
+                    className = 'price-market-logo'
+                    />
                 <Typography
                     className="price"
                     sx={{
                         color: color,
-                        fontSize: '1.0em',
-                        fontWeight: 'bold',
                     }}>
                     ${price}
                 </Typography>
