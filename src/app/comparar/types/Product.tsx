@@ -3,4 +3,5 @@ export default interface Product {
     market_price: string,
     names_list: string,
     image_url: string,
+    urls: string,
 }

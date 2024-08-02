@@ -49,6 +49,7 @@ const marketImage = (market: string) => {
 const ProductPaperAle = ({ product } : { product: Product }) => {
     const price_and_market = product.market_price.split(',').map(pair => pair.trim());
     const prices = price_and_market.map(price_market => parseFloat(price_market.split(' ')[1]));
+    const urls = product.urls.split(',');
     const minPrice = Math.min(...prices);
     const maxPrice = Math.max(...prices);
     const green = hexToRgb("#157a01");
@@ -75,7 +76,7 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
                         className = 'product-image'
                         />
                     <Box className = 'market-row'>
-                        {price_and_market.map((price_market: string) => {
+                        {price_and_market.map((price_market: string, index: number) => {
                             const market_price_vec = price_market.split(' ');
                             const logo = marketImage(market_price_vec[0]); /* Suponiendo que no existe market con espacio en el nombre */
                             const price = market_price_vec[1];
@@ -86,6 +87,7 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
                                 price={price}
                                 color={color}
                                 cheapest={parseFloat(price) === minPrice}
+                                url={urls[index]}
                                 />;
                         })}
                     </Box>
