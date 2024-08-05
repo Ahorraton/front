@@ -16,12 +16,7 @@ const PageContainer = ({ title, description, children }: Props) => (
         <meta name="description" content={description} />
     </Helmet>
 
-    <Box
-    display="flex"
-    justifyContent="center"
-    alignItems="center"
-    >
-      
+    <Box>
       {children}
     </Box>
   </HelmetProvider>

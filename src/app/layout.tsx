@@ -20,7 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const searchParams = useSearchParams()
-  const query = searchParams.get('query')
+  const query = searchParams.get('query') || ""
+  let compare = false;
+  if (typeof window !== 'undefined') {
+    if (window.location.pathname === '/comparar') {
+      compare = true;
+    }
+  } 
+  const [compareSearch, setCompareSearch] = React.useState<boolean>(compare);
   return (
     <html lang="en">
       <body>
@@ -28,7 +35,11 @@ export default function RootLayout({
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <MainWrapper className="mainwrapper">
-            <NavBar query_param={query}/>
+            <NavBar
+              query_param={query}
+              setCompareSearch={setCompareSearch}
+              compareSearch={compareSearch}
+              />
             <br />
             <Container>
               {children}
