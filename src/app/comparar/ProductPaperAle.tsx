@@ -78,7 +78,8 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
                     <Box className = 'market-row'>
                         {price_and_market.map((price_market: string, index: number) => {
                             const market_price_vec = price_market.split(' ');
-                            const logo = marketImage(market_price_vec[0]); /* Suponiendo que no existe market con espacio en el nombre */
+                            /* Suponiendo que no existe market con espacio en el nombre */
+                            const logo = marketImage(market_price_vec[0]);
                             const price = market_price_vec[1];
                             const color = getColorForPrice(parseFloat(price));
                             return <Price
@@ -92,14 +93,6 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
                         })}
                     </Box>
                 </Box>
-                {/* <Box className = 'row-actions'>
-                    <Button>
-                        Ma
-                    </Button>
-                    <Button>
-                        Meno
-                    </Button>
-                </Box> */}
             </Box>
         </Paper>
     )

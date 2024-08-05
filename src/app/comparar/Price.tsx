@@ -23,9 +23,9 @@ const Price = (
                         className = 'price-market-logo'
                         />
                     <Typography
-                        className="price"
                         sx={{
                             color: color,
+                            fontWeight: 'bold',
                         }}>
                         ${price}
                     </Typography>
