@@ -22,9 +22,11 @@ export default function RootLayout({
   const searchParams = useSearchParams()
   const query = searchParams.get('query') || ""
   let compare = false;
-  if (window.location.pathname === '/comparar') {
-    compare = true;
-  }
+  if (typeof window !== 'undefined') {
+    if (window.location.pathname === '/comparar') {
+      compare = true;
+    }
+  } 
   const [compareSearch, setCompareSearch] = React.useState<boolean>(compare);
   return (
     <html lang="en">
