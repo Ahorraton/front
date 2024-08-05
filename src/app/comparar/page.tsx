@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box, Grid, Button, Typography, CircularProgress } from "@mui/material";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
 import ProductPaper from "@/app/comparar/ProductPaper";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
@@ -16,7 +16,7 @@ const Compare = () => {
     const [loading, setLoading] = React.useState<boolean>(true);
     const [products, setProducts] = React.useState<Product[]>([]);
     const [error, setError] = React.useState<string | null>(null);
-    const [loadMore, setLoadMore] = React.useState<boolean>(true);
+    const [loadMore, setLoadMore] = React.useState<boolean>(false);
     const query = useSearchParams().get('query');
   
     useEffect(() => {
@@ -60,8 +60,21 @@ const Compare = () => {
     return (
         <PageContainer title="Comparar" description="Compara precios de productos">
             <Box className = "compare-layout">
-                {loading && <p>Cargando...</p>}
-                {error && <p>Error</p>}
+                {loading &&
+                  <Box className = 'loading-layout'>
+                    <CircularProgress color='secondary' />
+                  </Box>
+                }
+                {error && 
+                  <Box className = 'error-layout'>
+                    <Typography variant="h5" color="error">
+                      Error al cargar los productos
+                    </Typography>
+                    <Typography variant="body1" color="error">
+                      Por favor intente mas tarde.
+                    </Typography>
+                  </Box>
+                }
                 <Grid container spacing={2}>
                   {products.map((product: Product) => (
                     <Grid item key={product.ean} xs={12} sm={6} md={6} lg={6}>
