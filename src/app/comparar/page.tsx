@@ -40,6 +40,7 @@ const Compare = () => {
         setProducts([...products, ...products_result]);
       } catch (e: unknown) {
         setError("error");
+        setLoading(false);
         throw new Error(String(e));
       }
     };
@@ -53,6 +54,7 @@ const Compare = () => {
           setProducts([...products, ...products_result]);
         } catch (e: unknown) {
           setError("error");
+          setLoading(false);
           throw new Error(String(e));
         }
     };
@@ -92,6 +94,13 @@ const Compare = () => {
                           onClick={fetchMoreProducts}>
                           Cargar más
                         </Button>
+                    </Box>
+                )}
+                {products.length === 0 && !loading && !error && (
+                    <Box display="flex" justifyContent="center">
+                        <Typography variant="h5">
+                          No se encontraron productos
+                          </Typography>
                     </Box>
                 )}
             </Box>
