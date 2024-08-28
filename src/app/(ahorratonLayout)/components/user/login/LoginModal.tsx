@@ -2,6 +2,8 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../../../redux/store/userSlice';
 
 interface LoginModalProps {
     open: boolean;
@@ -9,12 +11,13 @@ interface LoginModalProps {
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
-    const [email, setEmail] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const dispatch = useDispatch();
 
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+    const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
     };
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,12 +28,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/users/login', {
-                email,
+            const response = await axios.post('api/user/login', {
+                username,
                 password,
             });
             console.log(response.data);
-            onClose(); // Close the modal on successful login
+            dispatch(login({ username }));
+            onClose();
         } catch (error) {
             console.error(error);
             setError('Login failed. Please try again.');
@@ -62,10 +66,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 )}
                 <form onSubmit={handleSubmit}>
                     <TextField
-                        label="Email"
-                        type="email"
-                        value={email}
-                        onChange={handleEmailChange}
+                        label="Username"
+                        type="username"
+                        value={username}
+                        onChange={handleUsernameChange}
                         fullWidth
                         margin="normal"
                         required
