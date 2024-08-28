@@ -4,15 +4,15 @@ import { NextRequest, NextResponse } from 'next/server';
 const REGISTER = "/register" // Move this to a constants/endpoints file
 
 export async function POST(req: NextRequest) {
-    const { email, password } = await req.json();
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"; // The env var should be called NEXT_PUBLIC_BACKEND_ENDPOINT
+    const { username, email, password } = await req.json();
+    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
     const backendEndpoint = baseUrl + REGISTER
-    console.log("Received registration request with email:", email);
+    console.log("Received registration. Posting to:", backendEndpoint);
 
     try {
         const response: AxiosResponse = await axios.post(
             backendEndpoint,
-            { email, password },
+            { username, email, password },
             { headers: { 'Content-Type': 'application/json' } }
         );
 

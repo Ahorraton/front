@@ -7,16 +7,16 @@ const COOKIE_NAME = 'Ahorraton';
 const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
 
 export async function POST(req: NextRequest) {
-    const { email, password } = await req.json();
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const { username, password } = await req.json();
+    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
     const backendEndpoint = baseUrl + LOGIN;
 
-    console.log("Received login request with email:", email);
+    console.log("Received login request with username:", username);
 
     try {
         const response: AxiosResponse = await axios.post(
             backendEndpoint,
-            { email, password },
+            { username, password },
             { headers: { 'Content-Type': 'application/json' } }
         );
 
