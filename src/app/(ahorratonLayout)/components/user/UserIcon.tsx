@@ -43,13 +43,14 @@ const UserIcon: React.FC = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.get('/api/users/logout');
+            await axios.get('api/user/logout');
             dispatch(logout());
             handleMenuClose();
         } catch (error) {
             console.error("Logout failed:", error);
         }
     };
+
 
     return (
         <div>
