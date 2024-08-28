@@ -25,8 +25,8 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch_async('/products/' + 'yerba' + '?offset=0' + '&limit=8');
-        const products_result : Product[] = res.products ? res.products : [];
+        const res = await fetch_async('/products/' + '?offset=0' + '&limit=8');
+        const products_result : Product[] = res ? res : [];
         setProducts(products_result);
         setLoading(false);
       } catch (e: unknown) {
