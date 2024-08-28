@@ -9,6 +9,7 @@ interface RegisterModalProps {
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
     const [email, setEmail] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
@@ -16,6 +17,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
+
+    const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);    
+    }
 
     const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
@@ -33,12 +38,13 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
         }
 
         try {
-            const response = await axios.post('./users/register/api', {
+            const response = await axios.post('api/user/register', {
+                username,
                 email,
                 password,
             });
             console.log(response.data);
-            onClose(); // Close the modal on successful registration
+            onClose();
         } catch (error) {
             console.error(error);
             setError('Registration failed. Please try again.');
@@ -69,6 +75,14 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                     </Typography>
                 )}
                 <form onSubmit={handleSubmit}>
+                    <TextField
+                        label="Username"
+                        value={username}
+                        onChange={handleUsernameChange}
+                        fullWidth
+                        margin="normal"
+                        required
+                    />
                     <TextField
                         label="Email"
                         type="email"
