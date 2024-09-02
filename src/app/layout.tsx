@@ -9,7 +9,9 @@ import NavBar from "./(ahorratonLayout)/layout/NavBar";
 import Footer from "./(ahorratonLayout)/layout/Footer";
 import { useSearchParams } from 'next/navigation';
 import { Provider } from 'react-redux';
-import { store } from '../redux/store';
+import { store, persistor } from '../redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -35,21 +37,23 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Provider store={store}>
-          <ThemeProvider theme={baselightTheme}>
-            <CssBaseline />
-            <MainWrapper className="mainwrapper">
-              <NavBar
-                query_param={query}
-                setCompareSearch={setCompareSearch}
-                compareSearch={compareSearch}
-              />
-              <br />
-              <Container>
-                {children}
-              </Container>
-              <Footer />
-            </MainWrapper>
-          </ThemeProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <ThemeProvider theme={baselightTheme}>
+              <CssBaseline />
+              <MainWrapper className="mainwrapper">
+                <NavBar
+                  query_param={query}
+                  setCompareSearch={setCompareSearch}
+                  compareSearch={compareSearch}
+                />
+                <br />
+                <Container>
+                  {children}
+                </Container>
+                <Footer />
+              </MainWrapper>
+            </ThemeProvider>
+            </PersistGate>
         </Provider>
       </body>
     </html>
