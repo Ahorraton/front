@@ -25,7 +25,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch_async('/products/' + 'yerba' + '?offset=0' + '&limit=8');
+        const res = await fetch_async('/products/' + "gaseosa" + '?offset=0' + '&limit=8');
         const products_result : Product[] = res.products ? res.products : [];
         setProducts(products_result);
         setLoading(false);

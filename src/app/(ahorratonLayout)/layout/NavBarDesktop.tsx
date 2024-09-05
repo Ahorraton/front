@@ -1,23 +1,24 @@
 import React from 'react';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import SearchBar from './SearchBar';
+import UserIcon from '../components/user/UserIcon';
 import './nav_bar.css';
 
-const NavBarDesktop = ({
-        query,
-        setQuery,
-        compareSearch,
-        setCompareSearch,
-    }
-    : {
-        query: string,
-        setQuery: React.Dispatch<React.SetStateAction<string>>,
-        compareSearch: boolean,
-        setCompareSearch: (e:boolean) => void,
-    }) => {
+interface NavBarDesktopProps {
+    query: string;
+    setQuery: React.Dispatch<React.SetStateAction<string>>;
+    compareSearch: boolean;
+    setCompareSearch: (e: boolean) => void;
+}
+
+const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
+    query,
+    setQuery,
+    compareSearch,
+    setCompareSearch,
+}) => {
     return (
         <Box className="nav-bar-layout">
-            {/** These components HAVE to sum up 100vw */}
             <Box className='title-layout' width='20vw'>
                 <ButtonBase disableRipple href="/" className="title-hover">
                     <Typography variant="h1" className='spin-on-hover'>
@@ -34,15 +35,13 @@ const NavBarDesktop = ({
                     set={setQuery}
                     compareSearch={compareSearch}
                     setCompareSearch={setCompareSearch}
-                    />
+                />
             </Box>
-            <Box className='about-us-layout' width='10vw' >
-                <Typography variant="h6" align="center">
-                    Sobre nosotros
-                </Typography>
+            <Box className='about-us-layout' width='10vw'>
+                <UserIcon />
             </Box>
         </Box>
-    )
+    );
 };
 
 export default NavBarDesktop;
