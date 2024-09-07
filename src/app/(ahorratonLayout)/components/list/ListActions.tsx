@@ -9,9 +9,10 @@ interface ListActionsProps {
     onListNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onClearList: () => void;
     onSaveList: () => void;
+    isLoggedIn: boolean;
 }
 
-const ListActions: React.FC<ListActionsProps> = ({ listName, total, onListNameChange, onClearList, onSaveList }) => {
+const ListActions: React.FC<ListActionsProps> = ({ listName, total, onListNameChange, onClearList, onSaveList, isLoggedIn }) => {
     return (
         <Box textAlign="center" m={2}>
             <TextField
@@ -25,7 +26,7 @@ const ListActions: React.FC<ListActionsProps> = ({ listName, total, onListNameCh
                 <DeleteIcon /> Borrar mi lista
             </IconButton>
             <IconButton color="primary" onClick={onSaveList}>
-                <SaveIcon /> Guardar mi lista
+                <SaveIcon /> {isLoggedIn ? 'Guardar y crear una nueva lista' : 'Guardar mi lista'}
             </IconButton>
         </Box>
     );

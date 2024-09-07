@@ -69,11 +69,33 @@ const ListIcon: React.FC = () => {
         dispatch(setListName(event.target.value));
     };
 
-    const handleSaveList = () => {
+    const handleSaveList = async () => {
         if (!user.isLoggedIn) {
             setAuthChoiceDialogOpen(true);
         } else {
-            // Save the list logic here
+            try {
+                const response = await fetch('/api/save-list', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ list, username: user.userInfo?.username }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to save the list');
+                }
+
+                const data = await response.json();
+                console.log('List saved successfully:', data);
+
+                dispatch(clearList());
+                dispatch(setListName(''));
+                alert('Lista guardada exitosamente');
+            } catch (error) {
+                console.error('Error saving the list:', error);
+                alert('Error al guardar la lista');
+            }
         }
     };
 
@@ -112,6 +134,7 @@ const ListIcon: React.FC = () => {
                         onListNameChange={handleListNameChange}
                         onClearList={handleClearList}
                         onSaveList={handleSaveList}
+                        isLoggedIn={user.isLoggedIn}
                     />
                     <List>
                         {list.map(item => (
