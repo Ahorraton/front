@@ -4,17 +4,25 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { addItem, removeItem, deleteItem, clearList, setListName } from '../../../../redux/store/listSlice';
+import LoginModal from '../user/login/LoginModal';
+import RegisterModal from '../user/register/RegisterModal';
+import AuthChoiceModal from './AuthChoiceModal';
 
 const ListIcon: React.FC = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [clearDialogOpen, setClearDialogOpen] = useState(false);
+    const [authChoiceDialogOpen, setAuthChoiceDialogOpen] = useState(false);
+    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+    const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState<string | null>(null);
     const list = useSelector((state: RootState) => state.list.items);
     const listName = useSelector((state: RootState) => state.list.name);
+    const user = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
 
     const handleAddItem = (id: string) => {
@@ -62,6 +70,36 @@ const ListIcon: React.FC = () => {
         dispatch(setListName(event.target.value));
     };
 
+    const handleSaveList = () => {
+        if (!user.isLoggedIn) {
+            setAuthChoiceDialogOpen(true);
+        } else {
+            // Save the list logic here
+        }
+    };
+
+    const handleAuthChoiceClose = () => {
+        setAuthChoiceDialogOpen(false);
+    };
+
+    const handleLoginClose = () => {
+        setLoginDialogOpen(false);
+    };
+
+    const handleRegisterClose = () => {
+        setRegisterDialogOpen(false);
+    };
+
+    const handleLogin = () => {
+        setAuthChoiceDialogOpen(false);
+        setLoginDialogOpen(true);
+    };
+
+    const handleRegister = () => {
+        setAuthChoiceDialogOpen(false);
+        setRegisterDialogOpen(true);
+    };
+
     return (
         <Box>
             <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
@@ -102,6 +140,9 @@ const ListIcon: React.FC = () => {
                         <Typography variant="h6">Total: ${list.reduce((total, item) => total + item.price * item.quantity, 0)}</Typography>
                         <IconButton color="secondary" onClick={handleClearList}>
                             <DeleteIcon /> Borrar mi lista
+                        </IconButton>
+                        <IconButton color="primary" onClick={handleSaveList}>
+                            <SaveIcon /> Guardar mi lista
                         </IconButton>
                     </Box>
                 </Box>
@@ -148,6 +189,14 @@ const ListIcon: React.FC = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <AuthChoiceModal
+                open={authChoiceDialogOpen}
+                onClose={handleAuthChoiceClose}
+                onLogin={handleLogin}
+                onRegister={handleRegister}
+            />
+            <LoginModal open={loginDialogOpen} onClose={handleLoginClose} />
+            <RegisterModal open={registerDialogOpen} onClose={handleRegisterClose} />
         </Box>
     );
 };
