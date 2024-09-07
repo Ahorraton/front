@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { Box, Drawer, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField } from '@mui/material';
+import { Box, Drawer, List, IconButton } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { addItem, removeItem, deleteItem, clearList, setListName } from '../../../../redux/store/listSlice';
 import LoginModal from '../user/login/LoginModal';
 import RegisterModal from '../user/register/RegisterModal';
 import AuthChoiceModal from './AuthChoiceModal';
+import ListItemComponent from './ListItemComponent';
+import ListActions from './ListActions';
+import { ConfirmDialog } from './Dialogs';
 
 const ListIcon: React.FC = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -107,88 +106,42 @@ const ListIcon: React.FC = () => {
             </IconButton>
             <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <Box width={300} role="presentation">
-                    <Box textAlign="center" m={2}>
-                        <TextField
-                            label="Nombre de mi lista"
-                            value={listName}
-                            onChange={handleListNameChange}
-                            fullWidth
-                        />
-                    </Box>
+                    <ListActions
+                        listName={listName}
+                        total={list.reduce((total, item) => total + item.price * item.quantity, 0)}
+                        onListNameChange={handleListNameChange}
+                        onClearList={handleClearList}
+                        onSaveList={handleSaveList}
+                    />
                     <List>
                         {list.map(item => (
-                            <ListItem key={item.id}>
-                                <ListItemText
-                                    primary={item.name}
-                                    secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`}
-                                />
-                                <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="add" onClick={() => handleAddItem(item.id)}>
-                                        <AddCircleIcon />
-                                    </IconButton>
-                                    <IconButton edge="end" aria-label="remove" onClick={() => handleRemoveItem(item.id)}>
-                                        <RemoveCircleIcon />
-                                    </IconButton>
-                                    <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteItem(item.id)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </ListItemSecondaryAction>
-                            </ListItem>
+                            <ListItemComponent
+                                key={item.id}
+                                item={item}
+                                onAdd={handleAddItem}
+                                onRemove={handleRemoveItem}
+                                onDelete={handleDeleteItem}
+                            />
                         ))}
                     </List>
-                    <Box textAlign="center" m={2}>
-                        <Typography variant="h6">Total: ${list.reduce((total, item) => total + item.price * item.quantity, 0)}</Typography>
-                        <IconButton color="secondary" onClick={handleClearList}>
-                            <DeleteIcon /> Borrar mi lista
-                        </IconButton>
-                        <IconButton color="primary" onClick={handleSaveList}>
-                            <SaveIcon /> Guardar mi lista
-                        </IconButton>
-                    </Box>
                 </Box>
             </Drawer>
-            <Dialog
+            <ConfirmDialog
                 open={dialogOpen}
                 onClose={() => setDialogOpen(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{"Borrar Item"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Seguro que quieres eliminar el producto de tu lista?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setDialogOpen(false)} color="primary">
-                        Cancelar
-                    </Button>
-                    <Button onClick={confirmDeleteItem} color="primary" autoFocus>
-                        Borrar
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog
+                onConfirm={confirmDeleteItem}
+                title="Borrar Item"
+                description="Seguro que quieres eliminar el producto de tu lista?"
+                confirmText="Borrar"
+            />
+            <ConfirmDialog
                 open={clearDialogOpen}
                 onClose={() => setClearDialogOpen(false)}
-                aria-labelledby="alert-clear-dialog-title"
-                aria-describedby="alert-clear-dialog-description"
-            >
-                <DialogTitle id="alert-clear-dialog-title">{"Borrar Lista"}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-clear-dialog-description">
-                        Seguro que quieres borrar toda tu lista?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setClearDialogOpen(false)} color="primary">
-                        Cancelar
-                    </Button>
-                    <Button onClick={confirmClearList} color="primary" autoFocus>
-                        Borrar
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                onConfirm={confirmClearList}
+                title="Borrar Lista"
+                description="Seguro que quieres borrar toda tu lista?"
+                confirmText="Borrar"
+            />
             <AuthChoiceModal
                 open={authChoiceDialogOpen}
                 onClose={handleAuthChoiceClose}
