@@ -8,10 +8,12 @@ interface ListItem {
 }
 
 interface ListState {
+    name: string;
     items: ListItem[];
 }
 
 const initialState: ListState = {
+    name: 'Mi lista',
     items: [],
 };
 
@@ -43,8 +45,11 @@ const listSlice = createSlice({
         clearList: (state) => {
             state.items = [];
         },
+        setListName: (state, action: PayloadAction<string>) => {
+            state.name = action.payload;
+        },
     },
 });
 
-export const { addItem, removeItem, deleteItem, clearList } = listSlice.actions;
+export const { addItem, removeItem, deleteItem, clearList, setListName } = listSlice.actions;
 export default listSlice.reducer;

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Drawer, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { Box, Drawer, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../redux/store';
-import { addItem, removeItem, deleteItem, clearList } from '../../../../redux/store/listSlice';
+import { addItem, removeItem, deleteItem, clearList, setListName } from '../../../../redux/store/listSlice';
 
 const ListIcon: React.FC = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -14,6 +14,7 @@ const ListIcon: React.FC = () => {
     const [clearDialogOpen, setClearDialogOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState<string | null>(null);
     const list = useSelector((state: RootState) => state.list.items);
+    const listName = useSelector((state: RootState) => state.list.name);
     const dispatch = useDispatch();
 
     const handleAddItem = (id: string) => {
@@ -57,6 +58,10 @@ const ListIcon: React.FC = () => {
         setClearDialogOpen(false);
     };
 
+    const handleListNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setListName(event.target.value));
+    };
+
     return (
         <Box>
             <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
@@ -64,6 +69,14 @@ const ListIcon: React.FC = () => {
             </IconButton>
             <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <Box width={300} role="presentation">
+                    <Box textAlign="center" m={2}>
+                        <TextField
+                            label="List Name"
+                            value={listName}
+                            onChange={handleListNameChange}
+                            fullWidth
+                        />
+                    </Box>
                     <List>
                         {list.map(item => (
                             <ListItem key={item.id}>
