@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Card, CardMedia, CardContent } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/store';
 import { addItem, removeItem } from '../../../../redux/store/listSlice';
 import Product from '../types/Product';
 import './product_card.css';
 
 const ProductCard = ({ product } : { product: Product }) => {
+    const list = useSelector((state: RootState) => state.list.items);
     const [prodCount, setProdCount] = useState<number>(0);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const item = list.find(item => item.id === product.id.toString());
+        if (item) {
+            setProdCount(item.quantity);
+        } else {
+            setProdCount(0);
+        }
+    }, [list, product.id]);
 
     const handleAddItem = () => {
         setProdCount(prodCount + 1);
