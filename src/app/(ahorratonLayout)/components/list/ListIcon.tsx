@@ -71,7 +71,7 @@ const ListIcon: React.FC = () => {
                 <Box width={300} role="presentation">
                     <Box textAlign="center" m={2}>
                         <TextField
-                            label="List Name"
+                            label="Nombre de mi lista"
                             value={listName}
                             onChange={handleListNameChange}
                             fullWidth
@@ -82,7 +82,7 @@ const ListIcon: React.FC = () => {
                             <ListItem key={item.id}>
                                 <ListItemText
                                     primary={item.name}
-                                    secondary={`Quantity: ${item.quantity} - Price: $${item.price}`}
+                                    secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`}
                                 />
                                 <ListItemSecondaryAction>
                                     <IconButton edge="end" aria-label="add" onClick={() => handleAddItem(item.id)}>
