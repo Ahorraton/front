@@ -61,6 +61,11 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
         return rgbToHex(interpolatedColor);
     };
 
+    const handleAddToList = () => {
+        // Logic to handle adding product to the list will go here
+        console.log(`Adding product with EAN: ${product.ean} to the list`);
+    };
+
     return (
         <Paper className = 'card-layout' elevation={8}>
             <Box className = 'product-layout'>
@@ -93,6 +98,14 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
                         })}
                     </Box>
                 </Box>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleAddToList}
+                    sx={{ fontSize: '0.8rem' }}
+                >
+                    Agregar a mi lista
+                </Button>
             </Box>
         </Paper>
     )

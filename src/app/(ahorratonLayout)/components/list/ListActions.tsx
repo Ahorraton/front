@@ -21,7 +21,7 @@ const ListActions: React.FC<ListActionsProps> = ({ listName, total, onListNameCh
                 onChange={onListNameChange}
                 fullWidth
             />
-            <Typography variant="h6">Total: ${total}</Typography>
+            {/* <Typography variant="h6">Total: ${total}</Typography> */}
             <IconButton color="secondary" onClick={onClearList}>
                 <DeleteIcon /> Borrar mi lista
             </IconButton>
