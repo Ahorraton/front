@@ -1,6 +1,6 @@
 'use client';
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IconButton, TextField, Box } from "@mui/material";
 import Switch from '@mui/material/Switch';
 import SearchIcon from '@mui/icons-material/Search';
@@ -27,6 +27,9 @@ export default function SearchBar({
     }
     window.location.href = `/buscar?query=${search}`;
   }
+  useEffect(() => {
+    setCompareSearch(true);
+  }, [setCompareSearch]);
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   
