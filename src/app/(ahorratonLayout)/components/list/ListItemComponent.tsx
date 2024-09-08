@@ -16,7 +16,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({ item, onAdd, onRe
         <ListItem key={item.id}>
             <ListItemText
                 primary={item.name}
-                secondary={`Cantidad: ${item.quantity} - Precio: $${item.price}`}
+                secondary={`Cantidad: ${item.quantity}`}
             />
             <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="add" onClick={() => onAdd(item.id)}>

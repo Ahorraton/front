@@ -86,15 +86,15 @@ const ProductCard = ({ product } : { product: Product }) => {
                     ${product.price}
                 </Typography>
                 <Box display='flex' flexDirection='row' alignItems='center'>
-                    <IconButton color="primary" aria-label="remove from shopping list" onClick={handleRemoveItem}>
+                    {/* <IconButton color="primary" aria-label="remove from shopping list" onClick={handleRemoveItem}>
                         <RemoveCircleIcon />
                     </IconButton>
                     <Typography variant="h6" component="div">
                         {prodCount}
-                    </Typography>
-                    <IconButton color="primary" aria-label="add to shopping list" onClick={handleAddItem}>
+                    </Typography> */}
+                    {/* <IconButton color="primary" aria-label="add to shopping list" onClick={handleAddItem}>
                         <AddCircleIcon />
-                    </IconButton>
+                    </IconButton> */}
                 </Box>
             </Box>
         </Card>
