@@ -5,6 +5,8 @@ interface ListItem {
     name: string;
     quantity: number;
     price: number;
+    ean?: string;
+    image_url?: string;
 }
 
 interface ListState {
