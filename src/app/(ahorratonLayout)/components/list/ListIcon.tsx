@@ -24,31 +24,32 @@ const ListIcon: React.FC = () => {
     const user = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
 
-    const handleAddItem = (id: string) => {
-        const item = list.find(item => item.id === id);
+    const handleAddItem = (ean: string) => {
+        const item = list.find(item => item.ean === ean);
         if (item) {
             dispatch(addItem({ ...item, quantity: 1 }));
         }
     };
 
-    const handleRemoveItem = (id: string) => {
-        const item = list.find(item => item.id === id);
+    const handleRemoveItem = (ean: string) => {
+        const item = list.find(item => item.ean === ean);
         if (item) {
             if (item.quantity > 1) {
-                dispatch(removeItem(id));
+                dispatch(removeItem(ean));
             } else {
-                setItemToDelete(id);
+                setItemToDelete(ean);
                 setDialogOpen(true);
             }
         }
     };
 
-    const handleDeleteItem = (id: string) => {
-        setItemToDelete(id);
+    const handleDeleteItem = (ean: string) => {
+        setItemToDelete(ean);
         setDialogOpen(true);
     };
 
     const confirmDeleteItem = () => {
+        console.log("Deleting item with ean:", itemToDelete);
         if (itemToDelete) {
             dispatch(deleteItem(itemToDelete));
             setItemToDelete(null);
@@ -130,7 +131,6 @@ const ListIcon: React.FC = () => {
                 <Box width={300} role="presentation">
                     <ListActions
                         listName={listName}
-                        total={list.reduce((total, item) => total + item.price * item.quantity, 0)}
                         onListNameChange={handleListNameChange}
                         onClearList={handleClearList}
                         onSaveList={handleSaveList}
@@ -139,7 +139,7 @@ const ListIcon: React.FC = () => {
                     <List>
                         {list.map(item => (
                             <ListItemComponent
-                                key={item.id}
+                                key={item.ean}
                                 item={item}
                                 onAdd={handleAddItem}
                                 onRemove={handleRemoveItem}
