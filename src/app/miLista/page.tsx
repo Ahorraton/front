@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Box, List, ListItem, ListItemText, IconButton, TextField, Typography, Button, Paper } from '@mui/material';
@@ -12,10 +12,112 @@ import { addItem, removeItem, deleteItem, setListName, clearList } from '../../r
 import Price from '@/app/comparar/Price';
 import { hexToRgb, interpolateColor, rgbToHex, marketImage } from '../comparar/ProductPaperAle';
 
+type Product = {
+    id: number;
+    name: string;
+    price: number;
+    price_per_unit: number | null; // Allow null for price_per_unit
+    created_at: string;
+    market: string;
+    image_url: string | null;
+    ean: string;
+    url: string | null;
+    quantity?: number;
+};
+
 const MiLista: React.FC = () => {
     const list = useSelector((state: RootState) => state.list.items);
     const listName = useSelector((state: RootState) => state.list.name);
     const dispatch = useDispatch();
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            // Mock response data
+            const mockData = {
+                "products": [
+                    {
+                        "id": 1,
+                        "name": "1",
+                        "price": 1,
+                        "price_per_unit": null,
+                        "created_at": "2024-09-09T05:08:48.083000",
+                        "market": "1",
+                        "image_url": null,
+                        "ean": "8890895010095",
+                        "url": null
+                    },
+                    {
+                        "id": 2,
+                        "name": "2",
+                        "price": 2,
+                        "price_per_unit": null,
+                        "created_at": "2024-09-09T05:08:48.083000",
+                        "market": "2",
+                        "image_url": null,
+                        "ean": "8890895010095",
+                        "url": null
+                    },
+                    {
+                        "id": 3,
+                        "name": "3",
+                        "price": 3,
+                        "price_per_unit": null,
+                        "created_at": "2024-09-09T05:08:48.083000",
+                        "market": "3",
+                        "image_url": null,
+                        "ean": "8890895010095",
+                        "url": null
+                    },
+                    {
+                        "id": 4,
+                        "name": "4",
+                        "price": 4,
+                        "price_per_unit": null,
+                        "created_at": "2024-09-09T05:08:48.083000",
+                        "market": "4",
+                        "image_url": null,
+                        "ean": "7790895006715",
+                        "url": null
+                    },
+                    {
+                        "id": 5,
+                        "name": "5",
+                        "price": 5,
+                        "price_per_unit": null,
+                        "created_at": "2024-09-09T05:08:48.083000",
+                        "market": "5",
+                        "image_url": null,
+                        "ean": "7790895006715",
+                        "url": null
+                    },
+                    {
+                        "id": 6,
+                        "name": "6",
+                        "price": 6,
+                        "price_per_unit": null,
+                        "created_at": "2024-09-09T05:08:48.083000",
+                        "market": "6",
+                        "image_url": null,
+                        "ean": "7790895006715",
+                        "url": null
+                    }
+                ]
+            };
+
+            const productsWithQuantity = mockData.products.map((product: Product) => {
+                const localItem = list.find(item => item.ean === product.ean);
+                return {
+                    ...product,
+                    quantity: localItem ? localItem.quantity : 0
+                };
+            });
+            setProducts(productsWithQuantity);
+            console.log(productsWithQuantity);
+        };
+
+        fetchProducts();
+    }, [list]);
 
     const handleAddQuantity = (ean: string) => {
         dispatch(addItem({ ean, quantity: 1 }));
@@ -49,10 +151,8 @@ const MiLista: React.FC = () => {
                 />
             </Typography>
             <List>
-                {list.map(item => {
-                    const price_and_market = item.market_price ? item.market_price.split(',').map(pair => pair.trim()) : [];
-                    const prices = price_and_market.map(price_market => parseFloat(price_market.split(' ')[1]));
-                    const urls = item.urls ? item.urls.split(',') : [];
+                {products.map(product => {
+                    const prices = products.map(p => p.price);
                     const minPrice = Math.min(...prices);
                     const maxPrice = Math.max(...prices);
                     const green = hexToRgb("#157a01");
@@ -64,50 +164,46 @@ const MiLista: React.FC = () => {
                         return rgbToHex(interpolatedColor);
                     };
 
+                    const color = getColorForPrice(product.price);
+                    const logo = marketImage(product.market);
+
                     return (
-                        <ListItem key={item.ean}>
+                        <ListItem key={product.id}>
                             <Paper className='card-layout' elevation={8} style={{ width: '100%' }}>
                                 <Box className='product-layout'>
                                     <Box className='card-title-box'>
                                         <Typography justifyContent='center' align='center' variant="h5" padding='2%'>
-                                            {item.name ? item.name.split(',')[0] : 'Producto sin nombre'}
+                                            {product.name ? product.name.split(',')[0] : 'Producto sin nombre'}
                                         </Typography>
                                     </Box>
                                     <Box className='product-row'>
                                         <Box
                                             component='img'
-                                            src={item.image_url}
+                                            src={product.image_url || ''}
                                             className='product-image'
                                             style={{ width: '100px', height: '100px' }}
                                         />
                                         <Box className='market-row'>
-                                            {price_and_market.map((price_market: string, index: number) => {
-                                                const market_price_vec = price_market.split(' ');
-                                                const logo = marketImage(market_price_vec[0]);
-                                                const price = market_price_vec[1];
-                                                const color = getColorForPrice(parseFloat(price));
-                                                return <Price
-                                                    key={price_market}
-                                                    logo={logo}
-                                                    price={price}
-                                                    color={color}
-                                                    cheapest={parseFloat(price) === minPrice}
-                                                    url={urls[index]}
-                                                />;
-                                            })}
+                                            <Price
+                                                logo={logo}
+                                                price={product.price.toString()}
+                                                color={color}
+                                                cheapest={product.price === minPrice}
+                                                url={product.url || ''}
+                                            />
                                         </Box>
                                     </Box>
                                     <Box className='quantity-controls' display="flex" alignItems="center">
-                                        <IconButton onClick={() => handleAddQuantity(item.ean)}>
+                                        <IconButton onClick={() => handleAddQuantity(product.ean)}>
                                             <AddIcon />
                                         </IconButton>
                                         <Typography variant="body1" style={{ margin: '0 10px' }}>
-                                            {item.quantity}
+                                            {product.quantity}
                                         </Typography>
-                                        <IconButton onClick={() => handleRemoveQuantity(item.ean)}>
+                                        <IconButton onClick={() => handleRemoveQuantity(product.ean)}>
                                             <RemoveIcon />
                                         </IconButton>
-                                        <IconButton onClick={() => handleDeleteItem(item.ean)}>
+                                        <IconButton onClick={() => handleDeleteItem(product.ean)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Box>
@@ -132,4 +228,3 @@ const MiLista: React.FC = () => {
 };
 
 export default MiLista;
-
