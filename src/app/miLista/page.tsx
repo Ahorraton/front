@@ -160,6 +160,8 @@ const MiLista: React.FC = () => {
         return acc;
     }, {} as { [key: string]: Product }));
 
+    const totalPrice = cheapestProducts.reduce((total, product) => total + product.price, 0);
+
     return (
         <Box m={2}>
             <Accordion>
@@ -202,6 +204,20 @@ const MiLista: React.FC = () => {
                     fullWidth
                 />
             </Typography>
+            <Box
+                sx={{
+                    backgroundColor: 'white',
+                    padding: '16px',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    textAlign: 'center',
+                    marginBottom: '16px'
+                }}
+            >
+                <Typography variant="h4" component="div" sx={{ fontWeight: 'bold', color: '#ff5722' }}>
+                    Total: ${totalPrice}
+                </Typography>
+            </Box>
             <List>
                 {cheapestProducts.map(product => {
                     const prices = products.map(p => p.price);
