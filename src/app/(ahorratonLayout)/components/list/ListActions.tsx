@@ -12,6 +12,15 @@ interface ListActionsProps {
 }
 
 const ListActions: React.FC<ListActionsProps> = ({ listName, onListNameChange, onClearList, onSaveList, isLoggedIn }) => {
+    const handleSaveList = () => {
+        console.log('Saving list');
+        if (isLoggedIn) {
+            window.location.href = '/miLista';
+        } else {
+            onSaveList();
+        }
+    };
+
     return (
         <Box textAlign="center" m={2}>
             <TextField
@@ -20,11 +29,10 @@ const ListActions: React.FC<ListActionsProps> = ({ listName, onListNameChange, o
                 onChange={onListNameChange}
                 fullWidth
             />
-            {/* <Typography variant="h6">Total: ${total}</Typography> */}
             <IconButton color="secondary" onClick={onClearList}>
                 <DeleteIcon /> Borrar mi lista
             </IconButton>
-            <IconButton color="primary" onClick={onSaveList}>
+            <IconButton color="primary" onClick={handleSaveList}>
                 <SaveIcon /> {isLoggedIn ? 'Ver mi lista en detalle' : 'Guardar mi lista'}
             </IconButton>
         </Box>
