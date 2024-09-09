@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "@/redux/store/listSlice";
 
 // Helper function to interpolate between two colors
-const interpolateColor = (color1: number[], color2: number[], factor: number): number[] => {
+export const interpolateColor = (color1: number[], color2: number[], factor: number): number[] => {
     const result = color1.slice();
     for (let i = 0; i < color1.length; i++) {
         result[i] = Math.round(result[i] + factor * (color2[i] - color1[i]));
@@ -17,19 +17,19 @@ const interpolateColor = (color1: number[], color2: number[], factor: number): n
 };
 
 // Helper function to convert RGB array to hex string
-const rgbToHex = (rgb: number[]): string => {
+export const rgbToHex = (rgb: number[]): string => {
     return '#' + rgb.map(x => x.toString(16).padStart(2, '0')).join('');
 };
 
 // Convert a color in hex format to an array of RGB values
-const hexToRgb = (hex: string): number[] => {
+export const hexToRgb = (hex: string): number[] => {
     return hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
                 , (m, r, g, b) => '#' + r + r + g + g + b + b)
                 .substring(1).match(/.{2}/g)!
                 .map(x => parseInt(x, 16));
 };
 
-const marketImage = (market: string) => {
+export const marketImage = (market: string) => {
     switch(market) {
         case 'disco':
             return '/images/logos/logo_disco.svg';
