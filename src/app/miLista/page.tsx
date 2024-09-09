@@ -160,7 +160,7 @@ const MiLista: React.FC = () => {
         return acc;
     }, {} as { [key: string]: Product }));
 
-    const totalPrice = cheapestProducts.reduce((total, product) => total + product.price, 0);
+    const totalPrice = cheapestProducts.reduce((total, product) => total + (product.price * (product.quantity || 0)), 0);
 
     return (
         <Box m={2}>
