@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ListItem {
-    id: string;
-    name: string;
+export interface ListItem {
+    id?: string;
+    name?: string;
     quantity: number;
-    price: number;
-    ean?: string;
+    price?: number;
+    ean: string; // Changed to required
     image_url?: string;
+    urls?: string;
+    market_price?: string; // We have the price here (e.g. coto 2500)
 }
 
 interface ListState {
@@ -24,7 +26,7 @@ const listSlice = createSlice({
     initialState,
     reducers: {
         addItem: (state, action: PayloadAction<ListItem>) => {
-            const existingItem = state.items.find(item => item.id === action.payload.id);
+            const existingItem = state.items.find(item => item.ean === action.payload.ean);
             if (existingItem) {
                 existingItem.quantity += action.payload.quantity;
             } else {
@@ -32,17 +34,17 @@ const listSlice = createSlice({
             }
         },
         removeItem: (state, action: PayloadAction<string>) => {
-            const existingItem = state.items.find(item => item.id === action.payload);
+            const existingItem = state.items.find(item => item.ean === action.payload);
             if (existingItem) {
                 if (existingItem.quantity > 1) {
                     existingItem.quantity -= 1;
                 } else {
-                    state.items = state.items.filter(item => item.id !== action.payload);
+                    state.items = state.items.filter(item => item.ean !== action.payload);
                 }
             }
         },
         deleteItem: (state, action: PayloadAction<string>) => {
-            state.items = state.items.filter(item => item.id !== action.payload);
+            state.items = state.items.filter(item => item.ean !== action.payload);
         },
         clearList: (state) => {
             state.items = [];
