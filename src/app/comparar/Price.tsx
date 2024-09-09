@@ -7,10 +7,10 @@ import '@/app/comparar/price.css'
 
 const Price = (
     { logo, price, color, cheapest, url }:
-    { logo: string; price: string, color: string, cheapest: boolean, url: string}
+    { logo: string; price: string, color: string, cheapest: boolean, url: string | undefined}
 ) => {
     const classNameCheapest = cheapest ? 'price-column-cheapest' : 'price-column';
-    const handleClick = (link: string) => {
+    const handleClick = (link: string | undefined) => {
         window.open(link, '_blank');
     }
     return (
