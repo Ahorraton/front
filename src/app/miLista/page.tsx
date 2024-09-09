@@ -38,25 +38,25 @@ const MiLista: React.FC = () => {
                 "products": [
                     {
                         "id": 1,
-                        "name": "1",
-                        "price": 1,
+                        "name": "Gaseosa Schweppes Tónica 1.5 Lt.",
+                        "price": 2500,
                         "price_per_unit": null,
                         "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "1",
-                        "image_url": null,
-                        "ean": "8890895010095",
-                        "url": null
+                        "market": "vea",
+                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/311168-800-auto?v=638599382953170000&width=800&height=auto&aspect=true",
+                        "ean": "7790895006715",
+                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-tonica-15-lt-115296/p"
                     },
                     {
                         "id": 2,
-                        "name": "2",
-                        "price": 2,
+                        "name": "Gaseosa Schweppes Tónica 1.5 Lt.",
+                        "price": 2509,
                         "price_per_unit": null,
                         "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "2",
-                        "image_url": null,
-                        "ean": "8890895010095",
-                        "url": null
+                        "market": "dia",
+                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/311168-800-auto?v=638599382953170000&width=800&height=auto&aspect=true",
+                        "ean": "7790895006715",
+                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-tonica-15-lt-115296/p"
                     },
                     {
                         "id": 3,
@@ -66,30 +66,30 @@ const MiLista: React.FC = () => {
                         "created_at": "2024-09-09T05:08:48.083000",
                         "market": "3",
                         "image_url": null,
-                        "ean": "8890895010095",
+                        "ean": "7790895006715",
                         "url": null
                     },
                     {
                         "id": 4,
-                        "name": "4",
-                        "price": 4,
+                        "name": "Gaseosa Schweppes Pomelo Zero 2.25 Lt.",
+                        "price": 3101,
                         "price_per_unit": null,
                         "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "4",
-                        "image_url": null,
-                        "ean": "7790895006715",
-                        "url": null
+                        "market": "coto",
+                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/318602-800-auto?v=638599491889630000&width=800&height=auto&aspect=true",
+                        "ean": "8890895010095",
+                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-pomelo-zero-225-lt-259397/p"
                     },
                     {
                         "id": 5,
-                        "name": "5",
-                        "price": 5,
+                        "name": "Gaseosa Schweppes Pomelo Zero 2.25 Lt.",
+                        "price": 3000,
                         "price_per_unit": null,
                         "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "5",
-                        "image_url": null,
-                        "ean": "7790895006715",
-                        "url": null
+                        "market": "carrefour",
+                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/318602-800-auto?v=638599491889630000&width=800&height=auto&aspect=true",
+                        "ean": "8890895010095",
+                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-pomelo-zero-225-lt-259397/p"
                     },
                     {
                         "id": 6,
@@ -99,7 +99,7 @@ const MiLista: React.FC = () => {
                         "created_at": "2024-09-09T05:08:48.083000",
                         "market": "6",
                         "image_url": null,
-                        "ean": "7790895006715",
+                        "ean": "8890895010095",
                         "url": null
                     }
                 ]
