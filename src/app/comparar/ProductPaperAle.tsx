@@ -4,6 +4,8 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import Product from "@/app/comparar/types/Product"
 import "@/app/comparar/compare.css";
 import Price from "@/app/comparar/Price";
+import { useDispatch } from "react-redux";
+import { addItem } from "@/redux/store/listSlice";
 
 // Helper function to interpolate between two colors
 const interpolateColor = (color1: number[], color2: number[], factor: number): number[] => {
@@ -54,6 +56,7 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
     const maxPrice = Math.max(...prices);
     const green = hexToRgb("#157a01");
     const black = hexToRgb("#000000");
+    const dispatch = useDispatch();
 
     const getColorForPrice = (price: number): string => {
         const normalizedPrice = (price - minPrice) / (maxPrice - minPrice);
@@ -62,8 +65,12 @@ const ProductPaperAle = ({ product } : { product: Product }) => {
     };
 
     const handleAddToList = () => {
-        // Logic to handle adding product to the list will go here
-        console.log(`Adding product with EAN: ${product.ean} to the list`);
+        const productToAdd = {
+            ...product,
+            name : product.names_list,
+            quantity: 1,
+        };
+        dispatch(addItem(productToAdd));
     };
 
     return (
