@@ -5,14 +5,13 @@ import SaveIcon from '@mui/icons-material/Save';
 
 interface ListActionsProps {
     listName: string;
-    total: number;
     onListNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onClearList: () => void;
     onSaveList: () => void;
     isLoggedIn: boolean;
 }
 
-const ListActions: React.FC<ListActionsProps> = ({ listName, total, onListNameChange, onClearList, onSaveList, isLoggedIn }) => {
+const ListActions: React.FC<ListActionsProps> = ({ listName, onListNameChange, onClearList, onSaveList, isLoggedIn }) => {
     return (
         <Box textAlign="center" m={2}>
             <TextField
@@ -26,7 +25,7 @@ const ListActions: React.FC<ListActionsProps> = ({ listName, total, onListNameCh
                 <DeleteIcon /> Borrar mi lista
             </IconButton>
             <IconButton color="primary" onClick={onSaveList}>
-                <SaveIcon /> {isLoggedIn ? 'Guardar y crear una nueva lista' : 'Guardar mi lista'}
+                <SaveIcon /> {isLoggedIn ? 'Ver mi lista en detalle' : 'Guardar mi lista'}
             </IconButton>
         </Box>
     );
