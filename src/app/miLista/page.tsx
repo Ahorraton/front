@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addItem, removeItem, deleteItem, setListName, clearList } from '../../redux/store/listSlice';
 import Price from '@/app/comparar/Price';
 import { hexToRgb, interpolateColor, rgbToHex, marketImage } from '../comparar/ProductPaperAle';
+import "./myList.css";
 
 type Product = {
     id: number;
