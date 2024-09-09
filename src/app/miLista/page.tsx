@@ -3,11 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, List, ListItem, ListItemText, IconButton, TextField, Typography, Button, Paper } from '@mui/material';
+import { Box, List, ListItem, ListItemText, IconButton, TextField, Typography, Button, Paper, Checkbox, FormControlLabel, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { addItem, removeItem, deleteItem, setListName, clearList } from '../../redux/store/listSlice';
 import Price from '@/app/comparar/Price';
 import { hexToRgb, interpolateColor, rgbToHex, marketImage } from '../comparar/ProductPaperAle';
@@ -16,7 +17,7 @@ type Product = {
     id: number;
     name: string;
     price: number;
-    price_per_unit: number | null; // Allow null for price_per_unit
+    price_per_unit: number | null;
     created_at: string;
     market: string;
     image_url: string | null;
@@ -30,6 +31,7 @@ const MiLista: React.FC = () => {
     const listName = useSelector((state: RootState) => state.list.name);
     const dispatch = useDispatch();
     const [products, setProducts] = useState<Product[]>([]);
+    const [selectedMarkets, setSelectedMarkets] = useState<string[]>(['carrefour', 'coto', 'dia', 'vea', 'disco', 'jumbo']);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -140,8 +142,57 @@ const MiLista: React.FC = () => {
         console.log('List saved');
     };
 
+    const handleMarketChange = (market: string) => {
+        if (selectedMarkets.includes(market)) {
+            setSelectedMarkets(selectedMarkets.filter((m) => m !== market));
+        } else {
+            setSelectedMarkets([...selectedMarkets, market]);
+        }
+    };
+
+    const filteredProducts = products.filter(product => selectedMarkets.includes(product.market));
+
+    const cheapestProducts = Object.values(filteredProducts.reduce((acc, product) => {
+        if (!acc[product.ean] || acc[product.ean].price > product.price) {
+            acc[product.ean] = product;
+        }
+        return acc;
+    }, {} as { [key: string]: Product }));
+
     return (
         <Box m={2}>
+            <Accordion>
+                <AccordionSummary
+                    sx={{
+                        '& .MuiAccordionSummary-content': {
+                            justifyContent: 'center',
+                        }
+                    }}
+                    expandIcon={<ExpandMoreIcon />}
+                >
+                    <h3>Filtros</h3>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexWrap: 'wrap'
+                    }}>
+                        {['carrefour', 'coto', 'dia', 'vea', 'disco', 'jumbo'].map((market) => (
+                            <FormControlLabel
+                                key={market}
+                                control={
+                                    <Checkbox
+                                        checked={selectedMarkets.includes(market)}
+                                        onChange={() => handleMarketChange(market)}
+                                    />
+                                }
+                                label={market.charAt(0).toUpperCase() + market.slice(1)}
+                            />
+                        ))}
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
             <Typography variant="h4" gutterBottom>
                 <TextField
                     label="Nombre de mi lista"
@@ -151,7 +202,7 @@ const MiLista: React.FC = () => {
                 />
             </Typography>
             <List>
-                {products.map(product => {
+                {cheapestProducts.map(product => {
                     const prices = products.map(p => p.price);
                     const minPrice = Math.min(...prices);
                     const maxPrice = Math.max(...prices);
