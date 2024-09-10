@@ -1,17 +1,17 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
-const ADD_PRODUCTS = "/grocery_lists/add_prods_to_my_list";
+const SAVE_LIST = "/grocery_lists/save_my_list";
 
 export async function POST(req: NextRequest) {
-    const { products_eans } = await req.json();
+    const { user_id, name, products } = await req.json();
     const baseUrl = process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
-    const backendEndpoint = baseUrl + ADD_PRODUCTS;
+    const backendEndpoint = baseUrl + SAVE_LIST;
 
     try {
         const response: AxiosResponse = await axios.post(
             backendEndpoint,
-            { product_codes: products_eans },
+            { user_id, name, products },
             { headers: { 'Content-Type': 'application/json' } }
         );
 

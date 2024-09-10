@@ -29,6 +29,7 @@ type Product = {
 const MiLista: React.FC = () => {
     const list = useSelector((state: RootState) => state.list.items);
     const listName = useSelector((state: RootState) => state.list.name);
+    const user = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedMarkets, setSelectedMarkets] = useState<string[]>(['carrefour', 'coto', 'dia', 'vea', 'disco', 'jumbo']);
@@ -40,7 +41,6 @@ const MiLista: React.FC = () => {
                 const response = await axios.post('/api/list/getProducts', {
                     products_eans: products_eans
                 });
-                console.log('response.data.data.products:', response.data.data.products);
                 const productsWithQuantity = response.data.data.products.map((product: Product) => {
                     const localItem = list.find(item => item.ean === product.ean);
                     return {
@@ -61,9 +61,25 @@ const MiLista: React.FC = () => {
         dispatch(setListName(event.target.value));
     };
 
-    const handleSaveList = () => {
-        // Save list logic will be implemented later
-        console.log('List saved');
+    const handleSaveList = async () => {
+        try {
+            console.log("MY USER ID IS:", user.userInfo?.id);
+            const user_id = user.userInfo?.id;
+            const productsToSave = list.map(item => ({
+                product_code: item.ean,
+                amount: item.quantity
+            }));
+
+            const response = await axios.post('/api/list/createList', {
+                user_id,
+                name: listName,
+                products: productsToSave
+            });
+
+            console.log('List saved:', response.data);
+        } catch (error) {
+            console.error('Error saving list:', error);
+        }
     };
 
     const handleMarketChange = (market: string) => {
