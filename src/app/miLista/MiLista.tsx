@@ -11,6 +11,7 @@ import ProductList from './ProductList';
 import TotalPrice from './TotalPrice';
 import Filters from './Filters';
 import "./myList.css";
+import axios from 'axios';
 
 type Product = {
     id: number;
@@ -34,87 +35,23 @@ const MiLista: React.FC = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            // Mock response data
-            const mockData = {
-                "products": [
-                    {
-                        "id": 1,
-                        "name": "Gaseosa Schweppes Tónica 1.5 Lt.",
-                        "price": 2500,
-                        "price_per_unit": null,
-                        "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "vea",
-                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/311168-800-auto?v=638599382953170000&width=800&height=auto&aspect=true",
-                        "ean": "7790895006715",
-                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-tonica-15-lt-115296/p"
-                    },
-                    {
-                        "id": 2,
-                        "name": "Gaseosa Schweppes Tónica 1.5 Lt.",
-                        "price": 2509,
-                        "price_per_unit": null,
-                        "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "dia",
-                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/311168-800-auto?v=638599382953170000&width=800&height=auto&aspect=true",
-                        "ean": "7790895006715",
-                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-tonica-15-lt-115296/p"
-                    },
-                    {
-                        "id": 3,
-                        "name": "3",
-                        "price": 3,
-                        "price_per_unit": null,
-                        "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "3",
-                        "image_url": null,
-                        "ean": "7790895006715",
-                        "url": null
-                    },
-                    {
-                        "id": 4,
-                        "name": "Gaseosa Schweppes Pomelo Zero 2.25 Lt.",
-                        "price": 3101,
-                        "price_per_unit": null,
-                        "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "coto",
-                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/318602-800-auto?v=638599491889630000&width=800&height=auto&aspect=true",
-                        "ean": "8890895010095",
-                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-pomelo-zero-225-lt-259397/p"
-                    },
-                    {
-                        "id": 5,
-                        "name": "Gaseosa Schweppes Pomelo Zero 2.25 Lt.",
-                        "price": 3000,
-                        "price_per_unit": null,
-                        "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "carrefour",
-                        "image_url": "https://ardiaprod.vtexassets.com/arquivos/ids/318602-800-auto?v=638599491889630000&width=800&height=auto&aspect=true",
-                        "ean": "8890895010095",
-                        "url": "https://diaonline.supermercadosdia.com.ar/gaseosa-schweppes-pomelo-zero-225-lt-259397/p"
-                    },
-                    {
-                        "id": 6,
-                        "name": "6",
-                        "price": 6,
-                        "price_per_unit": null,
-                        "created_at": "2024-09-09T05:08:48.083000",
-                        "market": "6",
-                        "image_url": null,
-                        "ean": "8890895010095",
-                        "url": null
-                    }
-                ]
-            };
-
-            const productsWithQuantity = mockData.products.map((product: Product) => {
-                const localItem = list.find(item => item.ean === product.ean);
-                return {
-                    ...product,
-                    quantity: localItem ? localItem.quantity : 0
-                };
-            });
-            setProducts(productsWithQuantity);
-            console.log(productsWithQuantity);
+            try {
+                const products_eans = list.map(item => item.ean);
+                const response = await axios.post('/api/list/getProducts', {
+                    products_eans: products_eans
+                });
+                console.log('response.data.data.products:', response.data.data.products);
+                const productsWithQuantity = response.data.data.products.map((product: Product) => {
+                    const localItem = list.find(item => item.ean === product.ean);
+                    return {
+                        ...product,
+                        quantity: localItem ? localItem.quantity : 0
+                    };
+                });
+                setProducts(productsWithQuantity);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
         };
 
         fetchProducts();
