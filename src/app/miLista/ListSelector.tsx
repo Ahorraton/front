@@ -30,11 +30,17 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
             displayEmpty
             fullWidth
         >
-            {Array.isArray(multipleLists.lists) && multipleLists.lists.map(list => (
-                <MenuItem key={list.id} value={list.id}>
-                    {list.name}
+            {Array.isArray(multipleLists.lists) && multipleLists.lists.length > 0 ? (
+                multipleLists.lists.map(list => (
+                    <MenuItem key={list.id} value={list.id}>
+                        {list.name}
+                    </MenuItem>
+                ))
+            ) : (
+                <MenuItem disabled value="">
+                    Todavía no tienes listas guardadas
                 </MenuItem>
-            ))}
+            )}
         </Select>
     );
 };
