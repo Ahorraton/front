@@ -183,7 +183,6 @@ const MiLista: React.FC = () => {
                 />
             </Typography>
             <TotalPrice totalPrice={totalPrice} />
-            <ProductList products={cheapestProducts} />
             <Box textAlign="center" mt={2}>
                 <Button
                     variant="contained"
@@ -194,6 +193,7 @@ const MiLista: React.FC = () => {
                     Guardar mi lista
                 </Button>
             </Box>
+            <ProductList products={cheapestProducts} />
             <SaveListDialog
                 open={openDialog}
                 handleClose={handleDialogClose}
