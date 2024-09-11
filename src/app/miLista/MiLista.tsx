@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
 import { setListName } from '../../redux/store/listSlice';
+import { setLists, selectList } from '../../redux/store/multipleListsSlice';
 import ProductList from './ProductList';
 import TotalPrice from './TotalPrice';
 import Filters from './Filters';
@@ -30,6 +31,7 @@ const MiLista: React.FC = () => {
     const list = useSelector((state: RootState) => state.list.items);
     const listName = useSelector((state: RootState) => state.list.name);
     const user = useSelector((state: RootState) => state.user);
+    const multipleLists = useSelector((state: RootState) => state.multipleLists);
     const dispatch = useDispatch();
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedMarkets, setSelectedMarkets] = useState<string[]>(['carrefour', 'coto', 'dia', 'vea', 'disco', 'jumbo']);
@@ -57,13 +59,36 @@ const MiLista: React.FC = () => {
         fetchProducts();
     }, [list]);
 
+    useEffect(() => {
+        const fetchUserLists = async () => {
+            try {
+                const response = await axios.get('/api/list/getLists', {
+                    params: { user_id: user.userInfo?.id }
+                });
+                const groceryLists = response.data.data.grocery_list_ids;
+                console.log("Grocery lists:", groceryLists);
+                if (Array.isArray(groceryLists)) {
+                    dispatch(setLists(groceryLists));
+                    if (groceryLists.length > 0) {
+                        dispatch(selectList(groceryLists[0].id));
+                    }
+                } else {
+                    console.error('Fetched grocery lists is not an array:', groceryLists);
+                }
+            } catch (error) {
+                console.error('Error fetching user lists:', error);
+            }
+        };
+
+        fetchUserLists();
+    }, [user]);
+
     const handleListNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setListName(event.target.value));
     };
 
     const handleSaveList = async () => {
         try {
-            console.log("MY USER ID IS:", user.userInfo?.id);
             const user_id = user.userInfo?.id;
             const productsToSave = list.map(item => ({
                 product_code: item.ean,
@@ -88,6 +113,10 @@ const MiLista: React.FC = () => {
         } else {
             setSelectedMarkets([...selectedMarkets, market]);
         }
+    };
+
+    const handleListChange = (event: SelectChangeEvent<number>) => {
+        dispatch(selectList(Number(event.target.value)));
     };
 
     const filteredProducts = products.filter(product => selectedMarkets.includes(product.market));
@@ -119,6 +148,18 @@ const MiLista: React.FC = () => {
                 </AccordionDetails>
             </Accordion>
             <Typography variant="h4" gutterBottom>
+                <Select
+                    value={multipleLists.selectedListId || ''}
+                    onChange={handleListChange}
+                    displayEmpty
+                    fullWidth
+                >
+                    {Array.isArray(multipleLists.lists) && multipleLists.lists.map(list => (
+                        <MenuItem key={list.id} value={list.id}>
+                            {list.name}
+                        </MenuItem>
+                    ))}
+                </Select>
                 <TextField
                     label="Nombre de mi lista"
                     value={listName}
