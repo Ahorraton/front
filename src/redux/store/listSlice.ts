@@ -52,8 +52,11 @@ const listSlice = createSlice({
         setListName: (state, action: PayloadAction<string>) => {
             state.name = action.payload;
         },
+        setList: (state, action: PayloadAction<ListItem[]>) => {
+            state.items = action.payload;
+        },
     },
 });
 
-export const { addItem, removeItem, deleteItem, clearList, setListName } = listSlice.actions;
+export const { addItem, removeItem, deleteItem, clearList, setListName, setList } = listSlice.actions;
 export default listSlice.reducer;

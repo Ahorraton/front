@@ -3,6 +3,8 @@ import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { selectList } from '../../redux/store/multipleListsSlice';
+import { setList, setListName } from '../../redux/store/listSlice';
+import axios from 'axios';
 
 type ListSelectorProps = {
     isListSaved: boolean;
@@ -14,12 +16,27 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
     const multipleLists = useSelector((state: RootState) => state.multipleLists);
     const dispatch = useDispatch();
 
-    const handleListChange = (event: SelectChangeEvent<number>) => {
+    const handleListChange = async (event: SelectChangeEvent<number>) => {
+        const selectedListId = Number(event.target.value);
+
         if (!isListSaved) {
-            setPendingListId(Number(event.target.value));
+            setPendingListId(selectedListId);
             setOpenDialog(true);
         } else {
-            dispatch(selectList(Number(event.target.value)));
+            try {
+                const response = await axios.get(`/api/list/getList`, {
+                    params: { grocery_list_id: selectedListId }
+                });
+                console.log('Fetched list:', response.data.items);
+                const selectedList = multipleLists.lists.find(list => list.id === selectedListId);
+                if (selectedList) {
+                    dispatch(setListName(selectedList.name));
+                }
+                dispatch(selectList(selectedListId));
+                dispatch(setList(response.data.items));
+            } catch (error) {
+                console.error('Error fetching list:', error);
+            }
         }
     };
 
