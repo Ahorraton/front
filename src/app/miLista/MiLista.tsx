@@ -65,11 +65,10 @@ const MiLista: React.FC = () => {
 
     const fetchUserLists = async () => {
         try {
-            const response = await axios.get('/api/list/getLists', {
+            const response = await axios.get('/api/list/getAllLists', {
                 params: { user_id: user.userInfo?.id }
             });
             const groceryLists = response.data.data.grocery_list_ids;
-            console.log("Grocery lists:", groceryLists);
             if (Array.isArray(groceryLists)) {
                 dispatch(setLists(groceryLists));
                 if (groceryLists.length > 0) {
