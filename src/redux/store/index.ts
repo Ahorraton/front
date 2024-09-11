@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import cookieStorage from './cookieStorage';
 import userReducer from './userSlice';
 import listReducer from './listSlice';
+import multipleListsReducer from './multipleListsSlice';
 
 const persistConfig = {
   key: 'root',
@@ -12,6 +13,7 @@ const persistConfig = {
 const rootReducer = {
   user: persistReducer(persistConfig, userReducer),
   list: persistReducer(persistConfig, listReducer),
+  multipleLists: persistReducer(persistConfig, multipleListsReducer),
 };
 
 export const store = configureStore({
