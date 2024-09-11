@@ -63,27 +63,27 @@ const MiLista: React.FC = () => {
         fetchProducts();
     }, [list]);
 
-    useEffect(() => {
-        const fetchUserLists = async () => {
-            try {
-                const response = await axios.get('/api/list/getLists', {
-                    params: { user_id: user.userInfo?.id }
-                });
-                const groceryLists = response.data.data.grocery_list_ids;
-                console.log("Grocery lists:", groceryLists);
-                if (Array.isArray(groceryLists)) {
-                    dispatch(setLists(groceryLists));
-                    if (groceryLists.length > 0) {
-                        dispatch(selectList(groceryLists[0].id));
-                    }
-                } else {
-                    console.error('Fetched grocery lists is not an array:', groceryLists);
+    const fetchUserLists = async () => {
+        try {
+            const response = await axios.get('/api/list/getLists', {
+                params: { user_id: user.userInfo?.id }
+            });
+            const groceryLists = response.data.data.grocery_list_ids;
+            console.log("Grocery lists:", groceryLists);
+            if (Array.isArray(groceryLists)) {
+                dispatch(setLists(groceryLists));
+                if (groceryLists.length > 0) {
+                    dispatch(selectList(groceryLists[0].id));
                 }
-            } catch (error) {
-                console.error('Error fetching user lists:', error);
+            } else {
+                console.error('Fetched grocery lists is not an array:', groceryLists);
             }
-        };
+        } catch (error) {
+            console.error('Error fetching user lists:', error);
+        }
+    };
 
+    useEffect(() => {
         fetchUserLists();
     }, [user]);
 
@@ -109,6 +109,7 @@ const MiLista: React.FC = () => {
             console.log('List saved:', response.data);
             setIsListSaved(true);
             dispatch(clearList()); // Clear the list after saving
+            await fetchUserLists(); // Fetch the lists again to update the dropdown
         } catch (error) {
             console.error('Error saving list:', error);
         }
