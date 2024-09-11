@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, MenuItem, Select, SelectChangeEvent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
-import { setListName } from '../../redux/store/listSlice';
+import { setListName, clearList, addItem } from '../../redux/store/listSlice';
 import { setLists, selectList } from '../../redux/store/multipleListsSlice';
 import ProductList from './ProductList';
 import TotalPrice from './TotalPrice';
@@ -35,6 +35,9 @@ const MiLista: React.FC = () => {
     const dispatch = useDispatch();
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedMarkets, setSelectedMarkets] = useState<string[]>(['carrefour', 'coto', 'dia', 'vea', 'disco', 'jumbo']);
+    const [isListSaved, setIsListSaved] = useState<boolean>(true);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [pendingListId, setPendingListId] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -85,6 +88,7 @@ const MiLista: React.FC = () => {
 
     const handleListNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setListName(event.target.value));
+        setIsListSaved(false);
     };
 
     const handleSaveList = async () => {
@@ -102,6 +106,7 @@ const MiLista: React.FC = () => {
             });
 
             console.log('List saved:', response.data);
+            setIsListSaved(true);
         } catch (error) {
             console.error('Error saving list:', error);
         }
@@ -116,7 +121,32 @@ const MiLista: React.FC = () => {
     };
 
     const handleListChange = (event: SelectChangeEvent<number>) => {
-        dispatch(selectList(Number(event.target.value)));
+        if (!isListSaved) {
+            setPendingListId(Number(event.target.value));
+            setOpenDialog(true);
+        } else {
+            dispatch(selectList(Number(event.target.value)));
+        }
+    };
+
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+        setPendingListId(null);
+    };
+
+    const handleDialogSave = async () => {
+        await handleSaveList();
+        if (pendingListId !== null) {
+            dispatch(selectList(pendingListId));
+        }
+        handleDialogClose();
+    };
+
+    const handleDialogDiscard = () => {
+        if (pendingListId !== null) {
+            dispatch(selectList(pendingListId));
+        }
+        handleDialogClose();
     };
 
     const filteredProducts = products.filter(product => selectedMarkets.includes(product.market));
@@ -179,6 +209,28 @@ const MiLista: React.FC = () => {
                     Guardar mi lista
                 </Button>
             </Box>
+            <Dialog
+                open={openDialog}
+                onClose={handleDialogClose}
+            >
+                <DialogTitle>Guardar lista</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        La lista actual no ha sido guardada. ¿Desea guardarla antes de cambiar a otra lista?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDialogClose} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleDialogDiscard} color="primary">
+                        Descartar
+                    </Button>
+                    <Button onClick={handleDialogSave} color="primary" autoFocus>
+                        Guardar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
