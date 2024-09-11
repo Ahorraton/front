@@ -6,7 +6,7 @@ import { RootState } from '../../redux/store';
 import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
-import { setListName } from '../../redux/store/listSlice';
+import { setListName, clearList } from '../../redux/store/listSlice';
 import { setLists, selectList } from '../../redux/store/multipleListsSlice';
 import ProductList from './ProductList';
 import TotalPrice from './TotalPrice';
@@ -108,6 +108,7 @@ const MiLista: React.FC = () => {
 
             console.log('List saved:', response.data);
             setIsListSaved(true);
+            dispatch(clearList()); // Clear the list after saving
         } catch (error) {
             console.error('Error saving list:', error);
         }
