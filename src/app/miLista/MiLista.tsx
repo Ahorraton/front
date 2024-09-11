@@ -3,14 +3,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, MenuItem, Select, SelectChangeEvent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
-import { setListName, clearList, addItem } from '../../redux/store/listSlice';
+import { setListName } from '../../redux/store/listSlice';
 import { setLists, selectList } from '../../redux/store/multipleListsSlice';
 import ProductList from './ProductList';
 import TotalPrice from './TotalPrice';
 import Filters from './Filters';
+import ListSelector from './ListSelector';
+import SaveListDialog from './SaveListDialog';
 import "./myList.css";
 import axios from 'axios';
 
@@ -31,7 +33,6 @@ const MiLista: React.FC = () => {
     const list = useSelector((state: RootState) => state.list.items);
     const listName = useSelector((state: RootState) => state.list.name);
     const user = useSelector((state: RootState) => state.user);
-    const multipleLists = useSelector((state: RootState) => state.multipleLists);
     const dispatch = useDispatch();
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedMarkets, setSelectedMarkets] = useState<string[]>(['carrefour', 'coto', 'dia', 'vea', 'disco', 'jumbo']);
@@ -112,23 +113,6 @@ const MiLista: React.FC = () => {
         }
     };
 
-    const handleMarketChange = (market: string) => {
-        if (selectedMarkets.includes(market)) {
-            setSelectedMarkets(selectedMarkets.filter((m) => m !== market));
-        } else {
-            setSelectedMarkets([...selectedMarkets, market]);
-        }
-    };
-
-    const handleListChange = (event: SelectChangeEvent<number>) => {
-        if (!isListSaved) {
-            setPendingListId(Number(event.target.value));
-            setOpenDialog(true);
-        } else {
-            dispatch(selectList(Number(event.target.value)));
-        }
-    };
-
     const handleDialogClose = () => {
         setOpenDialog(false);
         setPendingListId(null);
@@ -147,6 +131,14 @@ const MiLista: React.FC = () => {
             dispatch(selectList(pendingListId));
         }
         handleDialogClose();
+    };
+
+    const handleMarketChange = (market: string) => {
+        if (selectedMarkets.includes(market)) {
+            setSelectedMarkets(selectedMarkets.filter((m) => m !== market));
+        } else {
+            setSelectedMarkets([...selectedMarkets, market]);
+        }
     };
 
     const filteredProducts = products.filter(product => selectedMarkets.includes(product.market));
@@ -178,18 +170,11 @@ const MiLista: React.FC = () => {
                 </AccordionDetails>
             </Accordion>
             <Typography variant="h4" gutterBottom>
-                <Select
-                    value={multipleLists.selectedListId || ''}
-                    onChange={handleListChange}
-                    displayEmpty
-                    fullWidth
-                >
-                    {Array.isArray(multipleLists.lists) && multipleLists.lists.map(list => (
-                        <MenuItem key={list.id} value={list.id}>
-                            {list.name}
-                        </MenuItem>
-                    ))}
-                </Select>
+                <ListSelector
+                    isListSaved={isListSaved}
+                    setPendingListId={setPendingListId}
+                    setOpenDialog={setOpenDialog}
+                />
                 <TextField
                     label="Nombre de mi lista"
                     value={listName}
@@ -209,28 +194,12 @@ const MiLista: React.FC = () => {
                     Guardar mi lista
                 </Button>
             </Box>
-            <Dialog
+            <SaveListDialog
                 open={openDialog}
-                onClose={handleDialogClose}
-            >
-                <DialogTitle>Guardar lista</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        La lista actual no ha sido guardada. ¿Desea guardarla antes de cambiar a otra lista?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDialogClose} color="primary">
-                        Cancelar
-                    </Button>
-                    <Button onClick={handleDialogDiscard} color="primary">
-                        Descartar
-                    </Button>
-                    <Button onClick={handleDialogSave} color="primary" autoFocus>
-                        Guardar
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                handleClose={handleDialogClose}
+                handleSave={handleDialogSave}
+                handleDiscard={handleDialogDiscard}
+            />
         </Box>
     );
 };
