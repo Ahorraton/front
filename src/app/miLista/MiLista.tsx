@@ -104,10 +104,9 @@ const MiLista: React.FC = () => {
 
             console.log('List saved:', response.data);
             setIsListSaved(true);
-            if (!selectedListId) {
-                dispatch(clearList()); // Clear the list after saving if it's a new list
-            }
-            await fetchUserLists(user_id, dispatch); // Fetch the lists again to update the dropdown
+            dispatch(clearList());
+            dispatch(selectList(null));
+            await fetchUserLists(user_id, dispatch);
         } catch (error) {
             console.error('Error saving list:', error);
         }
@@ -191,7 +190,6 @@ const MiLista: React.FC = () => {
                     onClick={handleSaveList}
                 >
                     {"Guardar mi lista"}
-                    {/* {selectedListId ? 'Actualizar mi lista' : 'Guardar mi lista'} */}
                 </Button>
             </Box>
             <ProductList products={cheapestProducts} />
