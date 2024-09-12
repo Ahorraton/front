@@ -32,12 +32,18 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
                 if (selectedList) {
                     dispatch(setListName(selectedList.name));
                 }
-                const itemsWithQuantity = response.data.items.map((item: any) => ({
-                    ...item,
-                    quantity: item.amount,
-                }));
+
+                // Merge products with the same ean code
+                const itemsMap = new Map();
+                response.data.items.forEach((item: any) => {
+                    if (!itemsMap.has(item.ean)) {
+                        itemsMap.set(item.ean, { ...item, quantity: item.amount });
+                    }
+                });
+                const mergedItems = Array.from(itemsMap.values());
+
                 dispatch(selectList(selectedListId));
-                dispatch(setList(itemsWithQuantity));
+                dispatch(setList(mergedItems));
             } catch (error) {
                 console.error('Error fetching list:', error);
             }
