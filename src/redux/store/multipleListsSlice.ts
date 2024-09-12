@@ -23,7 +23,7 @@ const multipleListsSlice = createSlice({
         setLists: (state, action: PayloadAction<List[]>) => {
             state.lists = action.payload;
         },
-        selectList: (state, action: PayloadAction<number>) => {
+        selectList: (state, action: PayloadAction<number | null>) => {
             state.selectedListId = action.payload;
         },
     },

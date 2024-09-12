@@ -32,6 +32,7 @@ type Product = {
 const MiLista: React.FC = () => {
     const list = useSelector((state: RootState) => state.list.items);
     const listName = useSelector((state: RootState) => state.list.name);
+    const selectedListId = useSelector((state: RootState) => state.multipleLists.selectedListId);
     const user = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
     const [products, setProducts] = useState<Product[]>([]);
@@ -71,9 +72,6 @@ const MiLista: React.FC = () => {
             const groceryLists = response.data.data.grocery_list_ids;
             if (Array.isArray(groceryLists)) {
                 dispatch(setLists(groceryLists));
-                if (groceryLists.length > 0) {
-                    dispatch(selectList(groceryLists[0].id));
-                }
             } else {
                 console.error('Fetched grocery lists is not an array:', groceryLists);
             }
@@ -99,16 +97,19 @@ const MiLista: React.FC = () => {
                 amount: item.quantity
             }));
 
-            const response = await axios.post('/api/list/createList', {
-                user_id,
-                name: listName,
-                products: productsToSave
-            });
+            const endpoint = selectedListId ? '/api/list/updateList' : '/api/list/createList';
+            const payload = selectedListId
+                ? { user_id, grocery_list_id: selectedListId, name: listName, products: productsToSave }
+                : { user_id, name: listName, products: productsToSave };
+
+            const response = await axios.post(endpoint, payload);
 
             console.log('List saved:', response.data);
             setIsListSaved(true);
-            dispatch(clearList()); // Clear the list after saving
-            await fetchUserLists(); // Fetch the lists again to update the dropdown
+            if (!selectedListId) {
+                dispatch(clearList()); // Clear the list after saving if it's a new list
+                await fetchUserLists(); // Fetch the lists again to update the dropdown
+            }
         } catch (error) {
             console.error('Error saving list:', error);
         }
@@ -191,7 +192,7 @@ const MiLista: React.FC = () => {
                     startIcon={<SaveIcon />}
                     onClick={handleSaveList}
                 >
-                    Guardar mi lista
+                    {selectedListId ? 'Actualizar mi lista' : 'Guardar mi lista'}
                 </Button>
             </Box>
             <ProductList products={cheapestProducts} />
