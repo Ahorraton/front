@@ -32,8 +32,12 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
                 if (selectedList) {
                     dispatch(setListName(selectedList.name));
                 }
+                const itemsWithQuantity = response.data.items.map((item: any) => ({
+                    ...item,
+                    quantity: item.amount,
+                }));
                 dispatch(selectList(selectedListId));
-                dispatch(setList(response.data.items));
+                dispatch(setList(itemsWithQuantity));
             } catch (error) {
                 console.error('Error fetching list:', error);
             }
