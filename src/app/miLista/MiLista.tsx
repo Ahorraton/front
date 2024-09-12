@@ -190,7 +190,8 @@ const MiLista: React.FC = () => {
                     startIcon={<SaveIcon />}
                     onClick={handleSaveList}
                 >
-                    {selectedListId ? 'Actualizar mi lista' : 'Guardar mi lista'}
+                    {"Guardar mi lista"}
+                    {/* {selectedListId ? 'Actualizar mi lista' : 'Guardar mi lista'} */}
                 </Button>
             </Box>
             <ProductList products={cheapestProducts} />
