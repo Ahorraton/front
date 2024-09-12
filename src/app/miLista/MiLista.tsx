@@ -7,7 +7,7 @@ import { Box, TextField, Typography, Button, Accordion, AccordionSummary, Accord
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
 import { setListName, clearList } from '../../redux/store/listSlice';
-import { setLists, selectList } from '../../redux/store/multipleListsSlice';
+import { selectList } from '../../redux/store/multipleListsSlice';
 import ProductList from './ProductList';
 import TotalPrice from './TotalPrice';
 import Filters from './Filters';
@@ -15,6 +15,7 @@ import ListSelector from './ListSelector';
 import SaveListDialog from './SaveListDialog';
 import "./myList.css";
 import axios from 'axios';
+import { fetchUserLists } from '../../utils/apiUtils';
 
 type Product = {
     id: number;
@@ -64,25 +65,11 @@ const MiLista: React.FC = () => {
         fetchProducts();
     }, [list]);
 
-    const fetchUserLists = async () => {
-        try {
-            const response = await axios.get('/api/list/getAllLists', {
-                params: { user_id: user.userInfo?.id }
-            });
-            const groceryLists = response.data.data.grocery_list_ids;
-            if (Array.isArray(groceryLists)) {
-                dispatch(setLists(groceryLists));
-            } else {
-                console.error('Fetched grocery lists is not an array:', groceryLists);
-            }
-        } catch (error) {
-            console.error('Error fetching user lists:', error);
-        }
-    };
-
     useEffect(() => {
-        fetchUserLists();
-    }, [user]);
+        if (user.userInfo?.id) {
+            fetchUserLists(user.userInfo.id, dispatch);
+        }
+    }, [user, dispatch]);
 
     const handleListNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setListName(event.target.value));
@@ -92,6 +79,11 @@ const MiLista: React.FC = () => {
     const handleSaveList = async () => {
         try {
             const user_id = user.userInfo?.id;
+            if (user_id === undefined || user_id === null) {
+                console.error('User ID is not defined');
+                return;
+            }
+
             const productsToSave = list.map(item => ({
                 product_code: item.ean,
                 amount: item.quantity
@@ -108,8 +100,8 @@ const MiLista: React.FC = () => {
             setIsListSaved(true);
             if (!selectedListId) {
                 dispatch(clearList()); // Clear the list after saving if it's a new list
-                await fetchUserLists(); // Fetch the lists again to update the dropdown
             }
+            await fetchUserLists(user_id, dispatch); // Fetch the lists again to update the dropdown
         } catch (error) {
             console.error('Error saving list:', error);
         }

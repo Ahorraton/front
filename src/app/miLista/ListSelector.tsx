@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { selectList } from '../../redux/store/multipleListsSlice';
+import { selectList, setLists } from '../../redux/store/multipleListsSlice';
 import { setList, setListName } from '../../redux/store/listSlice';
 import axios from 'axios';
+import { fetchUserLists } from '../../utils/apiUtils';
 
 type ListSelectorProps = {
     isListSaved: boolean;
@@ -14,7 +15,15 @@ type ListSelectorProps = {
 
 const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingListId, setOpenDialog }) => {
     const multipleLists = useSelector((state: RootState) => state.multipleLists);
+    const user = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const savedListId = localStorage.getItem('selectedListId');
+        if (savedListId) {
+            dispatch(selectList(Number(savedListId)));
+        }
+    }, [dispatch]);
 
     const handleListChange = async (event: SelectChangeEvent<number>) => {
         const selectedListId = Number(event.target.value);
@@ -44,6 +53,10 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
 
                 dispatch(selectList(selectedListId));
                 dispatch(setList(mergedItems));
+                await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
+
+                // Save the selected list ID to local storage
+                localStorage.setItem('selectedListId', String(selectedListId));
             } catch (error) {
                 console.error('Error fetching list:', error);
             }
