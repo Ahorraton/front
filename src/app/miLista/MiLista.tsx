@@ -43,6 +43,12 @@ const MiLista: React.FC = () => {
     const [pendingListId, setPendingListId] = useState<number | null>(null);
 
     useEffect(() => {
+        if (!user.isLoggedIn) {
+            window.location.href = '/';
+        }
+    }, [user]);
+
+    useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const products_eans = list.map(item => item.ean);
