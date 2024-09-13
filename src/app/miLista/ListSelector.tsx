@@ -22,16 +22,14 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
     useEffect(() => {
         const fetchSelectedListId = async () => {
             const savedListId = await cookieStorage.getItem('selectedListId');
-            if (savedListId) {
-                dispatch(selectList(Number(savedListId)));
-            }
+            dispatch(selectList(Number(savedListId)));
         };
         fetchSelectedListId();
     }, [dispatch]);
 
     const handleListChange = async (event: SelectChangeEvent<number>) => {
         const selectedListId = Number(event.target.value);
-
+        
         if (!isListSaved) {
             setPendingListId(selectedListId);
             setOpenDialog(true);
