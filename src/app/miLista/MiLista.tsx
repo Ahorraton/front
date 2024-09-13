@@ -45,6 +45,8 @@ const MiLista: React.FC = () => {
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
     const [pendingListId, setPendingListId] = useState<number | null>(null);
+    const [modalMessage, setModalMessage] = useState<string>(''); // State variable for modal message
+    const [openModal, setOpenModal] = useState<boolean>(false); // State variable for modal visibility
 
     useEffect(() => {
         if (!user.isLoggedIn) {
@@ -109,6 +111,10 @@ const MiLista: React.FC = () => {
             console.log('List saved:', response.data);
             setIsListSaved(true);
             await fetchUserLists(user_id, dispatch);
+
+            // Show modal with appropriate message
+            setModalMessage(selectedListId ? 'Su lista ha sido actualizada exitosamente' : 'Su lista ha sido guardada exitosamente');
+            setOpenModal(true);
         } catch (error) {
             console.error('Error saving list:', error);
         }
@@ -166,6 +172,10 @@ const MiLista: React.FC = () => {
             handleCreateNewList();
             await fetchUserLists(user_id, dispatch);
             setOpenDeleteDialog(false);
+
+            // Show modal with appropriate message
+            setModalMessage('Su lista ha sido eliminada exitosamente');
+            setOpenModal(true);
         } catch (error) {
             console.error('Error deleting list:', error);
         }
@@ -272,6 +282,22 @@ const MiLista: React.FC = () => {
                     </Button>
                     <Button onClick={handleDeleteList} color="error">
                         Eliminar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openModal}
+                onClose={() => setOpenModal(false)}
+            >
+                <DialogTitle>Completado!</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {modalMessage}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenModal(false)} color="primary">
+                        Cerrar
                     </Button>
                 </DialogActions>
             </Dialog>
