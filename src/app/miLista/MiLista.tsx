@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { setListName, clearList } from '../../redux/store/listSlice';
 import { selectList } from '../../redux/store/multipleListsSlice';
 import ProductList from './ProductList';
@@ -42,6 +43,7 @@ const MiLista: React.FC = () => {
     const [selectedMarkets, setSelectedMarkets] = useState<string[]>(['carrefour', 'coto', 'dia', 'vea', 'disco', 'jumbo']);
     const [isListSaved, setIsListSaved] = useState<boolean>(true);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
     const [pendingListId, setPendingListId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -147,6 +149,28 @@ const MiLista: React.FC = () => {
         }
     };
 
+    const handleDeleteList = async () => {
+        try {
+            const user_id = user.userInfo?.id;
+            if (user_id === undefined || user_id === null) {
+                console.error('User ID is not defined');
+                return;
+            }
+
+            const endpoint = '/api/list/deleteList';
+            const response = await axios.delete(endpoint, {
+                params: { grocery_list_id: selectedListId }
+            });
+
+            console.log('List deleted:', response.data);
+            handleCreateNewList();
+            await fetchUserLists(user_id, dispatch);
+            setOpenDeleteDialog(false);
+        } catch (error) {
+            console.error('Error deleting list:', error);
+        }
+    };
+
     const filteredProducts = products.filter(product => selectedMarkets.includes(product.market));
 
     const cheapestProducts = Object.values(filteredProducts.reduce((acc, product) => {
@@ -196,7 +220,6 @@ const MiLista: React.FC = () => {
                     startIcon={<SaveIcon />}
                     onClick={handleSaveList}
                 >
-                    {/* {"Guardar mi lista"} */}
                     {selectedListId ? 'Actualizar lista' : 'Guardar mi lista'}
                 </Button>
                 <Button
@@ -206,7 +229,16 @@ const MiLista: React.FC = () => {
                     onClick={handleCreateNewList}
                     style={{ marginLeft: '10px' }}
                 >
-                    {"Nueva lista"}
+                    Nueva lista
+                </Button>
+                <Button
+                    variant="contained"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => setOpenDeleteDialog(true)}
+                    style={{ marginLeft: '10px' }}
+                >
+                    Eliminar lista
                 </Button>
             </Box>
             <ProductList products={cheapestProducts} />
@@ -216,6 +248,25 @@ const MiLista: React.FC = () => {
                 handleSave={handleDialogSave}
                 handleDiscard={handleDialogDiscard}
             />
+            <Dialog
+                open={openDeleteDialog}
+                onClose={() => setOpenDeleteDialog(false)}
+            >
+                <DialogTitle>Confirmar eliminación</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Seguro que quieres eliminar tu lista de forma permanente?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpenDeleteDialog(false)} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={handleDeleteList} color="error">
+                        Eliminar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
