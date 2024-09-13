@@ -222,7 +222,15 @@ const MiLista: React.FC = () => {
             <Box mt={1.5}>
                 <TotalPrice totalPrice={totalPrice} />
             </Box>
-            <Box textAlign="center" mt={1.5}>
+            <Box display="flex" justifyContent="space-between" mt={1.5}>
+                <Button
+                    variant="contained"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => setOpenDeleteDialog(true)}
+                >
+                    Eliminar lista
+                </Button>
                 <Button
                     variant="contained"
                     color="primary"
@@ -236,18 +244,8 @@ const MiLista: React.FC = () => {
                     color="secondary"
                     startIcon={<AddIcon />}
                     onClick={handleCreateNewList}
-                    style={{ marginLeft: '10px' }}
                 >
                     Nueva lista
-                </Button>
-                <Button
-                    variant="contained"
-                    color="error"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => setOpenDeleteDialog(true)}
-                    style={{ marginLeft: '10px' }}
-                >
-                    Eliminar lista
                 </Button>
             </Box>
             <ProductList products={cheapestProducts} />
