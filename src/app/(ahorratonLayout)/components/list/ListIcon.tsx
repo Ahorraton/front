@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Drawer, List, IconButton } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ListAltIcon from '@mui/icons-material/ListAlt'; // Import ListAltIcon from Material-UI
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { addItem, removeItem, deleteItem, clearList, setListName } from '../../../../redux/store/listSlice';
@@ -11,7 +11,7 @@ import ListItemComponent from './ListItemComponent';
 import ListActions from './ListActions';
 import { ConfirmDialog } from './Dialogs';
 
-const ListIcon: React.FC = () => {
+const ListIconComponent: React.FC = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [clearDialogOpen, setClearDialogOpen] = useState(false);
@@ -125,7 +125,7 @@ const ListIcon: React.FC = () => {
     return (
         <Box>
             <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
-                <ShoppingCartIcon />
+                <ListAltIcon /> {/* Use ListAltIcon instead of ListIcon */}
             </IconButton>
             <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <Box width={300} role="presentation">
@@ -177,4 +177,4 @@ const ListIcon: React.FC = () => {
     );
 };
 
-export default ListIcon;
+export default ListIconComponent;
