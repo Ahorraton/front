@@ -6,6 +6,7 @@ import { RootState } from '../../redux/store';
 import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
+import AddIcon from '@mui/icons-material/Add';
 import { setListName, clearList } from '../../redux/store/listSlice';
 import { selectList } from '../../redux/store/multipleListsSlice';
 import ProductList from './ProductList';
@@ -112,6 +113,12 @@ const MiLista: React.FC = () => {
         }
     };
 
+    const handleCreateNewList = () => {
+        dispatch(clearList());
+        dispatch(selectList(null));
+        setIsListSaved(true);
+    };
+
     const handleDialogClose = () => {
         setOpenDialog(false);
         setPendingListId(null);
@@ -190,6 +197,15 @@ const MiLista: React.FC = () => {
                     onClick={handleSaveList}
                 >
                     {"Guardar mi lista"}
+                </Button>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<AddIcon />}
+                    onClick={handleCreateNewList}
+                    style={{ marginLeft: '10px' }}
+                >
+                    {"Nueva lista"}
                 </Button>
             </Box>
             <ProductList products={cheapestProducts} />
