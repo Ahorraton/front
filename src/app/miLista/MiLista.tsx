@@ -17,6 +17,7 @@ import SaveListDialog from './SaveListDialog';
 import "./myList.css";
 import axios from 'axios';
 import { fetchUserLists } from '../../utils/apiUtils';
+import cookieStorage from '../../redux/store/cookieStorage';
 
 type Product = {
     id: number;
@@ -105,18 +106,17 @@ const MiLista: React.FC = () => {
 
             console.log('List saved:', response.data);
             setIsListSaved(true);
-            dispatch(clearList());
-            dispatch(selectList(null));
             await fetchUserLists(user_id, dispatch);
         } catch (error) {
             console.error('Error saving list:', error);
         }
     };
 
-    const handleCreateNewList = () => {
+    const handleCreateNewList = async () => {
         dispatch(clearList());
         dispatch(selectList(null));
         setIsListSaved(true);
+        await cookieStorage.removeItem('selectedListId'); // Remove selectedListId from cookies
     };
 
     const handleDialogClose = () => {
@@ -196,7 +196,8 @@ const MiLista: React.FC = () => {
                     startIcon={<SaveIcon />}
                     onClick={handleSaveList}
                 >
-                    {"Guardar mi lista"}
+                    {/* {"Guardar mi lista"} */}
+                    {selectedListId ? 'Actualizar lista' : 'Guardar mi lista'}
                 </Button>
                 <Button
                     variant="contained"
