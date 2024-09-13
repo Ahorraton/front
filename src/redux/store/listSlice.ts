@@ -48,7 +48,7 @@ const listSlice = createSlice({
         },
         clearList: (state) => {
             state.items = [];
-            state.name = 'Mi lista';
+            state.name = 'Mi nueva lista';
         },
         setListName: (state, action: PayloadAction<string>) => {
             state.name = action.payload;
