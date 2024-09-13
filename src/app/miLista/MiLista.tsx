@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
@@ -183,7 +183,7 @@ const MiLista: React.FC = () => {
     const totalPrice = cheapestProducts.reduce((total, product) => total + (product.price * (product.quantity || 0)), 0);
 
     return (
-        <Box m={2}>
+        <Box m={1.5}>
             <Accordion>
                 <AccordionSummary
                     sx={{
@@ -199,21 +199,29 @@ const MiLista: React.FC = () => {
                     <Filters selectedMarkets={selectedMarkets} handleMarketChange={handleMarketChange} />
                 </AccordionDetails>
             </Accordion>
-            <Typography variant="h4" gutterBottom>
-                <ListSelector
-                    isListSaved={isListSaved}
-                    setPendingListId={setPendingListId}
-                    setOpenDialog={setOpenDialog}
-                />
+            <Box mt={1.5}>
+                <FormControl fullWidth>
+                    <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
+                    <ListSelector
+                        isListSaved={isListSaved}
+                        setPendingListId={setPendingListId}
+                        setOpenDialog={setOpenDialog}
+                        labelId="list-selector-label"
+                    />
+                </FormControl>
+            </Box>
+            <Box mt={1.5}>
                 <TextField
                     label="Nombre de mi lista"
                     value={listName}
                     onChange={handleListNameChange}
                     fullWidth
                 />
-            </Typography>
-            <TotalPrice totalPrice={totalPrice} />
-            <Box textAlign="center" mt={2}>
+            </Box>
+            <Box mt={1.5}>
+                <TotalPrice totalPrice={totalPrice} />
+            </Box>
+            <Box textAlign="center" mt={1.5}>
                 <Button
                     variant="contained"
                     color="primary"
