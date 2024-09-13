@@ -1,9 +1,10 @@
+// MiLista.tsx
 'use client'
 
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, TextField, Typography, Button, Accordion, AccordionSummary, AccordionDetails, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, TextField, Button, Accordion, AccordionSummary, AccordionDetails, FormControl, InputLabel } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,23 +16,13 @@ import TotalPrice from './TotalPrice';
 import Filters from './Filters';
 import ListSelector from './ListSelector';
 import SaveListDialog from './SaveListDialog';
+import ConfirmationDialog from './ConfirmationDialog';
+import NotificationDialog from './NotificationDialog';
 import "./myList.css";
 import axios from 'axios';
 import { fetchUserLists } from '../../utils/apiUtils';
 import cookieStorage from '../../redux/store/cookieStorage';
-
-type Product = {
-    id: number;
-    name: string;
-    price: number;
-    price_per_unit: number | null;
-    created_at: string;
-    market: string;
-    image_url: string | null;
-    ean: string;
-    url: string | null;
-    quantity?: number;
-};
+import { Product } from './types';
 
 const MiLista: React.FC = () => {
     const list = useSelector((state: RootState) => state.list.items);
@@ -266,41 +257,16 @@ const MiLista: React.FC = () => {
                 handleSave={handleDialogSave}
                 handleDiscard={handleDialogDiscard}
             />
-            <Dialog
+            <ConfirmationDialog
                 open={openDeleteDialog}
                 onClose={() => setOpenDeleteDialog(false)}
-            >
-                <DialogTitle>Confirmar eliminación</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Seguro que quieres eliminar tu lista de forma permanente?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setOpenDeleteDialog(false)} color="primary">
-                        Cancelar
-                    </Button>
-                    <Button onClick={handleDeleteList} color="error">
-                        Eliminar
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog
+                onConfirm={handleDeleteList}
+            />
+            <NotificationDialog
                 open={openModal}
                 onClose={() => setOpenModal(false)}
-            >
-                <DialogTitle>Completado!</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {modalMessage}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setOpenModal(false)} color="primary">
-                        Cerrar
-                    </Button>
-                </DialogActions>
-            </Dialog>
+                message={modalMessage}
+            />
         </Box>
     );
 };
