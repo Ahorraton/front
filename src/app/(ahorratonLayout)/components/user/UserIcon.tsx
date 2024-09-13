@@ -46,7 +46,6 @@ const UserIcon: React.FC = () => {
             await axios.get('api/user/logout');
             dispatch(logout());
             dispatch(selectList(null)); // Reset selected list
-            localStorage.removeItem('selectedListId'); // Remove from local storage
             handleMenuClose();
         } catch (error) {
             console.error("Logout failed:", error);
