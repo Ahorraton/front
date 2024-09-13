@@ -6,6 +6,7 @@ import { selectList, setLists } from '../../redux/store/multipleListsSlice';
 import { setList, setListName } from '../../redux/store/listSlice';
 import axios from 'axios';
 import { fetchUserLists } from '../../utils/apiUtils';
+import cookieStorage from '../../redux/store/cookieStorage';
 
 type ListSelectorProps = {
     isListSaved: boolean;
@@ -19,10 +20,13 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const savedListId = localStorage.getItem('selectedListId');
-        if (savedListId) {
-            dispatch(selectList(Number(savedListId)));
-        }
+        const fetchSelectedListId = async () => {
+            const savedListId = await cookieStorage.getItem('selectedListId');
+            if (savedListId) {
+                dispatch(selectList(Number(savedListId)));
+            }
+        };
+        fetchSelectedListId();
     }, [dispatch]);
 
     const handleListChange = async (event: SelectChangeEvent<number>) => {
@@ -52,11 +56,12 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
                 const mergedItems = Array.from(itemsMap.values());
 
                 dispatch(selectList(selectedListId));
+                console.log('Setting list123213:', mergedItems);
                 dispatch(setList(mergedItems));
                 await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
 
-                // Save the selected list ID to local storage
-                localStorage.setItem('selectedListId', String(selectedListId));
+                // Save the selected list ID to cookies
+                await cookieStorage.setItem('selectedListId', String(selectedListId));
             } catch (error) {
                 console.error('Error fetching list:', error);
             }
