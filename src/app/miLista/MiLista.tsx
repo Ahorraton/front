@@ -1,4 +1,3 @@
-// MiLista.tsx
 'use client'
 
 import React, { useEffect, useState } from 'react';
@@ -35,6 +34,7 @@ const MiLista: React.FC = () => {
     const [isListSaved, setIsListSaved] = useState<boolean>(true);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
+    const [openNewListDialog, setOpenNewListDialog] = useState<boolean>(false); // New state variable for new list dialog
     const [pendingListId, setPendingListId] = useState<number | null>(null);
     const [modalMessage, setModalMessage] = useState<string>(''); // State variable for modal message
     const [openModal, setOpenModal] = useState<boolean>(false); // State variable for modal visibility
@@ -116,6 +116,7 @@ const MiLista: React.FC = () => {
         dispatch(selectList(null));
         setIsListSaved(true);
         await cookieStorage.removeItem('selectedListId'); // Remove selectedListId from cookies
+        setOpenNewListDialog(false); // Close the new list dialog
     };
 
     const handleDialogClose = () => {
@@ -243,7 +244,7 @@ const MiLista: React.FC = () => {
                     variant="contained"
                     color="secondary"
                     startIcon={<AddIcon />}
-                    onClick={handleCreateNewList}
+                    onClick={() => setOpenNewListDialog(true)} // Open the new list dialog
                 >
                     Nueva lista
                 </Button>
@@ -259,6 +260,20 @@ const MiLista: React.FC = () => {
                 open={openDeleteDialog}
                 onClose={() => setOpenDeleteDialog(false)}
                 onConfirm={handleDeleteList}
+                title="Confirmar eliminación"
+                content="Quieres eliminar tu lista de forma permanente?"
+                confirmText="Eliminar"
+                cancelText="Cancelar"
+            />
+            <ConfirmationDialog
+                open={openNewListDialog}
+                onClose={() => setOpenNewListDialog(false)}
+                onConfirm={handleCreateNewList}
+                title="Confirmar nueva lista"
+                content="Quieres comenzar una nueva lista?"
+                confirmText="Comenzar"
+                cancelText="Cancelar"
+                confirmButtonColor="#B8860B" // Darker yellow
             />
             <NotificationDialog
                 open={openModal}
