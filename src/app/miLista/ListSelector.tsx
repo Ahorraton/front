@@ -54,7 +54,6 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
                 const mergedItems = Array.from(itemsMap.values());
 
                 dispatch(selectList(selectedListId));
-                console.log('Setting list123213:', mergedItems);
                 dispatch(setList(mergedItems));
                 await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
 
@@ -81,7 +80,6 @@ const ListSelector: React.FC<ListSelectorProps> = ({ isListSaved, setPendingList
                 ))
             ) : (
                 <MenuItem disabled value="">
-                    Todavía no tienes listas guardadas
                 </MenuItem>
             )}
         </Select>
