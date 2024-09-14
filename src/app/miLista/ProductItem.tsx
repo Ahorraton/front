@@ -122,7 +122,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                 onClose={handleCloseWarning}
                 onConfirm={handleConfirmWarning}
                 title="Confirmar eliminación"
-                message="¿Estás seguro de que deseas eliminar este producto de la lista?"
+                message="¿Deseas eliminar este producto de la lista?"
             />
         </>
     );

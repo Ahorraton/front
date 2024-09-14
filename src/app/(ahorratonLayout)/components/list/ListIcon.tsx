@@ -154,7 +154,7 @@ const ListIconComponent: React.FC = () => {
                 onClose={() => setDialogOpen(false)}
                 onConfirm={confirmDeleteItem}
                 title="Borrar Item"
-                description="Seguro que quieres eliminar el producto de tu lista?"
+                description="Quieres eliminar el producto de tu lista?"
                 confirmText="Borrar"
             />
             <ConfirmDialog
@@ -162,7 +162,7 @@ const ListIconComponent: React.FC = () => {
                 onClose={() => setClearDialogOpen(false)}
                 onConfirm={confirmClearList}
                 title="Borrar Lista"
-                description="Seguro que quieres borrar toda tu lista?"
+                description="Quieres borrar toda tu lista?"
                 confirmText="Borrar"
             />
             <AuthChoiceModal
