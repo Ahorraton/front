@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import SearchBar from './SearchBar';
 import UserIcon from '../components/user/UserIcon';
+import ListIcon from '../components/list/ListIcon';
 import './nav_bar.css';
 
 interface NavBarMobileProps {
@@ -19,13 +20,14 @@ const NavBarMobile: React.FC<NavBarMobileProps> = ({
 }) => {
     return (
         <Box className='nav-bar-layout-mobile'>
-            <Box className='title-layout' width='100%' padding='10px'>
-                <ButtonBase disableRipple href="/" className='title-button'>
-                    <Typography variant="h6" className='title-text'>
+            <Box className='title-layout' width='100%' padding='10px' display='flex' alignItems='center'>
+                <ButtonBase disableRipple href="/" className='title-button' sx={{ flexGrow: 1, textAlign: 'center' }}>
+                    <Typography variant="h6" className='title-text' sx={{ fontSize: '1.5rem' }}>
                         Ahorratón 🐭
                     </Typography>
                 </ButtonBase>
-                <Box className='user-icon-layout'>
+                <Box display='flex' alignItems='center'>
+                    <ListIcon />
                     <UserIcon />
                 </Box>
             </Box>

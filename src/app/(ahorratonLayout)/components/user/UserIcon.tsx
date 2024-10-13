@@ -1,10 +1,10 @@
-// components/UserIcon.tsx
 import React, { useState, MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuItem, IconButton, Avatar } from '@mui/material';
 import axios from 'axios';
 import { RootState, AppDispatch } from '../../../../redux/store';
 import { logout } from '../../../../redux/store/userSlice';
+import { selectList } from '../../../../redux/store/multipleListsSlice';
 import RegisterModal from './register/RegisterModal';
 import LoginModal from './login/LoginModal';
 
@@ -45,12 +45,12 @@ const UserIcon: React.FC = () => {
         try {
             await axios.get('api/user/logout');
             dispatch(logout());
+            dispatch(selectList(null)); // Reset selected list
             handleMenuClose();
         } catch (error) {
             console.error("Logout failed:", error);
         }
     };
-
 
     return (
         <div>
