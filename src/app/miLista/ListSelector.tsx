@@ -6,7 +6,6 @@ import { selectList, setLists } from "../../redux/store/multipleListsSlice";
 import { setList, setListName } from "../../redux/store/listSlice";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
-import cookieStorage from "../../redux/store/cookieStorage";
 
 type ListSelectorProps = {
   isListSaved: boolean;
@@ -23,23 +22,6 @@ const ListSelector: React.FC<ListSelectorProps> = ({
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  console.log("Is list Saved", isListSaved);
-
-  useEffect(() => {
-    const fetchSelectedListId = async () => {
-      const savedListId = await cookieStorage.getItem("selectedListId");
-      dispatch(selectList(Number(savedListId)));
-      const response = await axios.get(`/api/list/getList`, {
-        params: { grocery_list_id: savedListId },
-      });
-      const selectedList = multipleLists.lists.find(
-        (list) => list.id === Number(savedListId)
-      );
-      dispatch(setListName(selectedList?.name ?? ""));
-    };
-    fetchSelectedListId();
-  }, [dispatch]);
-
   const handleListChange = async (event: SelectChangeEvent<number>) => {
     const selectedListId = Number(event.target.value);
 
@@ -55,7 +37,6 @@ const ListSelector: React.FC<ListSelectorProps> = ({
         const selectedList = multipleLists.lists.find(
           (list) => list.id === selectedListId
         );
-        console.log("selectedList", selectedList);
         if (selectedList) {
           dispatch(setListName(selectedList.name));
         }
@@ -74,7 +55,6 @@ const ListSelector: React.FC<ListSelectorProps> = ({
         await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
 
         // Save the selected list ID to cookies
-        await cookieStorage.setItem("selectedListId", String(selectedListId));
       } catch (error) {
         console.error("Error fetching list:", error);
       }

@@ -1,17 +1,24 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import cookieStorage from "./cookieStorage";
 import userReducer from "./userSlice";
 import listReducer from "./listSlice";
 import multipleListsReducer from "./multipleListsSlice";
+import sessionStorage from "redux-persist/lib/storage/session";
+import localStorage from "redux-persist/lib/storage";
 
 const persistConfig = {
   key: "root",
-  storage: cookieStorage,
+  storage: localStorage,
+  blacklist: ["auth"],
+};
+
+const userPersistConfig = {
+  key: "user",
+  storage: sessionStorage,
 };
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  user: persistReducer(userPersistConfig, userReducer),
   list: listReducer,
   multipleLists: multipleListsReducer,
 });
