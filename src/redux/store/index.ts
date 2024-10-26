@@ -1,27 +1,29 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
-import cookieStorage from './cookieStorage';
-import userReducer from './userSlice';
-import listReducer from './listSlice';
-import multipleListsReducer from './multipleListsSlice';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import cookieStorage from "./cookieStorage";
+import userReducer from "./userSlice";
+import listReducer from "./listSlice";
+import multipleListsReducer from "./multipleListsSlice";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: cookieStorage,
 };
 
-const rootReducer = {
-  user: persistReducer(persistConfig, userReducer),
-  list: persistReducer(persistConfig, listReducer),
-  multipleLists: persistReducer(persistConfig, multipleListsReducer),
-};
+const rootReducer = combineReducers({
+  user: userReducer,
+  list: listReducer,
+  multipleLists: multipleListsReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
       },
     }),
 });
