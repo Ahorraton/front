@@ -13,3 +13,8 @@ export type Ingredient = {
 export interface HeroSectionProps {
   recipes: Recipe[];
 }
+
+export interface ArrowInterface {
+  direction: string;
+  onClick: () => void;
+}

@@ -8,7 +8,6 @@ const RecipeSlide: React.FC<Recipe> = ({
   img_url: image_url,
   ingredients,
 }) => {
-  console.log(image_url);
   return (
     <Box
       sx={{
@@ -22,11 +21,22 @@ const RecipeSlide: React.FC<Recipe> = ({
         <Box
           component="img"
           src={image_url}
-          maxWidth="800px"
-          maxHeight="600px"
+          sx={{
+            objectFit: "cover",
+            width: "100%",
+            height: "50vh",
+            maxWidth: {
+              xs: "50vw",
+            },
+            borderRadius: "10px",
+          }}
         ></Box>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          textAlign: "center",
+        }}
+      >
         <h3>{title}</h3>
         <p>{description}</p>
         <ul>
