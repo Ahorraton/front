@@ -32,6 +32,19 @@ const listSlice = createSlice({
             } else {
                 state.items.push(action.payload);
             }
+
+            // post to api the new change
+        },
+        addItems: (state, action: PayloadAction<ListItem[]>) => {
+            action.payload.forEach(item => {
+                const existingItem = state.items.find(i => i.ean === item.ean);
+                if (existingItem) {
+                    existingItem.quantity += item.quantity;
+                } else {
+                    state.items.push(item);
+                }
+            });
+
         },
         removeItem: (state, action: PayloadAction<string>) => {
             const existingItem = state.items.find(item => item.ean === action.payload);
@@ -59,5 +72,5 @@ const listSlice = createSlice({
     },
 });
 
-export const { addItem, removeItem, deleteItem, clearList, setListName, setList } = listSlice.actions;
+export const { addItem, addItems, removeItem, deleteItem, clearList, setListName, setList } = listSlice.actions;
 export default listSlice.reducer;

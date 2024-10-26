@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Box, TextField, Button, Accordion, AccordionSummary, AccordionDetails, FormControl, InputLabel } from '@mui/material';
+import { Box, TextField, Button, Accordion, AccordionSummary, AccordionDetails, FormControl, InputLabel, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
@@ -96,6 +96,7 @@ const MiLista: React.FC = () => {
             const payload = selectedListId
                 ? { user_id, grocery_list_id: selectedListId, name: listName, products: productsToSave }
                 : { user_id, name: listName, products: productsToSave };
+
 
             const response = await axios.post(endpoint, payload);
 

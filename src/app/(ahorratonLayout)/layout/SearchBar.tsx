@@ -59,14 +59,14 @@ export default function SearchBar({
                       <IconButton type="submit" aria-label="search" onClick={handleSearch}>
                         <SearchIcon style={{ fill: "black" }} />
                       </IconButton>
-                      <Switch
+                      {/* <Switch
                         {...label}
                         checked={compareSearch}
                         onChange={
                           (e) => {
                             setCompareSearch(e.target.checked);
                           }
-                        } />
+                        } /> */}
                     </Box>
                   ),
                 }}
