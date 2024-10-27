@@ -235,12 +235,10 @@ const MiLista: React.FC = () => {
         >
           <h3>Filtros</h3>
         </AccordionSummary>
-        <AccordionDetails>
-          <Filters
-            selectedMarkets={selectedMarkets}
-            handleMarketChange={handleMarketChange}
-          />
-        </AccordionDetails>
+        <Filters
+          selectedMarkets={selectedMarkets}
+          handleMarketChange={handleMarketChange}
+        />
       </Accordion>
       <Box mt={1.5}>
         <FormControl fullWidth>
