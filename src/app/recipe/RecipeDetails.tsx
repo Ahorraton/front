@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -8,84 +8,57 @@ import {
   Button,
   Typography,
   CircularProgress,
-} from '@mui/material'
+} from "@mui/material";
 
-import { addItems } from '../../redux/store/listSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { addItems } from "../../redux/store/listSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { fetch_async } from "../(ahorratonLayout)/async/common/fetch_async";
+import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
 
 interface RecipeDetailsProps {
-  recipeId: number
-  onClose: () => void
-  onAddList: () => void
-}
-
-interface RecipeData {
-  id: number
-  title: string
-  image: string
-  description: string
-  ingredients: string[]
-  instructions: string[]
+  recipeId: number;
+  onClose: () => void;
+  onAddList: () => void;
 }
 
 const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipeId, onClose }) => {
-  const [recipe, setRecipe] = useState<RecipeData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        // const response = await axios.get('/api/recipe/getRecipe', {
-        //     params: { recipe_id: recipeId }
-        // });
-
-        const response = {
-            "id": 1,
-            "title": "Receta de chocotorta",
-            "image": "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2018/09/14170007/chocotorta-destacada.jpg",
-            "description": "La chocotorta es un postre tradicional argentino, hecho en capas alternadas de galletitas de chocolate (tipo Chocolinas) mojadas en café o leche, y una mezcla de queso crema y dulce de leche. No requiere cocción, lo que la convierte en un postre fácil y rápido de preparar. Su textura es suave y cremosa, y su sabor es una combinación perfecta entre el dulce de leche y el chocolate. Es ideal para ocasiones especiales o como postre diario.",
-            "product_ids": [1,2,3],
-            "ingredients": ["papas", "pan"],
-            "instructions": ["preparalo"]
-            }
-
-        // const title = response.data.data.title;
-        // const image = response.data.data.image;
-        // const description = response.data.data.description;
-        // const productList = response.data.data.product_list;
-
-        setRecipe({
-            "id": response.id,
-            "title": response.title,
-            "image": response.image,
-            "description": response.description,
-            "ingredients": response.ingredients,
-            "instructions": response.instructions
-        })
-        
-        setLoading(false)
-      } catch (err) {
-        setError('Error fetching recipe. Please try again.')
-        setLoading(false)
+        const res = await fetch_async(`/recipes/${recipeId}`);
+        setLoading(false);
+        const recipe: Recipe = res.recipe ? res.recipe : null;
+        setRecipe(recipe);
+      } catch (e: unknown) {
+        setError("error loading recipe");
+        throw new Error(String(e));
       }
-    }
-
-    fetchRecipe()
-  }, [recipeId])
+    };
+    fetchRecipe();
+  }, [recipeId]);
 
   const onAddList = () => {
-    dispatch(addItems(
-      recipe?.ingredients.map((ingredient, index) => ({ name: ingredient, quantity: index, ean: index.toString()})) || []
-    ));
-  }
+    dispatch(
+      addItems(
+        recipe?.ingredients.map((ingredient, index) => ({
+          name: ingredient.name,
+          quantity: index + 1,
+          ean: String(ingredient.id),
+        })) || []
+      )
+    );
+  };
 
   return (
     <Dialog open={true} onClose={onClose} aria-labelledby="recipe-dialog-title">
       <DialogTitle id="recipe-dialog-title">
-        {loading ? 'Loading Recipe...' : recipe?.title}
+        {loading ? "Loading Recipe..." : recipe?.title}
       </DialogTitle>
       <DialogContent>
         {loading ? (
@@ -99,22 +72,14 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipeId, onClose }) => {
             </Typography>
             <ul>
               {recipe.ingredients.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
+                <li key={index}>{ingredient.name}</li>
               ))}
             </ul>
-            <Typography variant="h6" gutterBottom>
-              Instructions:
-            </Typography>
-            <ol>
-              {recipe.instructions.map((instruction, index) => (
-                <li key={index}>{instruction}</li>
-              ))}
-            </ol>
           </>
         ) : null}
       </DialogContent>
       <DialogActions>
-      <Button onClick={(onAddList)} color="secondary">
+        <Button onClick={onAddList} color="secondary">
           Add to list
         </Button>
         <Button onClick={onClose} color="primary">
@@ -122,7 +87,7 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipeId, onClose }) => {
         </Button>
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default RecipeDetails
+export default RecipeDetails;
