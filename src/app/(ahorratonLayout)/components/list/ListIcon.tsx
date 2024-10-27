@@ -131,7 +131,11 @@ const ListIconComponent: React.FC = () => {
 
   return (
     <Box>
-      <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
+      <IconButton
+        color="inherit"
+        onClick={() => setDrawerOpen(true)}
+        style={{ transform: "scale(1.2)" }}
+      >
         <ListAltIcon /> {/* Use ListAltIcon instead of ListIcon */}
       </IconButton>
       <Drawer

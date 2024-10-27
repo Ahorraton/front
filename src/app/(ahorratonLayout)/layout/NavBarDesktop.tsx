@@ -42,8 +42,12 @@ const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
         display="flex"
         justifyContent="flex-center"
         alignItems="center"
+        padding="10px"
       >
-        <ListIcon />
+        <Box mr={2}>
+          <ListIcon />
+        </Box>
+
         <UserIcon />
       </Box>
     </Box>

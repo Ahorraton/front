@@ -6,6 +6,7 @@ import { RootState, AppDispatch } from "../../../../redux/store";
 import { logout } from "../../../../redux/store/userSlice";
 import { clearList } from "../../../../redux/store/multipleListsSlice";
 import { clearList as clearDrawerList } from "@/redux/store/listSlice";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import RegisterModal from "./register/RegisterModal";
 import LoginModal from "./login/LoginModal";
 
@@ -56,8 +57,12 @@ const UserIcon: React.FC = () => {
 
   return (
     <div>
-      <IconButton onClick={handleMenuOpen}>
-        <Avatar />
+      <IconButton
+        color="inherit"
+        onClick={handleMenuOpen}
+        style={{ transform: "scale(1.2)" }}
+      >
+        <AccountCircleIcon />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
