@@ -1,14 +1,4 @@
-export type Recipe = {
-  title: string;
-  description: string;
-  img_url: string;
-  ingredients: Ingredient[];
-};
-
-export type Ingredient = {
-  name: string;
-  amount: string;
-};
+import { Recipe } from "../types/Recipe";
 
 export interface HeroSectionProps {
   recipes: Recipe[];

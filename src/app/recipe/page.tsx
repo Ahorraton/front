@@ -1,6 +1,5 @@
-import Recipe from './Recipe';
+import RecipePage from "./Recipe";
 
 export default function Page() {
-    return <Recipe />;
-  }
-
+  return <RecipePage />;
+}

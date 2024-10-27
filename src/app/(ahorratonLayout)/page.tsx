@@ -9,6 +9,7 @@ import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
 import ProductGrid from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
+import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -28,7 +29,7 @@ export default function Home() {
         const res = await fetch_async("/recipes");
         console.log("Recetas recibidas");
         console.log(res);
-        const recipes_result: any[] = res.recipes ? res.recipes : [];
+        const recipes_result: Recipe[] = res.recipes ? res.recipes : [];
         setRecipes(recipes_result);
       } catch (e: unknown) {
         setError("error");
