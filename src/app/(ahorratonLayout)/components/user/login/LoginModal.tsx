@@ -32,8 +32,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 username,
                 password,
             });
-            console.log(response.data);
-            dispatch(login({ username }));
+            const { _username, id } = response.data.user
+            dispatch(login({ _username, id }));
             onClose();
         } catch (error) {
             console.error(error);

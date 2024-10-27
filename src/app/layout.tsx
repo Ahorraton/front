@@ -7,11 +7,10 @@ import { styled, Container } from "@mui/material";
 import React from "react";
 import NavBar from "./(ahorratonLayout)/layout/NavBar";
 import Footer from "./(ahorratonLayout)/layout/Footer";
-import { useSearchParams } from 'next/navigation';
-import { Provider } from 'react-redux';
-import { store, persistor } from '../redux/store';
-import { PersistGate } from 'redux-persist/integration/react';
-
+import { useSearchParams } from "next/navigation";
+import { Provider } from "react-redux";
+import { store, persistor } from "../redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -25,10 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const searchParams = useSearchParams();
-  const query = searchParams.get('query') || "";
+  const query = searchParams.get("query") || "";
   let compare = false;
-  if (typeof window !== 'undefined') {
-    if (window.location.pathname === '/comparar') {
+  if (typeof window !== "undefined") {
+    if (window.location.pathname === "/comparar") {
       compare = true;
     }
   }
@@ -47,13 +46,11 @@ export default function RootLayout({
                   compareSearch={compareSearch}
                 />
                 <br />
-                <Container>
-                  {children}
-                </Container>
+                <Container maxWidth="xl">{children}</Container>
                 <Footer />
               </MainWrapper>
             </ThemeProvider>
-            </PersistGate>
+          </PersistGate>
         </Provider>
       </body>
     </html>

@@ -1,0 +1,89 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+export interface ListItem {
+  id?: string;
+  name?: string;
+  quantity: number;
+  price?: number;
+  ean: string; // Changed to required
+  image_url?: string;
+  urls?: string;
+  market_price?: string; // We have the price here (e.g. coto 2500)
+}
+
+export interface ListState {
+  name: string;
+  items: ListItem[];
+}
+
+const initialState: ListState = {
+  name: "Mi lista",
+  items: [],
+};
+
+const listSlice = createSlice({
+  name: "list",
+  initialState,
+  reducers: {
+    addItem: (state, action: PayloadAction<ListItem>) => {
+      const existingItem = state.items.find(
+        (item) => item.ean === action.payload.ean
+      );
+      if (existingItem) {
+        existingItem.quantity += action.payload.quantity;
+      } else {
+        state.items.push(action.payload);
+      }
+
+      // post to api the new change
+    },
+    addItems: (state, action: PayloadAction<ListItem[]>) => {
+      action.payload.forEach((item) => {
+        const existingItem = state.items.find((i) => i.ean === item.ean);
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+        } else {
+          state.items.push(item);
+        }
+      });
+    },
+    removeItem: (state, action: PayloadAction<string>) => {
+      const existingItem = state.items.find(
+        (item) => item.ean === action.payload
+      );
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          existingItem.quantity -= 1;
+        } else {
+          state.items = state.items.filter(
+            (item) => item.ean !== action.payload
+          );
+        }
+      }
+    },
+    deleteItem: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter((item) => item.ean !== action.payload);
+    },
+    clearList: (state) => {
+      state.items = [];
+      state.name = "Mi nueva lista";
+    },
+    setListName: (state, action: PayloadAction<string>) => {
+      state.name = action.payload;
+    },
+    setList: (state, action: PayloadAction<ListItem[]>) => {
+      state.items = action.payload;
+    },
+  },
+});
+
+export const {
+  addItem,
+  addItems,
+  removeItem,
+  deleteItem,
+  clearList,
+  setListName,
+  setList,
+} = listSlice.actions;
+export default listSlice.reducer;
