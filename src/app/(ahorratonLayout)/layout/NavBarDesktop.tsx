@@ -19,8 +19,13 @@ const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
   setCompareSearch,
 }) => {
   return (
-    <Box className="nav-bar-layout">
-      <Box className="title-layout" width="20vw">
+    <Box
+      className="nav-bar-layout"
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <Box className="title-layout" flex="1" mr={2}>
         <ButtonBase disableRipple href="/" className="title-hover">
           <Typography variant="h1" className="spin-on-hover">
             🐭
@@ -28,7 +33,7 @@ const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
           <Typography variant="h1">Ahorratón</Typography>
         </ButtonBase>
       </Box>
-      <Box width="70vw">
+      <Box flex="2">
         <SearchBar
           starting_query={query}
           set={setQuery}
@@ -38,16 +43,15 @@ const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
       </Box>
       <Box
         className="about-us-layout"
-        width="10vw"
+        flex="0.8"
         display="flex"
-        justifyContent="flex-center"
+        justifyContent="center"
         alignItems="center"
         padding="10px"
       >
-        <Box mr={2}>
+        <Box mr={4}>
           <ListIcon />
         </Box>
-
         <UserIcon />
       </Box>
     </Box>

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Box, Drawer, List, IconButton, Button } from "@mui/material";
+import {
+  Box,
+  Drawer,
+  List,
+  IconButton,
+  Button,
+  useMediaQuery,
+} from "@mui/material";
 import ListAltIcon from "@mui/icons-material/ListAlt"; // Import ListAltIcon from Material-UI
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
@@ -30,6 +37,9 @@ const ListIconComponent: React.FC = () => {
   const listName = useSelector((state: RootState) => state.list.name);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const scale = isMobile ? 1.2 : 1.5;
 
   const handleAddItem = (ean: string) => {
     const item = list.find((item) => item.ean === ean);
@@ -134,7 +144,7 @@ const ListIconComponent: React.FC = () => {
       <IconButton
         color="inherit"
         onClick={() => setDrawerOpen(true)}
-        style={{ transform: "scale(1.2)" }}
+        style={{ transform: `scale(${scale})` }}
       >
         <ListAltIcon /> {/* Use ListAltIcon instead of ListIcon */}
       </IconButton>

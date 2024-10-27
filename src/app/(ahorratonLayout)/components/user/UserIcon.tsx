@@ -1,6 +1,12 @@
 import React, { useState, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Menu, MenuItem, IconButton, Avatar } from "@mui/material";
+import {
+  Menu,
+  MenuItem,
+  IconButton,
+  Avatar,
+  useMediaQuery,
+} from "@mui/material";
 import axios from "axios";
 import { RootState, AppDispatch } from "../../../../redux/store";
 import { logout } from "../../../../redux/store/userSlice";
@@ -16,6 +22,9 @@ const UserIcon: React.FC = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
   const dispatch: AppDispatch = useDispatch();
+
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const scale = isMobile ? 1.2 : 1.5;
 
   const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,7 +69,7 @@ const UserIcon: React.FC = () => {
       <IconButton
         color="inherit"
         onClick={handleMenuOpen}
-        style={{ transform: "scale(1.2)" }}
+        style={{ transform: `scale(${scale})` }}
       >
         <AccountCircleIcon />
       </IconButton>
