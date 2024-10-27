@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import SearchBar from './SearchBar';
 import UserIcon from '../components/user/UserIcon';
-import ListIcon from '../components/list/ListIcon';
 import './nav_bar.css';
 
 interface NavBarDesktopProps {
@@ -38,8 +37,7 @@ const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
                     setCompareSearch={setCompareSearch}
                 />
             </Box>
-            <Box className='about-us-layout' width='10vw' display="flex" justifyContent="flex-end">
-                <ListIcon />
+            <Box className='about-us-layout' width='10vw'>
                 <UserIcon />
             </Box>
         </Box>

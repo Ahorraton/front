@@ -2,28 +2,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import cookieStorage from './cookieStorage';
 import userReducer from './userSlice';
-import listReducer from './listSlice';
-import multipleListsReducer from './multipleListsSlice';
 
 const persistConfig = {
   key: 'root',
   storage: cookieStorage,
 };
 
-const rootReducer = {
-  user: persistReducer(persistConfig, userReducer),
-  list: persistReducer(persistConfig, listReducer),
-  multipleLists: persistReducer(persistConfig, multipleListsReducer),
-};
+const persistedReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
-      },
-    }),
+  reducer: {
+    user: persistedReducer,
+  },
 });
 
 export const persistor = persistStore(store);
