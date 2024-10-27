@@ -11,7 +11,7 @@ export interface ListItem {
   market_price?: string; // We have the price here (e.g. coto 2500)
 }
 
-interface ListState {
+export interface ListState {
   name: string;
   items: ListItem[];
 }
