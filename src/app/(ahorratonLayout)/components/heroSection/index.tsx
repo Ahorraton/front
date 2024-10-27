@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React, { useRef } from "react";
 import { ArrowInterface, HeroSectionProps } from "./recipeInterface";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -22,25 +22,37 @@ const HeroSection: React.FC<HeroSectionProps> = ({ recipes }) => {
     slidesToScroll: 1,
   };
   return (
-    <Box
-      component="section"
-      sx={{
-        marginBottom: "2rem",
-      }}
-    >
-      <Slider {...settings} ref={sliderRef}>
-        {recipes.map((recipe) => (
-          <RecipeSlide {...recipe} />
-        ))}
-      </Slider>
-      <CustomArrow
-        direction="left"
-        onClick={() => sliderRef.current && sliderRef.current.slickPrev()}
-      />
-      <CustomArrow
-        direction="right"
-        onClick={() => sliderRef.current && sliderRef.current.slickNext()}
-      />
+    <Box component="div" sx={{ position: "relative" }}>
+      <Box
+        component="section"
+        sx={{
+          marginBottom: "2rem",
+        }}
+      >
+        <Slider {...settings} ref={sliderRef}>
+          {recipes.map((recipe) => (
+            <RecipeSlide {...recipe} />
+          ))}
+        </Slider>
+        <CustomArrow
+          direction="left"
+          onClick={() => sliderRef.current && sliderRef.current.slickPrev()}
+        />
+        <CustomArrow
+          direction="right"
+          onClick={() => sliderRef.current && sliderRef.current.slickNext()}
+        />
+      </Box>
+      <Button
+        sx={{
+          position: "absolute",
+          bottom: "-0.5rem",
+          right: "1rem",
+        }}
+        href="/recipes"
+      >
+        Todas las Recetas
+      </Button>
     </Box>
   );
 };
