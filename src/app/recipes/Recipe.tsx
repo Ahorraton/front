@@ -55,9 +55,6 @@ export default function RecipePage() {
 
   return (
     <>
-      <Typography variant="body1" paragraph>
-        Cocina nuestras deliciosas recetas al mejor precio posible!
-      </Typography>
       <Typography variant="h5" component="h2" gutterBottom>
         Featured Recipes
       </Typography>
