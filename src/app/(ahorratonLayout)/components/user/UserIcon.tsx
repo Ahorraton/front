@@ -79,14 +79,14 @@ const UserIcon: React.FC = () => {
         onClose={handleMenuClose}
       >
         {isLoggedIn ? (
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
         ) : (
           [
             <MenuItem key="login" onClick={handleLoginOpen}>
-              Login
+              Ingresar
             </MenuItem>,
             <MenuItem key="register" onClick={handleRegisterOpen}>
-              Register
+              Crear cuenta
             </MenuItem>,
           ]
         )}
