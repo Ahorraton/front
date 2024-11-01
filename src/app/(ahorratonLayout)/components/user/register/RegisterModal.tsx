@@ -8,15 +8,10 @@ interface RegisterModalProps {
 }
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
-    const [email, setEmail] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
 
     const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);    
@@ -40,7 +35,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
         try {
             const response = await axios.post('api/user/register', {
                 username,
-                email,
                 password,
             });
             console.log(response.data);
@@ -79,15 +73,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                         label="Username"
                         value={username}
                         onChange={handleUsernameChange}
-                        fullWidth
-                        margin="normal"
-                        required
-                    />
-                    <TextField
-                        label="Email"
-                        type="email"
-                        value={email}
-                        onChange={handleEmailChange}
                         fullWidth
                         margin="normal"
                         required
