@@ -160,33 +160,7 @@ const ProductCard = ({
           width: "100%",
           padding: 0,
         }}
-      >
-        {/* <Button
-          size="large"
-          sx={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "lightblue",
-            "&:hover": {
-              backgroundColor: "#522719",
-            },
-          }}
-          onClick={() =>
-            addProduct({
-              id: ean,
-              market_price: product.price,
-              names_list,
-              image_url,
-              urls,
-              dir_sucursal,
-            })
-          }
-        >
-          <Typography variant="h6" color="white">
-            {"Agregar a la lista"}
-          </Typography>
-        </Button> */}
-      </CardActions>
+      ></CardActions>
     </Card>
   );
 };

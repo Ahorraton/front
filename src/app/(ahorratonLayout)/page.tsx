@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Paper, Skeleton, Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
@@ -10,6 +10,7 @@ import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
 import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
+import { LoadingFeaturedProducts } from "./layout/loadingFeaturedProducts";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -20,18 +21,10 @@ export default function Home() {
     string | null
   >(null);
 
-  const skeletonGridItems = Array.from({ length: 8 }, (_, i) => (
-    <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
-      <Skeleton variant="rounded" animation="wave" height={350} width={280} />
-    </Grid>
-  ));
-
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const res = await fetch_async("/recipes");
-        console.log("Recetas recibidas");
-        console.log(res);
         const recipes_result: Recipe[] = res.recipes ? res.recipes : [];
         setRecipes(recipes_result);
       } catch (e: unknown) {
@@ -71,18 +64,20 @@ export default function Home() {
       <HeroSection recipes={recipes} />
       <Box className="page-layout">
         {loading ? (
-          <Grid container spacing={2}>
-            {skeletonGridItems}
-          </Grid>
+          <Box py={4} p={4}>
+            <LoadingFeaturedProducts />
+          </Box>
         ) : products.length === 0 ? (
           <Typography variant="h6" align="center">
             No se encontraron productos.
           </Typography>
         ) : (
-          <FeaturedProducts
-            products={products}
-            setSelectedFeaturedProduct={setSelectedFeaturedProduct}
-          />
+          <Box py={4} p={4}>
+            <FeaturedProducts
+              products={products}
+              setSelectedFeaturedProduct={setSelectedFeaturedProduct}
+            />
+          </Box>
         )}
       </Box>
     </PageContainer>
