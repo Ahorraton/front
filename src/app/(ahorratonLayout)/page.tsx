@@ -16,6 +16,9 @@ export default function Home() {
   const [products, setProducts] = React.useState<Product[]>([]);
   const [error, setError] = React.useState<string | null>(null);
   const [recipes, setRecipes] = React.useState<any[]>([]);
+  const [selectedFeaturedProduct, setSelectedFeaturedProduct] = React.useState<
+    string | null
+  >(null);
 
   const skeletonGridItems = Array.from({ length: 8 }, (_, i) => (
     <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
@@ -42,14 +45,11 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        console.log("Searching for products");
-        const res = await fetch_async(
-          "featured_products"
-        );
-        console.log("Productos recibidos", res);
-        const products_result: Product[] = res.featured_products ? res.featured_products : [];
+        const res = await fetch_async("featured_products");
+        const products_result: Product[] = res.featured_products
+          ? res.featured_products
+          : [];
         setProducts(products_result);
-        console.log("Productos seteados", products_result);
         setLoading(false);
       } catch (e: unknown) {
         setError("error");
@@ -60,9 +60,14 @@ export default function Home() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    if (selectedFeaturedProduct) {
+      window.location.href = `/comparar?query=${selectedFeaturedProduct}`;
+    }
+  }, [selectedFeaturedProduct]);
+
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
-      {/* I want a section with a slider that contains a big image that cover 70% of the screen and the description taking the rest of the space left*/}
       <HeroSection recipes={recipes} />
       <Box className="page-layout">
         {loading ? (
@@ -74,7 +79,10 @@ export default function Home() {
             No se encontraron productos.
           </Typography>
         ) : (
-          <FeaturedProducts products={products} />
+          <FeaturedProducts
+            products={products}
+            setSelectedFeaturedProduct={setSelectedFeaturedProduct}
+          />
         )}
       </Box>
     </PageContainer>

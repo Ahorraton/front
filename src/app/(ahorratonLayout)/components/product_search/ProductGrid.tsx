@@ -4,8 +4,15 @@ import Product from "../types/Product";
 import ProductCard from "./ProductCard";
 import { addItem } from "@/redux/store/listSlice";
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "next/navigation";
 
-const FeaturedProducts = ({ products }: { products: Product[] }) => {
+const FeaturedProducts = ({
+  products,
+  setSelectedFeaturedProduct,
+}: {
+  products: Product[];
+  setSelectedFeaturedProduct: (prod_name: string) => void;
+}) => {
   const dispatch = useDispatch();
 
   const handleAddProduct = (product: Product) => {
@@ -18,7 +25,7 @@ const FeaturedProducts = ({ products }: { products: Product[] }) => {
   };
 
   const handleOnClickSearch = (prod_name: string) => {
-    console.log("Buscando producto: ", prod_name);
+    setSelectedFeaturedProduct(prod_name);
   };
 
   return (
