@@ -25,11 +25,9 @@ import {
 const ProductCard = ({
   product,
   onClickSearch,
-  addProduct,
 }: {
   product: Product;
   onClickSearch: (prod_name: string) => void;
-  addProduct: (product: Product) => void;
 }) => {
   const list = useSelector((state: RootState) => state.list.items);
   const [prodCount, setProdCount] = useState<number>(0);

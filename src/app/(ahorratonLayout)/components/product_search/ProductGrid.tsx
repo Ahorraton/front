@@ -19,24 +19,15 @@ const FeaturedProducts = ({
   };
 
   return (
-    <Box py={4} p={4}>
+    <Box>
       <Typography variant="h4" gutterBottom>
         Productos Destacados{" "}
       </Typography>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center"
-        // xs={12}
-        // sm={12}
-        // md={12}
-        // lg={12}
-      >
+      <Grid container spacing={2}>
         {products.map((product, index) => (
           <Grid item key={index}>
             <FeaturedProductCard
               product={product}
-              // addProduct={handleAddProduct}
               onClickSearch={handleOnClickSearch}
             />
           </Grid>
