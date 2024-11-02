@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
 import Product from "@/app/(ahorratonLayout)/components/types/Product";
 import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
-import ProductGrid from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
+import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
 import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
@@ -42,11 +42,14 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        console.log("Searching for products");
         const res = await fetch_async(
-          "/products/" + "gaseosa" + "?offset=0" + "&limit=8"
+          "featured_products"
         );
-        const products_result: Product[] = res.products ? res.products : [];
+        console.log("Productos recibidos", res);
+        const products_result: Product[] = res.featured_products ? res.featured_products : [];
         setProducts(products_result);
+        console.log("Productos seteados", products_result);
         setLoading(false);
       } catch (e: unknown) {
         setError("error");
@@ -71,7 +74,7 @@ export default function Home() {
             No se encontraron productos.
           </Typography>
         ) : (
-          <ProductGrid products={products} />
+          <FeaturedProducts products={products} />
         )}
       </Box>
     </PageContainer>

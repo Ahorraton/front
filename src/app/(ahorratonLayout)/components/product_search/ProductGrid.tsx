@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import Product from "../types/Product";
 import ProductCard from "./ProductCard";
 
-const ProductGrid = ({ products }: { products: Product[] }) => {
+const FeaturedProducts = ({ products }: { products: Product[] }) => {
   return (
     <Grid container spacing={2}>
       {products.map((product) => (
@@ -15,4 +15,4 @@ const ProductGrid = ({ products }: { products: Product[] }) => {
   );
 };
 
-export default ProductGrid;
+export default FeaturedProducts;
