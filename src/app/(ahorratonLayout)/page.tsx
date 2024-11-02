@@ -10,7 +10,7 @@ import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
 import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
-import { LoadingFeaturedProducts } from "./layout/loadingFeaturedProducts";
+import { LoadingFeaturedProducts } from "./layout/LoadingFeaturedProducts";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
