@@ -31,7 +31,7 @@ const FeaturedProducts = ({
   return (
     <Box py={4} p={4}>
       <Typography variant="h4" gutterBottom>
-        Featured Products
+        Productos Destacados
       </Typography>
       <Grid container spacing={2}>
         {products.map((product) => (

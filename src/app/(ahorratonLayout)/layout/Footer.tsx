@@ -10,12 +10,13 @@ export default function Footer() {
       sx={{
         marginTop: "auto",
         p: 6,
+        backgroundColor: "#02c0ff",
       }}
       component="footer"
     >
       <Container maxWidth="sm">
         <Typography variant="body2" color="text.secondary" align="center">
-          {"Copyright © "}
+          {"Hecho con cariño por "}
           <Link color="inherit" href="https://github.com/Ahorraton">
             Ahorratón
           </Link>{" "}

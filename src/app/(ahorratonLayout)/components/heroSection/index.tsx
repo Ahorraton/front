@@ -27,6 +27,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ recipes }) => {
         component="section"
         sx={{
           marginBottom: "2rem",
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
         }}
       >
         <Slider {...settings} ref={sliderRef}>
