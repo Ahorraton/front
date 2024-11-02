@@ -8,15 +8,10 @@ interface RegisterModalProps {
 }
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
-    const [email, setEmail] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
 
     const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);    
@@ -33,21 +28,20 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setError('Passwords do not match');
+            setError('Las contraseñas no coindicen.');
             return;
         }
 
         try {
             const response = await axios.post('api/user/register', {
                 username,
-                email,
                 password,
             });
             console.log(response.data);
             onClose();
         } catch (error) {
             console.error(error);
-            setError('Registration failed. Please try again.');
+            setError('Ha ocurrido un error. Por favor, intente nuevamente.');
         }
     };
 
@@ -67,7 +61,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                 }}
             >
                 <Typography variant="h6" component="h2">
-                    Register
+                    Crear cuenta
                 </Typography>
                 {error && (
                     <Typography color="error">
@@ -76,7 +70,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                 )}
                 <form onSubmit={handleSubmit}>
                     <TextField
-                        label="Username"
+                        label="Nombre de usuario"
                         value={username}
                         onChange={handleUsernameChange}
                         fullWidth
@@ -84,16 +78,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                         required
                     />
                     <TextField
-                        label="Email"
-                        type="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        fullWidth
-                        margin="normal"
-                        required
-                    />
-                    <TextField
-                        label="Password"
+                        label="Contraseña"
                         type="password"
                         value={password}
                         onChange={handlePasswordChange}
@@ -102,7 +87,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                         required
                     />
                     <TextField
-                        label="Confirm Password"
+                        label="Confirmar contraseña"
                         type="password"
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
@@ -111,7 +96,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                         required
                     />
                     <Button type="submit" variant="contained" color="primary" fullWidth>
-                        Register
+                        Crear cuenta
                     </Button>
                 </form>
             </Box>

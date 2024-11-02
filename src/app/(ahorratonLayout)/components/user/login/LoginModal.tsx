@@ -37,7 +37,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             onClose();
         } catch (error) {
             console.error(error);
-            setError('Login failed. Please try again.');
+            setError('Ha ocurrido un error. Por favor, intente nuevamente.');
         }
     };
 
@@ -57,7 +57,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 }}
             >
                 <Typography variant="h6" component="h2">
-                    Login
+                    Ingresar
                 </Typography>
                 {error && (
                     <Typography color="error">
@@ -66,7 +66,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 )}
                 <form onSubmit={handleSubmit}>
                     <TextField
-                        label="Username"
+                        label="Nombre de usuario"
                         type="username"
                         value={username}
                         onChange={handleUsernameChange}
@@ -75,7 +75,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                         required
                     />
                     <TextField
-                        label="Password"
+                        label="Contraseña"
                         type="password"
                         value={password}
                         onChange={handlePasswordChange}
@@ -84,7 +84,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                         required
                     />
                     <Button type="submit" variant="contained" color="primary" fullWidth>
-                        Login
+                        Ingresar
                     </Button>
                 </form>
             </Box>
