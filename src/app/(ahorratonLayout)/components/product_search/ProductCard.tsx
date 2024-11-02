@@ -121,6 +121,17 @@ const ProductCard = ({
               alignItems: "center",
             }}
           >
+            <Typography variant="h6" color="textSecondary">
+              <Box
+                component="img"
+                src={marketImage()}
+                sx={{
+                  maxWidth: "100px",
+                  height: "auto",
+                  borderRadius: "30px",
+                }}
+              />
+            </Typography>
             <Box
               component="img"
               src={product.image_url ?? storeIconMap.default}
@@ -150,7 +161,7 @@ const ProductCard = ({
           padding: 0,
         }}
       >
-        <Button
+        {/* <Button
           size="large"
           sx={{
             width: "100%",
@@ -174,7 +185,7 @@ const ProductCard = ({
           <Typography variant="h6" color="white">
             {"Agregar a la lista"}
           </Typography>
-        </Button>
+        </Button> */}
       </CardActions>
     </Card>
   );
