@@ -26,6 +26,8 @@ export const FeaturedProductCard = ({
 }) => {
   const list = useSelector((state: RootState) => state.list.items);
 
+  console.log("image", product.image_url);
+
   return (
     <Card
       key={product.id}
@@ -60,7 +62,7 @@ export const FeaturedProductCard = ({
             backgroundColor: "#dbdbdb",
           }}
         >
-          {product.image_url ? (
+          {product.image_url !== null ? (
             <Box
               component="img"
               src={product.image_url}
@@ -81,7 +83,6 @@ export const FeaturedProductCard = ({
           ) : (
             <Box
               component="img"
-              alt={`Featured Product: ${product.name}`}
               sx={{
                 width: 94,
                 height: 94,
@@ -93,6 +94,7 @@ export const FeaturedProductCard = ({
                 border: "2px solid #1c1c1c",
                 overflow: "hidden",
                 objectFit: "cover",
+                backgroundColor: "#ffffff",
               }}
             />
           )}
