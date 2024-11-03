@@ -157,7 +157,7 @@ const Compare = () => {
           />
         )}
         {loadMore && (
-          <Box display="flex" justifyContent="center">
+          <Box display="flex" justifyContent="center" py="1%">
             <Button
               variant="contained"
               color="secondary"

@@ -135,14 +135,6 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
                   <IconMarket icon={cheapestProduct.market} />
                 </Typography>
               </Box>
-              {/* <Typography variant="body1">
-                <strong>Links:</strong>{" "}
-                {urls.split(", ").map((url, index) => (
-                  <Link key={index} href={url} target="_blank">
-                    {url}
-                  </Link>
-                ))}
-              </Typography> */}
             </Box>
           </Box>
         </CardContent>
