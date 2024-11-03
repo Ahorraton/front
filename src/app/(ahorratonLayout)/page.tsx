@@ -11,6 +11,7 @@ import "./landing_page.css";
 import HeroSection from "./components/heroSection";
 import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
 import { LoadingFeaturedProducts } from "./layout/LoadingFeaturedProducts";
+import { LoadingHeroComponent } from "./layout/LoadingRecipes";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -61,25 +62,32 @@ export default function Home() {
 
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
-      <HeroSection recipes={recipes} />
-      <Box className="page-layout">
-        {loading ? (
+      {loading ? (
+        <Box py={4} p={4} component="div" sx={{ position: "relative" }}>
+          <LoadingHeroComponent />
           <Box py={4} p={4}>
             <LoadingFeaturedProducts />
           </Box>
-        ) : products.length === 0 ? (
-          <Typography variant="h6" align="center">
-            No se encontraron productos.
-          </Typography>
-        ) : (
-          <Box py={4} p={4}>
-            <FeaturedProducts
-              products={products}
-              setSelectedFeaturedProduct={setSelectedFeaturedProduct}
-            />
+        </Box>
+      ) : (
+        <Box component="div" sx={{ position: "relative" }}>
+          <HeroSection recipes={recipes} />
+          <Box className="page-layout">
+            {products.length === 0 ? (
+              <Typography variant="h6" align="center">
+                No se encontraron productos.
+              </Typography>
+            ) : (
+              <Box py={4} p={4}>
+                <FeaturedProducts
+                  products={products}
+                  setSelectedFeaturedProduct={setSelectedFeaturedProduct}
+                />
+              </Box>
+            )}
           </Box>
-        )}
-      </Box>
+        </Box>
+      )}
     </PageContainer>
   );
 }
