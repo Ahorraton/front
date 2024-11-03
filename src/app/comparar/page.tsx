@@ -22,6 +22,7 @@ import ProductCardSearch from "../buscar/cardComponent";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
+import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
 
 const LIMIT = 8;
 
@@ -40,6 +41,7 @@ const Compare = () => {
     "disco",
     "jumbo",
   ]);
+  const [productPage, setProductPage] = useState<Product | null>(null);
 
   useEffect(() => {
     fetchProducts();
@@ -55,7 +57,6 @@ const Compare = () => {
 
     try {
       const res = await fetch_async(uri);
-      console.log("res", res);
       const products_result: Product[] = res.products ? res.products : [];
       setLoading(false);
       setLoadMore(products.length + products_result.length < res.count);
@@ -121,7 +122,7 @@ const Compare = () => {
             </Typography>
           </Box>
         )}
-        <Accordion sx={{ width: "200px", marginLeft: "auto" }}>
+        <Accordion>
           <AccordionSummary
             sx={{
               "& .MuiAccordionSummary-content": {
@@ -140,16 +141,21 @@ const Compare = () => {
         <Grid container spacing={2} py={4}>
           {products.map((product: Product) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
-              {/* {<ProductPaperAle key={product.ean} product={product} />} */}
-              {/* <ProductPaper key={product.ean} product={product} /> */}
               <ProductCardSearch
                 product={product}
                 addProduct={handleAddProduct}
+                setProductPage={setProductPage}
               />
             </Grid>
           ))}
         </Grid>
         <br />
+        {productPage && (
+          <ProductView
+            product={productPage}
+            onClose={() => setProductPage(null)}
+          />
+        )}
         {loadMore && (
           <Box display="flex" justifyContent="center">
             <Button

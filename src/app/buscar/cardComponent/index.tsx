@@ -26,6 +26,7 @@ interface Product {
 interface cardComponentProps {
   product: Product;
   addProduct: (product: Product) => void;
+  setProductPage: (product: Product) => void;
 }
 
 type StoreNames =
@@ -51,6 +52,7 @@ const storeIconMap: Record<StoreNames, string> = {
 const ProductCardSearch: React.FC<cardComponentProps> = ({
   product: { ean, market_price, names_list, image_url, urls, dir_sucursal },
   addProduct,
+  setProductPage,
 }) => {
   const products = market_price
     .split(", ")
@@ -78,7 +80,16 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
       }}
     >
       <CardActionArea
-        onClick={() => console.log("Hola bello")}
+        onClick={() =>
+          setProductPage({
+            ean,
+            market_price,
+            names_list,
+            image_url,
+            urls,
+            dir_sucursal,
+          })
+        }
         sx={{
           flexGrow: 1,
           borderBottomLeftRadius: "0px",
@@ -124,14 +135,14 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
                   <IconMarket icon={cheapestProduct.market} />
                 </Typography>
               </Box>
-              <Typography variant="body1">
+              {/* <Typography variant="body1">
                 <strong>Links:</strong>{" "}
                 {urls.split(", ").map((url, index) => (
                   <Link key={index} href={url} target="_blank">
                     {url}
                   </Link>
                 ))}
-              </Typography>
+              </Typography> */}
             </Box>
           </Box>
         </CardContent>
