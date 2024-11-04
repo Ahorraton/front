@@ -1,9 +1,9 @@
-'use client';
+"use client";
 import React from "react";
 import { useState, useEffect } from "react";
 import { IconButton, TextField, Box } from "@mui/material";
-import Switch from '@mui/material/Switch';
-import SearchIcon from '@mui/icons-material/Search';
+import Switch from "@mui/material/Switch";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function SearchBar({
   starting_query,
@@ -12,11 +12,10 @@ export default function SearchBar({
   setCompareSearch,
 }: {
   starting_query: string;
-  set: (e:string) => void,
-  compareSearch: boolean,
-  setCompareSearch: (e:boolean) => void,
+  set: (e: string) => void;
+  compareSearch: boolean;
+  setCompareSearch: (e: boolean) => void;
 }) {
-
   const [search, setSearch] = useState<string>(starting_query);
 
   const handleSearch = () => {
@@ -26,40 +25,43 @@ export default function SearchBar({
       return;
     }
     window.location.href = `/buscar?query=${search}`;
-  }
+  };
   useEffect(() => {
     setCompareSearch(true);
   }, [setCompareSearch]);
 
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
-  
+  const label = { inputProps: { "aria-label": "Switch demo" } };
+
   return (
-        <Box width='100%'>
-          <Box display='flex' flexDirection='row' alignItems='center'>
-            <TextField
-                id="search-bar"
-                className="text"
-                value={search}
-                onChange={(e) => setSearch((e.target as HTMLInputElement).value)}
-                onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
-                    if (event.key === 'Enter') {
-                      handleSearch();
-                    }
-                  }
-                }
-                variant="outlined"
-                placeholder="Coca cola, leche, etc."
-                spellCheck={false}
-                size='small'
-                color='secondary'
-                fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <Box display='flex' flexDirection='row'>
-                      <IconButton type="submit" aria-label="search" onClick={handleSearch}>
-                        <SearchIcon style={{ fill: "black" }} />
-                      </IconButton>
-                      {/* <Switch
+    <Box width="100%">
+      <Box display="flex" flexDirection="row" alignItems="center">
+        <TextField
+          id="search-bar"
+          className="text"
+          value={search}
+          onChange={(e) => setSearch((e.target as HTMLInputElement).value)}
+          onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === "Enter") {
+              handleSearch();
+            }
+          }}
+          variant="outlined"
+          placeholder="Buscar un producto..."
+          spellCheck={false}
+          size="small"
+          color="secondary"
+          fullWidth
+          InputProps={{
+            endAdornment: (
+              <Box display="flex" flexDirection="row">
+                <IconButton
+                  type="submit"
+                  aria-label="search"
+                  onClick={handleSearch}
+                >
+                  <SearchIcon style={{ fill: "black" }} />
+                </IconButton>
+                {/* <Switch
                         {...label}
                         checked={compareSearch}
                         onChange={
@@ -67,11 +69,11 @@ export default function SearchBar({
                             setCompareSearch(e.target.checked);
                           }
                         } /> */}
-                    </Box>
-                  ),
-                }}
-            />
-          </Box>
-        </Box>
+              </Box>
+            ),
+          }}
+        />
+      </Box>
+    </Box>
   );
-};
+}

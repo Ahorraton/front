@@ -1,19 +1,19 @@
 import { createTheme } from "@mui/material/styles";
-import { outlinedInputClasses } from '@mui/material/OutlinedInput';
+import { outlinedInputClasses } from "@mui/material/OutlinedInput";
 
 const baselightTheme = createTheme({
   direction: "ltr",
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
       main: "#6CACE4",
       light: "#255cab",
       dark: "#bcdaf4",
     },
     secondary: {
-      main: '#FFB81C',
-      light: '#FFD54F',
-      dark: '#FFA000',
+      main: "#FFB81C",
+      light: "#FFD54F",
+      dark: "#FFA000",
     },
     text: {
       primary: "#000000",
@@ -27,7 +27,7 @@ const baselightTheme = createTheme({
     divider: "#e5eaef",
   },
   typography: {
-    fontFamily: 'Montserrat, sans-serif',
+    fontFamily: "Montserrat, sans-serif",
     h1: {
       fontWeight: 600,
       fontSize: "2.25rem",
@@ -88,27 +88,27 @@ const baselightTheme = createTheme({
         body: {
           backgroundColor: "#6CACE4",
           backgroundImage: `linear-gradient(#6CACE4 10%, #FFFFFF 100%)`,
-          backgroundAttachment: 'fixed',
+          backgroundAttachment: "fixed",
         },
       },
     },
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
-          borderColor: '#6CACE4',
+          borderColor: "#6CACE4",
         },
         root: {
-          backgroundColor: 'white',
+          backgroundColor: "white",
           [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-            borderColor: '#FFB81C',
+            borderColor: "#FFB81C",
           },
           [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
-            borderColor: '#FFB81C',
+            borderColor: "#FFB81C",
           },
         },
       },
     },
-  }
+  },
 });
 
 export { baselightTheme };
