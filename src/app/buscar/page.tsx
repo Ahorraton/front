@@ -7,7 +7,7 @@ import PageContainer from "../(ahorratonLayout)/components/container/PageContain
 import ProductFilters from "../(ahorratonLayout)/components/product_search/GridFilter";
 import { fetch_async } from '../(ahorratonLayout)/async/common/fetch_async'
 import Product from '../(ahorratonLayout)/components/types/Product'
-import ProductGrid from "../(ahorratonLayout)/components/product_search/ProductGrid";
+import FeaturedProducts from "../(ahorratonLayout)/components/product_search/ProductGrid";
 import Filters from "@/app/buscar/types/Filters";
 import './search_page.css'
 
@@ -91,7 +91,7 @@ const Search = () => {
                     {products.length === 0 || error ? (
                         <Typography variant="h6" align="center">No se encontraron productos.</Typography>
                     ) : (
-                        <ProductGrid products={products}/>
+                        <FeaturedProducts products={products}/>
                     )}
                 </Box>
                 <br />

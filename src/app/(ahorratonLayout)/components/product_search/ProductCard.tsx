@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import IconMarket from "@/utils/IconMarket";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { Card, CardMedia, CardContent } from "@mui/material";
+import { Card, CardMedia } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { addItem, removeItem } from "../../../../redux/store/listSlice";
 import Product from "../types/Product";
 import "./product_card.css";
+import {
+  Box,
+  Button,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Icon,
+  Link,
+  Paper,
+  Typography,
+} from "@mui/material";
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({
+  product,
+  onClickSearch,
+}: {
+  product: Product;
+  onClickSearch: (prod_name: string) => void;
+}) => {
   const list = useSelector((state: RootState) => state.list.items);
   const [prodCount, setProdCount] = useState<number>(0);
   const dispatch = useDispatch();
@@ -24,23 +42,24 @@ const ProductCard = ({ product }: { product: Product }) => {
     }
   }, [list, product.id]);
 
-  const handleAddItem = () => {
-    setProdCount(prodCount + 1);
-    dispatch(
-      addItem({
-        id: product.id.toString(),
-        name: product.name,
-        quantity: 1,
-        price: product.price,
-      })
-    );
-  };
+  type StoreNames =
+    | "dia"
+    | "carrefour"
+    | "vea"
+    | "coto"
+    | "jumbo"
+    | "disco"
+    | "default";
 
-  const handleRemoveItem = () => {
-    if (prodCount > 0) {
-      setProdCount(prodCount - 1);
-      dispatch(removeItem(product.id.toString()));
-    }
+  const storeIconMap: Record<StoreNames, string> = {
+    dia: "/images/logos/logo_dia.svg",
+    carrefour: "/images/logos/logo_carrefour.svg",
+    vea: "/images/logos/logo_vea.png",
+    coto: "/images/logos/logo_coto.svg",
+    jumbo: "/images/logos/logo_jumbo.png",
+    disco: "/images/logos/logo_disco.svg",
+    default:
+      "https://i5.walmartimages.com/asr/e9ff8590-58ad-44f4-8a74-99aff8a72ea9.1bb69167e16a3d0209eb310e758fcb36.jpeg",
   };
 
   const marketImage = () => {
@@ -67,34 +86,79 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 350, width: "100%", margin: "auto" }}>
-      <CardContent className="product-row">
-        <Typography variant="h5">
-          {product.market.charAt(0).toUpperCase() + product.market.slice(1)}
-        </Typography>
-      </CardContent>
-      <CardMedia component="img" alt={product.name} image={marketImage()} />
-      <CardContent className="product-row">
-        <Typography gutterBottom variant="h5" component="div">
-          {product.name}
-        </Typography>
-      </CardContent>
-      <Box className="product-row">
-        <Typography variant="h4" component="div">
-          ${product.price}
-        </Typography>
-        <Box display="flex" flexDirection="row" alignItems="center">
-          {/* <IconButton color="primary" aria-label="remove from shopping list" onClick={handleRemoveItem}>
-                        <RemoveCircleIcon />
-                    </IconButton>
-                    <Typography variant="h6" component="div">
-                        {prodCount}
-                    </Typography> */}
-          {/* <IconButton color="primary" aria-label="add to shopping list" onClick={handleAddItem}>
-                        <AddCircleIcon />
-                    </IconButton> */}
-        </Box>
-      </Box>
+    <Card
+      key={product.id}
+      sx={{
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
+        borderRadius: "30px",
+        justifyContent: "space-between",
+      }}
+    >
+      <CardActionArea
+        onClick={() => onClickSearch(product.name)}
+        sx={{
+          flexGrow: 1,
+          borderBottomLeftRadius: "0px",
+          borderBottomRightRadius: "0px",
+        }}
+      >
+        <CardContent>
+          <CardHeader
+            title={product.name ?? ""}
+            sx={{ textAlign: "center" }}
+          ></CardHeader>
+          <Box
+            component="div"
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h6" color="textSecondary">
+              <Box
+                component="img"
+                src={marketImage()}
+                sx={{
+                  maxWidth: "100px",
+                  height: "auto",
+                  borderRadius: "30px",
+                }}
+              />
+            </Typography>
+            <Box
+              component="img"
+              src={product.image_url ?? storeIconMap.default}
+              sx={{
+                maxWidth: "200px",
+                height: "auto",
+                borderRadius: "30px",
+              }}
+            />
+            <Box component="div">
+              <Box
+                component="div"
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></Box>
+            </Box>
+          </Box>
+        </CardContent>
+      </CardActionArea>
+      <CardActions
+        sx={{
+          width: "100%",
+          padding: 0,
+        }}
+      ></CardActions>
     </Card>
   );
 };

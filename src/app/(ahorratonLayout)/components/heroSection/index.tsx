@@ -26,7 +26,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ recipes }) => {
       <Box
         component="section"
         sx={{
-          marginBottom: "2rem",
+          marginBottom: "2%",
+          paddingTop: "2%",
+          paddingBottom: "2%",
         }}
       >
         <Slider {...settings} ref={sliderRef}>
@@ -46,8 +48,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ recipes }) => {
       <Button
         sx={{
           position: "absolute",
-          bottom: "-0.5rem",
-          right: "1rem",
+          bottom: "-0.5%",
+          right: "1%",
         }}
         href="/recipes"
       >

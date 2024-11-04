@@ -1,18 +1,40 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import Product from "../types/Product";
 import ProductCard from "./ProductCard";
+import { addItem } from "@/redux/store/listSlice";
+import { useDispatch } from "react-redux";
+import { useSearchParams } from "next/navigation";
+import { FeaturedProductCard } from "./FeaturedProductCard";
 
-const ProductGrid = ({ products }: { products: Product[] }) => {
+const FeaturedProducts = ({
+  products,
+  setSelectedFeaturedProduct,
+}: {
+  products: Product[];
+  setSelectedFeaturedProduct: (prod_name: string) => void;
+}) => {
+  const handleOnClickSearch = (prod_name: string) => {
+    setSelectedFeaturedProduct(prod_name);
+  };
+
   return (
-    <Grid container spacing={2}>
-      {products.map((product) => (
-        <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-          <ProductCard product={product} />
-        </Grid>
-      ))}
-    </Grid>
+    <Box>
+      <Typography variant="h4" gutterBottom>
+        Productos Destacados{" "}
+      </Typography>
+      <Grid container spacing={2}>
+        {products.map((product, index) => (
+          <Grid item key={index}>
+            <FeaturedProductCard
+              product={product}
+              onClickSearch={handleOnClickSearch}
+            />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 
-export default ProductGrid;
+export default FeaturedProducts;

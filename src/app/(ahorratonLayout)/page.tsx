@@ -1,34 +1,31 @@
 "use client";
 import React, { useEffect } from "react";
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Paper, Skeleton, Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
 import Product from "@/app/(ahorratonLayout)/components/types/Product";
 import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
-import ProductGrid from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
+import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
 import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
+import { LoadingFeaturedProducts } from "./layout/LoadingFeaturedProducts";
+import { LoadingHeroComponent } from "./layout/LoadingRecipes";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [products, setProducts] = React.useState<Product[]>([]);
   const [error, setError] = React.useState<string | null>(null);
   const [recipes, setRecipes] = React.useState<any[]>([]);
-
-  const skeletonGridItems = Array.from({ length: 8 }, (_, i) => (
-    <Grid item key={i} xs={12} sm={6} md={4} lg={3}>
-      <Skeleton variant="rounded" animation="wave" height={350} width={280} />
-    </Grid>
-  ));
+  const [selectedFeaturedProduct, setSelectedFeaturedProduct] = React.useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const res = await fetch_async("/recipes");
-        console.log("Recetas recibidas");
-        console.log(res);
         const recipes_result: Recipe[] = res.recipes ? res.recipes : [];
         setRecipes(recipes_result);
       } catch (e: unknown) {
@@ -42,10 +39,10 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch_async(
-          "/products/" + "gaseosa" + "?offset=0" + "&limit=8"
-        );
-        const products_result: Product[] = res.products ? res.products : [];
+        const res = await fetch_async("featured_products");
+        const products_result: Product[] = res.featured_products
+          ? res.featured_products
+          : [];
         setProducts(products_result);
         setLoading(false);
       } catch (e: unknown) {
@@ -57,23 +54,40 @@ export default function Home() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    if (selectedFeaturedProduct) {
+      window.location.href = `/comparar?query=${selectedFeaturedProduct}`;
+    }
+  }, [selectedFeaturedProduct]);
+
   return (
     <PageContainer title="Ahorraton" description="Ahorra en grande">
-      {/* I want a section with a slider that contains a big image that cover 70% of the screen and the description taking the rest of the space left*/}
-      <HeroSection recipes={recipes} />
-      <Box className="page-layout">
-        {loading ? (
-          <Grid container spacing={2}>
-            {skeletonGridItems}
-          </Grid>
-        ) : products.length === 0 ? (
-          <Typography variant="h6" align="center">
-            No se encontraron productos.
-          </Typography>
-        ) : (
-          <ProductGrid products={products} />
-        )}
-      </Box>
+      {loading ? (
+        <Box py={4} p={4} component="div" sx={{ position: "relative" }}>
+          <LoadingHeroComponent />
+          <Box py={4} p={4}>
+            <LoadingFeaturedProducts />
+          </Box>
+        </Box>
+      ) : (
+        <Box component="div" sx={{ position: "relative" }}>
+          <HeroSection recipes={recipes} />
+          <Box className="page-layout">
+            {products.length === 0 ? (
+              <Typography variant="h6" align="center">
+                No se encontraron productos.
+              </Typography>
+            ) : (
+              <Box py={4} p={4}>
+                <FeaturedProducts
+                  products={products}
+                  setSelectedFeaturedProduct={setSelectedFeaturedProduct}
+                />
+              </Box>
+            )}
+          </Box>
+        </Box>
+      )}
     </PageContainer>
   );
 }
