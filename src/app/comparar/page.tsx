@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
+import { LoadingCompareScreen } from "./LoadingPrices";
 
 const LIMIT = 8;
 
@@ -107,9 +108,28 @@ const Compare = () => {
   return (
     <PageContainer title="Comparar" description="Compara precios de productos">
       <Box className="compare-layout">
-        {loading && (
+        {loading ? (
           <Box className="loading-layout">
-            <CircularProgress color="secondary" />
+            <LoadingCompareScreen />
+          </Box>
+        ) : (
+          <Box className="compare-layout">
+            <Accordion>
+              <AccordionSummary
+                sx={{
+                  "& .MuiAccordionSummary-content": {
+                    justifyContent: "center",
+                  },
+                }}
+                expandIcon={<ExpandMoreIcon />}
+              >
+                <Typography variant="h3">Filtros</Typography>
+              </AccordionSummary>
+              <Filters
+                selectedMarkets={selectedMarkets}
+                handleMarketChange={handleMarketChange}
+              />
+            </Accordion>
           </Box>
         )}
         {error && (
@@ -122,22 +142,7 @@ const Compare = () => {
             </Typography>
           </Box>
         )}
-        <Accordion>
-          <AccordionSummary
-            sx={{
-              "& .MuiAccordionSummary-content": {
-                justifyContent: "center",
-              },
-            }}
-            expandIcon={<ExpandMoreIcon />}
-          >
-            <Typography variant="h3">Filtros</Typography>
-          </AccordionSummary>
-          <Filters
-            selectedMarkets={selectedMarkets}
-            handleMarketChange={handleMarketChange}
-          />
-        </Accordion>
+
         <Grid container spacing={2} py={4}>
           {products.map((product: Product) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
@@ -149,7 +154,7 @@ const Compare = () => {
             </Grid>
           ))}
         </Grid>
-        <br />
+
         {productPage && (
           <ProductView
             product={productPage}
