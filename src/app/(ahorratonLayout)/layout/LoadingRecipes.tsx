@@ -124,14 +124,19 @@ export const LoadingHeroComponent = () => {
             >
               <StyledBox width={338.97} height={7.7} bgcolor="grey.600" />
               <StyledBox width={277.53} height={7.7} bgcolor="grey.600" />
-              <StyledBox width={338.97} height={1} bgcolor="grey.600" />
+              <StyledBox width={338.97} height={7.7} bgcolor="grey.600" />
 
-              <Box width={331.79} height={86.95} position="relative">
+              <Box
+                width={331.79}
+                height={86.95}
+                position="relative"
+                paddingY={0}
+              >
                 <Box
                   width={332}
                   height={67}
-                  position="absolute"
-                  top={5}
+                  position="relative"
+                  top="20%"
                   left={0}
                 >
                   <Box
