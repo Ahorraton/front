@@ -1,13 +1,9 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Recipe } from "../types/Recipe";
+import { RecipeDescription } from "./recipeDescription";
 
-const RecipeSlide: React.FC<Recipe> = ({
-  title,
-  description,
-  img_url: image_url,
-  ingredients,
-}) => {
+const RecipeSlide: React.FC<Recipe> = (recipe) => {
   return (
     <Box
       sx={{
@@ -20,7 +16,7 @@ const RecipeSlide: React.FC<Recipe> = ({
       <Box>
         <Box
           component="img"
-          src={image_url}
+          src={recipe.img_url}
           sx={{
             objectFit: "cover",
             width: "100%",
@@ -37,15 +33,7 @@ const RecipeSlide: React.FC<Recipe> = ({
           textAlign: "center",
         }}
       >
-        <h3>{title}</h3>
-        <p>{description}</p>
-        <ul>
-          {ingredients.map((ingredient) => (
-            <li>
-              {ingredient.name} ({ingredient.amount})
-            </li>
-          ))}
-        </ul>
+        <RecipeDescription {...recipe} />
       </Box>
     </Box>
   );

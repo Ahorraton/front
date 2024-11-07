@@ -2,7 +2,7 @@ import { Box, Grid, Paper } from "@mui/material";
 
 export const LoadingFeaturedProducts = () => {
   return (
-    <Grid container spacing={2} justifyContent="center">
+    <Grid container spacing={2} display="flex" justifyContent="center">
       {Array.from({ length: 6 }, (_, i) => (
         <Grid item key={i}>
           <Paper
@@ -13,6 +13,8 @@ export const LoadingFeaturedProducts = () => {
               borderRadius: 2,
               position: "relative",
               backgroundColor: "#dbdbdb",
+              display: "flex",
+              justifyContent: "center",
             }}
           >
             <Box
@@ -22,7 +24,6 @@ export const LoadingFeaturedProducts = () => {
                 height: 94,
                 position: "relative",
                 top: "10%",
-                left: "20%",
                 alignItems: "center",
                 borderRadius: "50%",
                 border: "2px solid #1c1c1c",

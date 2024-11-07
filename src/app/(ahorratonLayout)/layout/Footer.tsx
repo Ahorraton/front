@@ -9,7 +9,7 @@ export default function Footer() {
     <Box
       sx={{
         marginTop: "auto",
-        p: 6,
+        p: 2,
         backgroundColor: "#02c0ff",
       }}
       component="footer"

@@ -47,6 +47,7 @@ export default function RootLayout({
                 />
                 <br />
                 <Container maxWidth="xl">{children}</Container>
+                <br />
                 <Footer />
               </MainWrapper>
             </ThemeProvider>

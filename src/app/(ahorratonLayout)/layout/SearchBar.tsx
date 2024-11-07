@@ -61,14 +61,6 @@ export default function SearchBar({
                 >
                   <SearchIcon style={{ fill: "black" }} />
                 </IconButton>
-                {/* <Switch
-                        {...label}
-                        checked={compareSearch}
-                        onChange={
-                          (e) => {
-                            setCompareSearch(e.target.checked);
-                          }
-                        } /> */}
               </Box>
             ),
           }}
