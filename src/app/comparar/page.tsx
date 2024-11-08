@@ -53,10 +53,10 @@ const Compare = () => {
       return;
     }
 
-    let uri = "/products_ean/" + query + `?offset=0` + `&limit=${LIMIT}`;
-
     try {
-      const res = await fetch_async(uri);
+      const res = await fetch_async(
+        `/products_ean/${query}?offset=0&limit=${LIMIT}`
+      );
       const products_result: Product[] = res.products ? res.products : [];
       setLoading(false);
       setLoadMore(products.length + products_result.length < res.count);
@@ -70,13 +70,10 @@ const Compare = () => {
   };
 
   const fetchMoreProducts = async () => {
-    let uri =
-      "/products_ean/" +
-      query +
-      `?offset=${products.length}` +
-      `&limit=${LIMIT}`;
     try {
-      const res = await fetch_async(uri);
+      const res = await fetch_async(
+        `/products_ean/${query}?offset=${products.length}&limit=${LIMIT}`
+      );
       const products_result: Product[] = res.products ? res.products : [];
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
