@@ -22,8 +22,8 @@ const ListIconComponent: React.FC = () => {
         anchor="right"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        id="list-drawer"
-        className="list-drawer"
+        id="list-layout"
+        className="list-layout"
       >
         <ListContent />
       </Drawer>
