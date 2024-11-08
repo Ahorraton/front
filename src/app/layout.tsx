@@ -18,6 +18,12 @@ const MainWrapper = styled("div")(() => ({
   minHeight: "100vh",
 }));
 
+const BodyStyle = styled("div")(() => ({
+  marginTop: "2%",
+  marginBottom: "2%",
+  maxWidth: "xl",
+}));
+
 export default function RootLayout({
   children,
 }: {
@@ -33,11 +39,19 @@ export default function RootLayout({
           <PersistGate loading={null} persistor={persistor}>
             <ThemeProvider theme={baselightTheme}>
               <CssBaseline />
-              <MainWrapper className="mainwrapper">
+              <MainWrapper className="mainwrapper" id="main-wrapper-style">
                 <NavBar query_param={query} />
-                <br />
-                <Container maxWidth="xl">{children}</Container>
-                <br />
+
+                <BodyStyle className="bodystyle" id="main-content-style">
+                  <Container
+                    component="main"
+                    className="bodystyle"
+                    id="main-content"
+                  >
+                    {children}
+                  </Container>
+                </BodyStyle>
+
                 <Footer />
               </MainWrapper>
             </ThemeProvider>

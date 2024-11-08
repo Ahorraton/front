@@ -13,6 +13,7 @@ export default function Footer() {
         backgroundColor: "#02c0ff",
       }}
       component="footer"
+      id="footer"
     >
       <Container maxWidth="sm">
         <Typography variant="body2" color="text.secondary" align="center">
