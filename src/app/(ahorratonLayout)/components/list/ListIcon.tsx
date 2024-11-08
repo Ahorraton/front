@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Drawer, IconButton, useMediaQuery } from "@mui/material";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import ListDrawer from "./ListDrawer";
+import ListContent from "./ListContent";
 import "./list-drawer.css";
 
 const ListIconComponent: React.FC = () => {
@@ -25,7 +25,7 @@ const ListIconComponent: React.FC = () => {
         id="list-drawer"
         className="list-drawer"
       >
-        <ListDrawer />
+        <ListContent />
       </Drawer>
     </Box>
   );
