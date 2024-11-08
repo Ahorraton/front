@@ -1,16 +1,25 @@
 import React from "react";
-import { Box, IconButton, Typography, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { ListItem } from "@/redux/store/listSlice";
+import { ListItemType } from "@/app/types/ListItem";
 import axios from "axios";
 import { fetchUserLists } from "@/utils/apiUtils";
+import {
+  Box,
+  IconButton,
+  TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface ListActionsProps {
   listName: string;
-  list: ListItem[];
+  list: ListItemType[];
   onListNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClearList: () => void;
   onSaveList: () => void;
@@ -74,20 +83,39 @@ const ListActions: React.FC<ListActionsProps> = ({
     }
   };
 
+  const [selectedList, setSelectedList] = React.useState<string>(listName);
+
   return (
     <Box textAlign="center" m={2}>
+      <Box>
+        <FormControl fullWidth>
+          <InputLabel id="selected-list-label">Lista Seleccionada</InputLabel>
+          <Select
+            labelId="selected-list-label"
+            id="selected-list"
+            value={selectedList}
+            label="Lista Seleccionada"
+            onChange={(event: SelectChangeEvent) =>
+              setSelectedList(event.target.value as string)
+            }
+          >
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      {/* 
       <TextField
         label="Nombre de mi lista"
         value={listName}
         onChange={onListNameChange}
         fullWidth
-      />
-      <IconButton color="secondary" onClick={onClearList}>
-        <DeleteIcon /> Borrar mi lista
-      </IconButton>
+      /> */}
+
       <IconButton color="primary" onClick={handleSaveList}>
         <SaveIcon />
-        {isLoggedIn ? "Ver mi lista en detalle" : "Guardar mi lista"}
+        {isLoggedIn ? "Guardar" : "Inicia sesion para guardar"}
       </IconButton>
     </Box>
   );

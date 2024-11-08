@@ -1,0 +1,9 @@
+.list-layout {
+  display: flex;
+  justify-content: space-around;
+}
+
+.list-content {
+  justify-content: space-around;
+  background-color: white;
+}
