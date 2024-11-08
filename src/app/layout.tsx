@@ -1,6 +1,6 @@
 // RootLayout.tsx
 "use client";
-import { baselightTheme } from "./GlobalTheme";
+import { baselightTheme } from "./global_layout/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, Container, Typography, Box } from "@mui/material";
