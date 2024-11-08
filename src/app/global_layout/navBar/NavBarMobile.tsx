@@ -8,7 +8,7 @@ import NavBarProps from "./NavBarProps";
 
 const NavBarMobile: React.FC<NavBarProps> = ({ query, setQuery }) => {
   return (
-    <Box className="nav-bar-mobile">
+    <Box className="nav-bar-mobile" id="nav-bar-mobile-style">
       <Box
         className="title-layout"
         width="100%"

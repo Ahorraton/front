@@ -8,12 +8,7 @@ import NavBarProps from "./NavBarProps";
 
 const NavBarDesktop: React.FC<NavBarProps> = ({ query, setQuery }) => {
   return (
-    <Box
-      className="nav-bar-desktop"
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-    >
+    <Box className="nav-bar-desktop" id="nav-bar-desktop-style">
       <Box className="title-layout" flex="1" mr={2}>
         <ButtonBase disableRipple href="/" className="title-hover">
           <Typography variant="h1" className="spin-on-hover">
