@@ -18,7 +18,7 @@ import { ConfirmDialog } from "./Dialogs";
 import { Box, List } from "@mui/material";
 import "./list-drawer.css";
 
-const ListDrawer = () => {
+const ListContent = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [clearDialogOpen, setClearDialogOpen] = useState(false);
   const [authChoiceDialogOpen, setAuthChoiceDialogOpen] = useState(false);
@@ -109,12 +109,8 @@ const ListDrawer = () => {
     setRegisterDialogOpen(true);
   };
   return (
-    <Box
-      className="list-drawer-content"
-      id="list-drawer-content"
-      role="presentation"
-    >
-      <Box className="opened-list-drawer">
+    <Box className="list-content" id="list-content" role="presentation">
+      <Box>
         <ListActions
           listName={listName}
           list={list}
@@ -171,4 +167,4 @@ const ListDrawer = () => {
   );
 };
 
-export default ListDrawer;
+export default ListContent;
