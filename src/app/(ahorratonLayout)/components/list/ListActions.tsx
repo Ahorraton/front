@@ -4,13 +4,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { ListItem } from "@/redux/store/listSlice";
+import { ListItemType } from "@/app/types/ListItem";
 import axios from "axios";
 import { fetchUserLists } from "@/utils/apiUtils";
 
 interface ListActionsProps {
   listName: string;
-  list: ListItem[];
+  list: ListItemType[];
   onListNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClearList: () => void;
   onSaveList: () => void;

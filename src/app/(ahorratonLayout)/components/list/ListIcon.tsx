@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Drawer, IconButton, useMediaQuery } from "@mui/material";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import ListContent from "./ListContent";
-import "./list-drawer.css";
+import "./list-style.css";
 
 const ListIconComponent: React.FC = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -22,7 +22,7 @@ const ListIconComponent: React.FC = () => {
         anchor="right"
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        id="list-layout"
+        id="list-layout-style"
         className="list-layout"
       >
         <ListContent />

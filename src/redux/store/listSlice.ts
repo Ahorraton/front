@@ -1,20 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ListItem {
-  id?: string;
-  name?: string;
-  quantity: number;
-  price?: number;
-  ean: string; // Changed to required
-  image_url?: string;
-  urls?: string;
-  market_price?: string; // We have the price here (e.g. coto 2500)
-}
-
-export interface ListState {
-  name: string;
-  items: ListItem[];
-}
+import { ListItemType, ListState } from "@/app/types/ListItem";
 
 const initialState: ListState = {
   name: "Mi lista",
@@ -25,7 +11,7 @@ const listSlice = createSlice({
   name: "list",
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<ListItem>) => {
+    addItem: (state, action: PayloadAction<ListItemType>) => {
       const existingItem = state.items.find(
         (item) => item.ean === action.payload.ean
       );
@@ -37,7 +23,7 @@ const listSlice = createSlice({
 
       // post to api the new change
     },
-    addItems: (state, action: PayloadAction<ListItem[]>) => {
+    addItems: (state, action: PayloadAction<ListItemType[]>) => {
       action.payload.forEach((item) => {
         const existingItem = state.items.find((i) => i.ean === item.ean);
         if (existingItem) {
@@ -71,7 +57,7 @@ const listSlice = createSlice({
     setListName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
-    setList: (state, action: PayloadAction<ListItem[]>) => {
+    setList: (state, action: PayloadAction<ListItemType[]>) => {
       state.items = action.payload;
     },
   },

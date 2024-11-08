@@ -247,7 +247,6 @@ const MiLista: React.FC = () => {
             isListSaved={isListSaved}
             setPendingListId={setPendingListId}
             setOpenDialog={setOpenDialog}
-            labelId="list-selector-label"
           />
         </FormControl>
       </Box>

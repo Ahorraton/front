@@ -1,15 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface List {
-  id: number;
-  user_id: number;
-  name: string;
-}
-
-interface MultipleListsState {
-  lists: List[];
-  selectedListId: number | null;
-}
+import { List, MultipleListsState } from "@/app/types/List";
 
 const initialState: MultipleListsState = {
   lists: [],

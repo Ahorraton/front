@@ -1,7 +1,6 @@
 .list-layout {
   display: flex;
   justify-content: space-around;
-  background-color: white;
 }
 
 .list-content {
