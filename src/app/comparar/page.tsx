@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
-import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
+import PageContainer from "@/app/container/PageContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
 import Product from "./types/Product";
 
