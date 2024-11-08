@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
-import PageContainer from "@/app/global_layout/PageContainer";
+import MetaDataContainer from "@/app/global_layout/PageContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
 import Product from "./types/Product";
 
@@ -105,7 +105,10 @@ const Compare = () => {
   };
 
   return (
-    <PageContainer title="Comparar" description="Compara precios de productos">
+    <MetaDataContainer
+      title="Comparar"
+      description="Compara precios de productos"
+    >
       <Box className="compare-layout">
         {loading ? (
           <Box className="loading-layout">
@@ -177,7 +180,7 @@ const Compare = () => {
           </Box>
         )}
       </Box>
-    </PageContainer>
+    </MetaDataContainer>
   );
 };
 

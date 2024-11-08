@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Box, Paper, Skeleton, Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
-import PageContainer from "@/app/global_layout/PageContainer";
+import MetaDataContainer from "@/app/global_layout/PageContainer";
 import Product from "@/app/(ahorratonLayout)/components/types/Product";
 import { fetch_async } from "@/utils/common/fetch_async";
 import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
@@ -61,7 +61,7 @@ export default function Home() {
   }, [selectedFeaturedProduct]);
 
   return (
-    <PageContainer title="Ahorraton" description="Ahorra en grande">
+    <MetaDataContainer title="Ahorraton" description="Ahorra en grande">
       {loading ? (
         <Box py={4} p={4} component="div" sx={{ position: "relative" }}>
           <LoadingHeroComponent />
@@ -88,6 +88,6 @@ export default function Home() {
           </Box>
         </Box>
       )}
-    </PageContainer>
+    </MetaDataContainer>
   );
 }

@@ -7,7 +7,7 @@ type Props = {
   title?: string;
 };
 
-const PageContainer = ({ title, description, children }: Props) => (
+const MetaDataContainer = ({ title, description, children }: Props) => (
   <HelmetProvider>
     <Helmet>
       <title>{title}</title>
@@ -18,4 +18,4 @@ const PageContainer = ({ title, description, children }: Props) => (
   </HelmetProvider>
 );
 
-export default PageContainer;
+export default MetaDataContainer;

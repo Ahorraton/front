@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Box, Typography, Button } from "@mui/material";
-import PageContainer from "../global_layout/PageContainer";
+import MetaDataContainer from "../global_layout/PageContainer";
 import ProductFilters from "../(ahorratonLayout)/components/product_search/GridFilter";
 import { fetch_async } from "../../utils/common/fetch_async";
 import Product from "../(ahorratonLayout)/components/types/Product";
@@ -88,7 +88,7 @@ const Search = () => {
   };
 
   return (
-    <PageContainer title="Buscar" description="Buscar">
+    <MetaDataContainer title="Buscar" description="Buscar">
       <Box className="page-layout">
         <ProductFilters fetchFunc={fetchProducts} />
         <br />
@@ -114,7 +114,7 @@ const Search = () => {
           </Box>
         )}
       </Box>
-    </PageContainer>
+    </MetaDataContainer>
   );
 };
 
