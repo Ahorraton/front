@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, ButtonBase, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
-import UserIcon from "../../components/user/UserIcon";
-import ListIcon from "../../components/list/ListIcon";
+import UserIcon from "../user/UserIcon";
+import ListIcon from "../list/ListIcon";
 import "./nav_bar.css";
 import NavBarProps from "./NavBarProps";
 

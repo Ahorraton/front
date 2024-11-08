@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, Container, Typography, Box } from "@mui/material";
 import React from "react";
-import NavBar from "./(ahorratonLayout)/components/NavBar/NavBar";
+import NavBar from "./(ahorratonLayout)/components/navBar/NavBar";
 import Footer from "./(ahorratonLayout)/components/footer/Footer";
 import { useSearchParams } from "next/navigation";
 import { Provider } from "react-redux";
