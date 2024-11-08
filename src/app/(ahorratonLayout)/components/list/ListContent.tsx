@@ -16,7 +16,7 @@ import ListItemComponent from "./ListItemComponent";
 import ListActions from "./ListActions";
 import { ConfirmDialog } from "./Dialogs";
 import { Box, List } from "@mui/material";
-import "./list-drawer.css";
+import "./list-style.css";
 
 const ListContent = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
