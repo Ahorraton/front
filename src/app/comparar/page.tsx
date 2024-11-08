@@ -11,19 +11,18 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
-import ProductPaper from "@/app/comparar/ProductPaper";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
 import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
 import Product from "./types/Product";
 
 import "./compare.css";
 import { useSearchParams } from "next/navigation";
-import ProductCardSearch from "../buscar/cardComponent";
+import ProductCardSearch from "./cardComponent";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
-import { LoadingCompareScreen } from "./LoadingPrices";
+import { LoadingCompareScreen } from "./loadingScreens/LoadingPrices";
 
 const LIMIT = 8;
 
