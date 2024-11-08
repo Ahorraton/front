@@ -3,18 +3,11 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { Box } from "@mui/material";
+import "./footer.css";
 
 export default function Footer() {
   return (
-    <Box
-      sx={{
-        marginTop: "auto",
-        p: 2,
-        backgroundColor: "#02c0ff",
-      }}
-      component="footer"
-      id="footer"
-    >
+    <Box className="footer" component="footer" id="footer">
       <Container maxWidth="sm">
         <Typography variant="body2" color="text.secondary" align="center">
           {"Hecho con cariño por "}

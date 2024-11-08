@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, ButtonBase, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
-import UserIcon from "../user/UserIcon";
-import ListIcon from "../list/ListIcon";
+import UserIcon from "../../(ahorratonLayout)/components/user/UserIcon";
+import ListIcon from "../../(ahorratonLayout)/components/list/ListIcon";
 import "./nav_bar.css";
 import NavBarProps from "./NavBarProps";
 

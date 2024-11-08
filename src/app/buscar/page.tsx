@@ -98,7 +98,9 @@ const Search = () => {
               No se encontraron productos.
             </Typography>
           ) : (
-            <FeaturedProducts products={products} />
+            <Typography variant="h6" align="center">
+              Resultados de la búsqueda
+            </Typography>
           )}
         </Box>
         <br />
