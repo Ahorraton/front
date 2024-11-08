@@ -82,12 +82,10 @@ const ListActions: React.FC<ListActionsProps> = ({
         onChange={onListNameChange}
         fullWidth
       />
-      <IconButton color="secondary" onClick={onClearList}>
-        <DeleteIcon /> Borrar mi lista
-      </IconButton>
+
       <IconButton color="primary" onClick={handleSaveList}>
         <SaveIcon />
-        {isLoggedIn ? "Ver mi lista en detalle" : "Guardar mi lista"}
+        {isLoggedIn ? "Guardar" : "Inicia sesion para guardar"}
       </IconButton>
     </Box>
   );

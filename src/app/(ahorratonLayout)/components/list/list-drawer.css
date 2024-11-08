@@ -1,0 +1,13 @@
+.list-drawer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.opened-list-drawer {
+  background-color: white;
+  width: 300px;
+}
+
+.list-drawer-content {
+  justify-content: space-around;
+}
