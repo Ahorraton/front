@@ -8,16 +8,9 @@ import "./nav_bar.css";
 interface NavBarDesktopProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  compareSearch: boolean;
-  setCompareSearch: (e: boolean) => void;
 }
 
-const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
-  query,
-  setQuery,
-  compareSearch,
-  setCompareSearch,
-}) => {
+const NavBarDesktop: React.FC<NavBarDesktopProps> = ({ query, setQuery }) => {
   return (
     <Box
       className="nav-bar-layout"
@@ -34,12 +27,7 @@ const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
         </ButtonBase>
       </Box>
       <Box flex="2">
-        <SearchBar
-          starting_query={query}
-          set={setQuery}
-          compareSearch={compareSearch}
-          setCompareSearch={setCompareSearch}
-        />
+        <SearchBar starting_query={query} set={setQuery} />
       </Box>
       <Box
         className="about-us-layout"

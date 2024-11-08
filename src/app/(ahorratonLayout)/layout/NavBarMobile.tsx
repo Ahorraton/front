@@ -8,16 +8,9 @@ import "./nav_bar.css";
 interface NavBarMobileProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  compareSearch: boolean;
-  setCompareSearch: (e: boolean) => void;
 }
 
-const NavBarMobile: React.FC<NavBarMobileProps> = ({
-  query,
-  setQuery,
-  compareSearch,
-  setCompareSearch,
-}) => {
+const NavBarMobile: React.FC<NavBarMobileProps> = ({ query, setQuery }) => {
   return (
     <Box className="nav-bar-layout-mobile">
       <Box
@@ -46,12 +39,7 @@ const NavBarMobile: React.FC<NavBarMobileProps> = ({
         <UserIcon />
       </Box>
       <Box width="100%" padding="10px">
-        <SearchBar
-          starting_query={query}
-          set={setQuery}
-          compareSearch={compareSearch}
-          setCompareSearch={setCompareSearch}
-        />
+        <SearchBar starting_query={query} set={setQuery} />
       </Box>
     </Box>
   );

@@ -3,7 +3,7 @@
 import { baselightTheme } from "./(ahorratonLayout)/theme/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { styled, Container } from "@mui/material";
+import { styled, Container, Typography } from "@mui/material";
 import React from "react";
 import NavBar from "./(ahorratonLayout)/layout/NavBar";
 import Footer from "./(ahorratonLayout)/layout/Footer";
@@ -25,13 +25,7 @@ export default function RootLayout({
 }) {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
-  let compare = false;
-  if (typeof window !== "undefined") {
-    if (window.location.pathname === "/comparar") {
-      compare = true;
-    }
-  }
-  const [compareSearch, setCompareSearch] = React.useState<boolean>(compare);
+
   return (
     <html lang="en">
       <body>
@@ -40,11 +34,7 @@ export default function RootLayout({
             <ThemeProvider theme={baselightTheme}>
               <CssBaseline />
               <MainWrapper className="mainwrapper">
-                <NavBar
-                  query_param={query}
-                  setCompareSearch={setCompareSearch}
-                  compareSearch={compareSearch}
-                />
+                <NavBar query_param={query} />
                 <br />
                 <Container maxWidth="xl">{children}</Container>
                 <br />
