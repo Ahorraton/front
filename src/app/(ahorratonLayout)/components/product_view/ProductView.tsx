@@ -1,6 +1,7 @@
 import { Box, Dialog, DialogContent, DialogTitle, Grid } from "@mui/material";
 import Product from "@/app/comparar/types/Product";
 import Price from "@/app/comparar/Price";
+import "./product_view.css";
 
 interface ProductPageDetailsProps {
   product: Product;
@@ -55,13 +56,18 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   const urls = product.urls.split(",");
   const minPrice = Math.min(...prices);
   return (
-    <Dialog open={true} onClose={onClose} aria-labelledby="product-page-title">
+    <Dialog
+      open={true}
+      onClose={onClose}
+      aria-labelledby="product-page-title"
+      className="product-view"
+    >
       <DialogTitle id="recipe-dialog-title" align="center">
         {title}
       </DialogTitle>
 
       <DialogContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className="product-view-grid">
           <Box display="flex" alignItems="center" justifyContent="center">
             <Grid item xs={12} sm={4}>
               <Box

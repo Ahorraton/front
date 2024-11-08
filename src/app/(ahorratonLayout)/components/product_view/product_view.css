@@ -1,0 +1,11 @@
+.product-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-view-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
