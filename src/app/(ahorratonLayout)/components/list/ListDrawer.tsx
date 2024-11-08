@@ -64,17 +64,9 @@ const ListDrawer = () => {
     setDialogOpen(false);
   };
 
-  const handleClearList = () => {
-    setClearDialogOpen(true);
-  };
-
   const confirmClearList = () => {
     dispatch(clearList());
     setClearDialogOpen(false);
-  };
-
-  const handleListNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setListName(event.target.value));
   };
 
   const handleSaveList = async () => {
@@ -107,18 +99,6 @@ const ListDrawer = () => {
     }
   };
 
-  const handleAuthChoiceClose = () => {
-    setAuthChoiceDialogOpen(false);
-  };
-
-  const handleLoginClose = () => {
-    setLoginDialogOpen(false);
-  };
-
-  const handleRegisterClose = () => {
-    setRegisterDialogOpen(false);
-  };
-
   const handleLogin = () => {
     setAuthChoiceDialogOpen(false);
     setLoginDialogOpen(true);
@@ -138,8 +118,10 @@ const ListDrawer = () => {
         <ListActions
           listName={listName}
           list={list}
-          onListNameChange={handleListNameChange}
-          onClearList={handleClearList}
+          onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            dispatch(setListName(event.target.value))
+          }
+          onClearList={() => setClearDialogOpen(true)}
           onSaveList={handleSaveList}
           isLoggedIn={user.isLoggedIn}
         />
@@ -173,12 +155,18 @@ const ListDrawer = () => {
       />
       <AuthChoiceModal
         open={authChoiceDialogOpen}
-        onClose={handleAuthChoiceClose}
+        onClose={() => setAuthChoiceDialogOpen(false)}
         onLogin={handleLogin}
         onRegister={handleRegister}
       />
-      <LoginModal open={loginDialogOpen} onClose={handleLoginClose} />
-      <RegisterModal open={registerDialogOpen} onClose={handleRegisterClose} />
+      <LoginModal
+        open={loginDialogOpen}
+        onClose={() => setLoginDialogOpen(false)}
+      />
+      <RegisterModal
+        open={registerDialogOpen}
+        onClose={() => setRegisterDialogOpen(false)}
+      />
     </Box>
   );
 };
