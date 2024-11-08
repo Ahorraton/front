@@ -9,7 +9,7 @@ import { fetch_async } from "@/utils/common/fetch_async";
 import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
-import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
+import { Recipe } from "../types/Recipe";
 import { LoadingFeaturedProducts } from "./loadingScreens/LoadingFeaturedProducts";
 import { LoadingHeroComponent } from "./loadingScreens/LoadingRecipes";
 

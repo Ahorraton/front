@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Recipe } from "../types/Recipe";
+import { Recipe } from "../../../types/Recipe";
 
 export const RecipeDescription: React.FC<Recipe> = ({
   title,

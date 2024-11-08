@@ -13,7 +13,7 @@ import {
 import { addItems } from "../../redux/store/listSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { fetch_async } from "../../utils/common/fetch_async";
-import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
+import { Recipe } from "../types/Recipe";
 
 interface RecipeDetailsProps {
   recipeId: number;
