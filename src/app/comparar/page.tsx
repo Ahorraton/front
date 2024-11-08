@@ -12,7 +12,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
-import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
+import { fetch_async } from "@/utils/common/fetch_async";
 import Product from "./types/Product";
 
 import "./compare.css";

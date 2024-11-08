@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { Grid } from "@mui/material";
 import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
 import Product from "@/app/(ahorratonLayout)/components/types/Product";
-import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
+import { fetch_async } from "@/utils/common/fetch_async";
 import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";

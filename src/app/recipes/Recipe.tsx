@@ -14,7 +14,7 @@ import RecipeDetails from "./RecipeDetails";
 import { fetchRecipe } from "../../utils/apiUtils";
 import { useDispatch } from "react-redux";
 import { Recipe } from "@/app/(ahorratonLayout)/components/types/Recipe";
-import { fetch_async } from "../(ahorratonLayout)/async/common/fetch_async";
+import { fetch_async } from "../../utils/common/fetch_async";
 
 export default function RecipePage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

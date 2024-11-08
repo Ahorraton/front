@@ -12,7 +12,7 @@ import {
 
 import { addItems } from "../../redux/store/listSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { fetch_async } from "../(ahorratonLayout)/async/common/fetch_async";
+import { fetch_async } from "../../utils/common/fetch_async";
 import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
 
 interface RecipeDetailsProps {
