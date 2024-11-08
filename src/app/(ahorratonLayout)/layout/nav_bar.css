@@ -1,37 +1,39 @@
-.nav-bar-layout {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-top: 1%;
-    padding-bottom: 1%;
+.nav-bar-desktop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: white;
 }
 
-.nav-bar-layout-mobile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 1%;
+.nav-bar-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1%;
+  background-color: white;
 }
 
 .about-us-layout {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .title-layout {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .title-hover:hover .spin-on-hover {
-    animation: spin 0.3s linear;
+  animation: spin 0.3s linear;
 }

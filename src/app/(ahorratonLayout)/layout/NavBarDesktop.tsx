@@ -13,7 +13,7 @@ interface NavBarDesktopProps {
 const NavBarDesktop: React.FC<NavBarDesktopProps> = ({ query, setQuery }) => {
   return (
     <Box
-      className="nav-bar-layout"
+      className="nav-bar-desktop"
       display="flex"
       justifyContent="space-between"
       alignItems="center"

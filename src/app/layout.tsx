@@ -3,7 +3,7 @@
 import { baselightTheme } from "./(ahorratonLayout)/theme/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { styled, Container, Typography } from "@mui/material";
+import { styled, Container, Typography, Box } from "@mui/material";
 import React from "react";
 import NavBar from "./(ahorratonLayout)/layout/NavBar";
 import Footer from "./(ahorratonLayout)/layout/Footer";

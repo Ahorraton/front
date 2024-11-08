@@ -12,7 +12,7 @@ interface NavBarMobileProps {
 
 const NavBarMobile: React.FC<NavBarMobileProps> = ({ query, setQuery }) => {
   return (
-    <Box className="nav-bar-layout-mobile">
+    <Box className="nav-bar-mobile">
       <Box
         className="title-layout"
         width="100%"
