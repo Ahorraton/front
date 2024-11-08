@@ -43,11 +43,7 @@ export default function RootLayout({
                 <NavBar query_param={query} />
 
                 <BodyStyle className="bodystyle" id="main-content-style">
-                  <Container
-                    component="main"
-                    className="bodystyle"
-                    id="main-content"
-                  >
+                  <Container component="main" id="main-content">
                     {children}
                   </Container>
                 </BodyStyle>
