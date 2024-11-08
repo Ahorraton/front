@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Card } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 interface Product {
   ean: string;
@@ -27,6 +27,7 @@ interface cardComponentProps {
   product: Product;
   addProduct: (product: Product) => void;
   setProductPage: (product: Product) => void;
+  setShowAlert: (showAlert: Boolean) => void;
 }
 
 type StoreNames =
@@ -53,6 +54,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
   product: { ean, market_price, names_list, image_url, urls, dir_sucursal },
   addProduct,
   setProductPage,
+  setShowAlert,
 }) => {
   const products = market_price
     .split(", ")
@@ -155,7 +157,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
               backgroundColor: "#522719",
             },
           }}
-          onClick={() =>
+          onClick={() => {
             addProduct({
               ean,
               market_price,
@@ -163,8 +165,9 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
               image_url,
               urls,
               dir_sucursal,
-            })
-          }
+            });
+            setShowAlert(true);
+          }}
         >
           <Typography variant="h6" color="white">
             {"Agregar a la lista"}

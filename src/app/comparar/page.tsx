@@ -8,6 +8,7 @@ import {
   CircularProgress,
   AccordionSummary,
   Accordion,
+  Alert,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
@@ -23,6 +24,7 @@ import { addItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
 import { LoadingCompareScreen } from "./loadingScreens/LoadingPrices";
+import SelectedItemAlert from "./selectedItemAlert";
 
 const LIMIT = 8;
 
@@ -42,6 +44,8 @@ const Compare = () => {
     "jumbo",
   ]);
   const [productPage, setProductPage] = useState<Product | null>(null);
+
+  const [showAlert, setShowAlert] = useState<Boolean>(false);
 
   useEffect(() => {
     fetchProducts();
@@ -149,10 +153,17 @@ const Compare = () => {
                 product={product}
                 addProduct={handleAddProduct}
                 setProductPage={setProductPage}
+                setShowAlert={setShowAlert}
               />
             </Grid>
           ))}
         </Grid>
+
+        {showAlert && (
+          <Box className="alert-box" id="alert-box">
+            <SelectedItemAlert setShowAlert={setShowAlert} />
+          </Box>
+        )}
 
         {productPage && (
           <ProductView
@@ -160,6 +171,7 @@ const Compare = () => {
             onClose={() => setProductPage(null)}
           />
         )}
+
         {loadMore && (
           <Box display="flex" justifyContent="center" py="1%">
             <Button

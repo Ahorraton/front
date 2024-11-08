@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import { Box, Paper, Skeleton, Typography } from "@mui/material";
-import { Button } from "@mui/material";
-import { Grid } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import Product from "@/app/(ahorratonLayout)/components/types/Product";
 import { fetch_async } from "@/utils/common/fetch_async";
