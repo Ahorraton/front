@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Box, Typography, Button } from "@mui/material";
-import MetaDataContainer from "../global_layout/PageContainer";
+import MetaDataContainer from "../global_layout/MetaDataContainer";
 import ProductFilters from "../(ahorratonLayout)/components/product_search/GridFilter";
 import { fetch_async } from "../../utils/common/fetch_async";
 import Product from "../(ahorratonLayout)/components/types/Product";
