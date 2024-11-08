@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
-import PageContainer from "@/app/(ahorratonLayout)/components/container/PageContainer";
-import { fetch_async } from "@/app/(ahorratonLayout)/async/common/fetch_async";
+import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
+import { fetch_async } from "@/utils/common/fetch_async";
 import Product from "./types/Product";
 
 import "./compare.css";
@@ -53,10 +53,10 @@ const Compare = () => {
       return;
     }
 
-    let uri = "/products_ean/" + query + `?offset=0` + `&limit=${LIMIT}`;
-
     try {
-      const res = await fetch_async(uri);
+      const res = await fetch_async(
+        `/products_ean/${query}?offset=0&limit=${LIMIT}`
+      );
       const products_result: Product[] = res.products ? res.products : [];
       setLoading(false);
       setLoadMore(products.length + products_result.length < res.count);
@@ -70,13 +70,10 @@ const Compare = () => {
   };
 
   const fetchMoreProducts = async () => {
-    let uri =
-      "/products_ean/" +
-      query +
-      `?offset=${products.length}` +
-      `&limit=${LIMIT}`;
     try {
-      const res = await fetch_async(uri);
+      const res = await fetch_async(
+        `/products_ean/${query}?offset=${products.length}&limit=${LIMIT}`
+      );
       const products_result: Product[] = res.products ? res.products : [];
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
@@ -105,7 +102,10 @@ const Compare = () => {
   };
 
   return (
-    <PageContainer title="Comparar" description="Compara precios de productos">
+    <MetaDataContainer
+      title="Comparar"
+      description="Compara precios de productos"
+    >
       <Box className="compare-layout">
         {loading ? (
           <Box className="loading-layout">
@@ -177,7 +177,7 @@ const Compare = () => {
           </Box>
         )}
       </Box>
-    </PageContainer>
+    </MetaDataContainer>
   );
 };
 

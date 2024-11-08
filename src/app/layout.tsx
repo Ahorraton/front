@@ -1,12 +1,12 @@
 // RootLayout.tsx
 "use client";
-import { baselightTheme } from "./(ahorratonLayout)/theme/GlobalTheme";
+import { baselightTheme } from "./global_layout/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { styled, Container } from "@mui/material";
+import { styled, Container, Typography, Box } from "@mui/material";
 import React from "react";
-import NavBar from "./(ahorratonLayout)/layout/NavBar";
-import Footer from "./(ahorratonLayout)/layout/Footer";
+import NavBar from "./global_layout/navBar/NavBar";
+import Footer from "./global_layout/footer/Footer";
 import { useSearchParams } from "next/navigation";
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store";
@@ -18,6 +18,12 @@ const MainWrapper = styled("div")(() => ({
   minHeight: "100vh",
 }));
 
+const BodyStyle = styled("div")(() => ({
+  marginTop: "2%",
+  marginBottom: "2%",
+  maxWidth: "xl",
+}));
+
 export default function RootLayout({
   children,
 }: {
@@ -25,13 +31,7 @@ export default function RootLayout({
 }) {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
-  let compare = false;
-  if (typeof window !== "undefined") {
-    if (window.location.pathname === "/comparar") {
-      compare = true;
-    }
-  }
-  const [compareSearch, setCompareSearch] = React.useState<boolean>(compare);
+
   return (
     <html lang="en">
       <body>
@@ -39,15 +39,15 @@ export default function RootLayout({
           <PersistGate loading={null} persistor={persistor}>
             <ThemeProvider theme={baselightTheme}>
               <CssBaseline />
-              <MainWrapper className="mainwrapper">
-                <NavBar
-                  query_param={query}
-                  setCompareSearch={setCompareSearch}
-                  compareSearch={compareSearch}
-                />
-                <br />
-                <Container maxWidth="xl">{children}</Container>
-                <br />
+              <MainWrapper className="mainwrapper" id="main-wrapper-style">
+                <NavBar query_param={query} />
+
+                <BodyStyle className="bodystyle" id="main-content-style">
+                  <Container component="main" id="main-content">
+                    {children}
+                  </Container>
+                </BodyStyle>
+
                 <Footer />
               </MainWrapper>
             </ThemeProvider>

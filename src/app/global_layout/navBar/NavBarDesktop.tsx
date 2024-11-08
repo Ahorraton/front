@@ -1,26 +1,15 @@
 import React from "react";
 import { Box, ButtonBase, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
-import UserIcon from "../components/user/UserIcon";
-import ListIcon from "../components/list/ListIcon";
+import UserIcon from "../../(ahorratonLayout)/components/user/UserIcon";
+import ListIcon from "../../(ahorratonLayout)/components/list/ListIcon";
 import "./nav_bar.css";
+import NavBarProps from "./NavBarProps";
 
-interface NavBarDesktopProps {
-  query: string;
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
-  compareSearch: boolean;
-  setCompareSearch: (e: boolean) => void;
-}
-
-const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
-  query,
-  setQuery,
-  compareSearch,
-  setCompareSearch,
-}) => {
+const NavBarDesktop: React.FC<NavBarProps> = ({ query, setQuery }) => {
   return (
     <Box
-      className="nav-bar-layout"
+      className="nav-bar-desktop"
       display="flex"
       justifyContent="space-between"
       alignItems="center"
@@ -34,12 +23,7 @@ const NavBarDesktop: React.FC<NavBarDesktopProps> = ({
         </ButtonBase>
       </Box>
       <Box flex="2">
-        <SearchBar
-          starting_query={query}
-          set={setQuery}
-          compareSearch={compareSearch}
-          setCompareSearch={setCompareSearch}
-        />
+        <SearchBar starting_query={query} set={setQuery} />
       </Box>
       <Box
         className="about-us-layout"

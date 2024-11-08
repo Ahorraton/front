@@ -1,25 +1,14 @@
 import React from "react";
 import { Box, ButtonBase, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
-import UserIcon from "../components/user/UserIcon";
-import ListIcon from "../components/list/ListIcon";
+import UserIcon from "../../(ahorratonLayout)/components/user/UserIcon";
+import ListIcon from "../../(ahorratonLayout)/components/list/ListIcon";
 import "./nav_bar.css";
+import NavBarProps from "./NavBarProps";
 
-interface NavBarMobileProps {
-  query: string;
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
-  compareSearch: boolean;
-  setCompareSearch: (e: boolean) => void;
-}
-
-const NavBarMobile: React.FC<NavBarMobileProps> = ({
-  query,
-  setQuery,
-  compareSearch,
-  setCompareSearch,
-}) => {
+const NavBarMobile: React.FC<NavBarProps> = ({ query, setQuery }) => {
   return (
-    <Box className="nav-bar-layout-mobile">
+    <Box className="nav-bar-mobile">
       <Box
         className="title-layout"
         width="100%"
@@ -46,12 +35,7 @@ const NavBarMobile: React.FC<NavBarMobileProps> = ({
         <UserIcon />
       </Box>
       <Box width="100%" padding="10px">
-        <SearchBar
-          starting_query={query}
-          set={setQuery}
-          compareSearch={compareSearch}
-          setCompareSearch={setCompareSearch}
-        />
+        <SearchBar starting_query={query} set={setQuery} />
       </Box>
     </Box>
   );

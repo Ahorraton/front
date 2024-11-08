@@ -12,8 +12,8 @@ import {
 
 import { addItems } from "../../redux/store/listSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { fetch_async } from "../(ahorratonLayout)/async/common/fetch_async";
-import { Recipe } from "../(ahorratonLayout)/components/types/Recipe";
+import { fetch_async } from "../../utils/common/fetch_async";
+import { Recipe } from "../types/Recipe";
 
 interface RecipeDetailsProps {
   recipeId: number;
@@ -56,7 +56,12 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipeId, onClose }) => {
   };
 
   return (
-    <Dialog open={true} onClose={onClose} aria-labelledby="recipe-dialog-title">
+    <Dialog
+      open={true}
+      onClose={onClose}
+      aria-labelledby="recipe-dialog-title"
+      id="recipe-details-dialog"
+    >
       <DialogTitle id="recipe-dialog-title">
         {loading ? "Loading Recipe..." : recipe?.title}
       </DialogTitle>
@@ -79,10 +84,18 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipeId, onClose }) => {
         ) : null}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onAddList} color="secondary">
+        <Button
+          onClick={onAddList}
+          color="secondary"
+          id="recipe-dialog-add-to-list-button"
+        >
           Add to list
         </Button>
-        <Button onClick={onClose} color="primary">
+        <Button
+          onClick={onClose}
+          color="primary"
+          id="recipe-dialog-close-button"
+        >
           Close
         </Button>
       </DialogActions>
