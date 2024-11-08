@@ -15,14 +15,13 @@ import { fetchRecipe } from "../../utils/apiUtils";
 import { useDispatch } from "react-redux";
 import { Recipe } from "@/app/types/Recipe";
 import { fetch_async } from "../../utils/common/fetch_async";
+import "./recipe.css";
 
 export default function RecipePage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -53,12 +52,28 @@ export default function RecipePage() {
     );
   }
 
+  if (error) {
+    return (
+      <Box component="div" className=".error-message" id="recipes-error-box">
+        <Typography color="error">
+          Se produjo el siguiente error: {error}
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
-    <>
-      <Typography variant="h5" component="h2" gutterBottom>
+    <Box component="div" id="recipes-div">
+      <Typography
+        variant="h5"
+        component="h2"
+        gutterBottom
+        id="featured-recipes-title"
+      >
         Featured Recipes
       </Typography>
-      <Grid container spacing={4}>
+
+      <Grid container spacing={4} id="recipes-grid">
         {recipes.map((recipe) => (
           <Grid item key={recipe.id} xs={12} sm={6} md={4}>
             <Card
@@ -87,6 +102,6 @@ export default function RecipePage() {
           onAddList={() => console.log("Adding to list")}
         />
       )}
-    </>
+    </Box>
   );
 }
