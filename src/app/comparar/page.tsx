@@ -25,6 +25,8 @@ import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
 import { LoadingCompareScreen } from "./loadingScreens/LoadingPrices";
 import SelectedItemAlert from "./selectedItemAlert";
+import NoProductsFound from "./errorMessage/NoProductsFound";
+import ErrorPage from "./errorMessage/ErrorComponent";
 
 const LIMIT = 8;
 
@@ -115,6 +117,10 @@ const Compare = () => {
           <Box className="loading-layout">
             <LoadingCompareScreen />
           </Box>
+        ) : error ? (
+          <ErrorPage />
+        ) : products.length === 0 && !loading && !error ? (
+          <NoProductsFound />
         ) : (
           <Box className="compare-layout">
             <Accordion>
@@ -133,31 +139,33 @@ const Compare = () => {
                 handleMarketChange={handleMarketChange}
               />
             </Accordion>
-          </Box>
-        )}
-        {error && (
-          <Box className="error-layout">
-            <Typography variant="h5" color="error">
-              Error al cargar los productos
-            </Typography>
-            <Typography variant="body1" color="error">
-              Por favor intente mas tarde.
-            </Typography>
-          </Box>
-        )}
 
-        <Grid container spacing={2} py={4}>
-          {products.map((product: Product) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
-              <ProductCardSearch
-                product={product}
-                addProduct={handleAddProduct}
-                setProductPage={setProductPage}
-                setShowAlert={setShowAlert}
-              />
+            <Grid container spacing={2} py={4}>
+              {products.map((product: Product) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
+                  <ProductCardSearch
+                    product={product}
+                    addProduct={handleAddProduct}
+                    setProductPage={setProductPage}
+                    setShowAlert={setShowAlert}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+
+            {loadMore && (
+              <Box display="flex" justifyContent="center" py="1%">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={fetchMoreProducts}
+                >
+                  Cargar más
+                </Button>
+              </Box>
+            )}
+          </Box>
+        )}
 
         {showAlert && (
           <Box className="alert-box" id="alert-box">
@@ -170,23 +178,6 @@ const Compare = () => {
             product={productPage}
             onClose={() => setProductPage(null)}
           />
-        )}
-
-        {loadMore && (
-          <Box display="flex" justifyContent="center" py="1%">
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={fetchMoreProducts}
-            >
-              Cargar más
-            </Button>
-          </Box>
-        )}
-        {products.length === 0 && !loading && !error && (
-          <Box display="flex" justifyContent="center">
-            <Typography variant="h5">No se encontraron productos</Typography>
-          </Box>
         )}
       </Box>
     </MetaDataContainer>
