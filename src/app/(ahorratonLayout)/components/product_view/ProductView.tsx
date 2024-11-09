@@ -9,6 +9,8 @@ interface ProductPageDetailsProps {
   onClose: () => void;
 }
 
+const DEFAULT_PROD_IMG = "/images/stock_product/default_prod_img.png";
+
 export const ProductView: React.FC<ProductPageDetailsProps> = ({
   product,
   onClose,
@@ -35,12 +37,15 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   );
   const urls = product.urls.split(",");
   const minPrice = Math.min(...prices);
+
+  const prod_img = product.image_url ?? DEFAULT_PROD_IMG;
+
   return (
     <Dialog
       open={true}
       onClose={onClose}
       aria-labelledby="product-page-title"
-      className="product-view"
+      className="selected-product-view"
       id="selected-product-view"
     >
       <DialogTitle id="selected-product-title" align="center">
@@ -48,18 +53,19 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
       </DialogTitle>
 
       <DialogContent>
-        <Grid container spacing={2} className="selected-product-view-grid">
+        <Grid
+          container
+          spacing={2}
+          className="selected-product-view-grid"
+          id="selected-product-grid"
+        >
           <Box display="flex" alignItems="center" justifyContent="center">
             <Grid item xs={12} sm={4}>
               <Box
                 component="img"
-                // src={image_url ?? storeIconMap.default}
-                src={getStoreIcon("")}
-                sx={{
-                  maxWidth: "200px",
-                  height: "auto",
-                  borderRadius: "30px",
-                }}
+                src={prod_img}
+                id="selected-product-img"
+                className="selected-product-img"
               />
             </Grid>
 

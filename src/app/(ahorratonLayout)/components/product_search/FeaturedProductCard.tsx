@@ -16,7 +16,7 @@ import { RootState } from "../../../../redux/store";
 import { Product } from "@/app/types/Product";
 import "./product_card.css";
 
-const defaultProdImage = "/images/stock_product/default_prod_img.png";
+const DEFAULT_PROD_IMG = "/images/stock_product/default_prod_img.png";
 
 export const FeaturedProductCard = ({
   product,
@@ -25,7 +25,7 @@ export const FeaturedProductCard = ({
   product: Product;
   onClickSearch: (prod_name: string) => void;
 }) => {
-  const productImg = product.image_url ? product.image_url : defaultProdImage;
+  const productImg = product.image_url ? product.image_url : DEFAULT_PROD_IMG;
 
   return (
     <Box
