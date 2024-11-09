@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import IconMarket from "@/utils/IconMarket";
+import IconMarket from "@/utils/storeIconMap/IconMarket";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";

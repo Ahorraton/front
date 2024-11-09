@@ -1,4 +1,4 @@
-import IconMarket from "@/utils/IconMarket";
+import IconMarket from "@/utils/storeIconMap/IconMarket";
 import {
   Box,
   Button,
