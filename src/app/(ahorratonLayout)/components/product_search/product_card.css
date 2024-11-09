@@ -46,6 +46,7 @@
 }
 
 .featured-product-title {
-  text-align: "center";
+  text-align: center;
+  align-items: center;
   color: white;
 }
