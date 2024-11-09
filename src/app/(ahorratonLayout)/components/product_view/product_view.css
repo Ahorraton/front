@@ -1,11 +1,17 @@
-.product-view {
+.selected-product-view {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.product-view-grid {
+.selected-product-view-grid {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.selected-product-img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 30px;
 }

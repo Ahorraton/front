@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, FormControlLabel, Checkbox } from "@mui/material";
-import IconMarket from "@/utils/IconMarket";
+import IconMarket from "@/utils/storeIconMap/IconMarket";
 
 type FiltersProps = {
   selectedMarkets: string[];

@@ -2,11 +2,14 @@ import { Box, Dialog, DialogContent, DialogTitle, Grid } from "@mui/material";
 import Product from "@/app/comparar/types/Product";
 import Price from "@/app/comparar/Price";
 import "./product_view.css";
+import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";
 
 interface ProductPageDetailsProps {
   product: Product;
   onClose: () => void;
 }
+
+const DEFAULT_PROD_IMG = "/images/stock_product/default_prod_img.png";
 
 export const ProductView: React.FC<ProductPageDetailsProps> = ({
   product,
@@ -26,27 +29,6 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   const cheapestProduct = products[0];
   const title = product.names_list.split(",")[0];
 
-  console.log("Dentro de card", products);
-  console.log("Aca estoy", product);
-  type StoreNames =
-    | "dia"
-    | "carrefour"
-    | "vea"
-    | "coto"
-    | "jumbo"
-    | "disco"
-    | "default";
-
-  const storeIconMap: Record<StoreNames, string> = {
-    dia: "/images/logos/logo_dia.svg",
-    carrefour: "/images/logos/logo_carrefour.svg",
-    vea: "/images/logos/logo_vea.png",
-    coto: "/images/logos/logo_coto.svg",
-    jumbo: "/images/logos/logo_jumbo.png",
-    disco: "/images/logos/logo_disco.svg",
-    default: "",
-  };
-
   const price_and_market = product.market_price
     .split(",")
     .map((pair) => pair.trim());
@@ -55,30 +37,35 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   );
   const urls = product.urls.split(",");
   const minPrice = Math.min(...prices);
+
+  const prod_img = product.image_url ?? DEFAULT_PROD_IMG;
+
   return (
     <Dialog
       open={true}
       onClose={onClose}
       aria-labelledby="product-page-title"
-      className="product-view"
+      className="selected-product-view"
+      id="selected-product-view"
     >
-      <DialogTitle id="recipe-dialog-title" align="center">
+      <DialogTitle id="selected-product-title" align="center">
         {title}
       </DialogTitle>
 
       <DialogContent>
-        <Grid container spacing={2} className="product-view-grid">
+        <Grid
+          container
+          spacing={2}
+          className="selected-product-view-grid"
+          id="selected-product-grid"
+        >
           <Box display="flex" alignItems="center" justifyContent="center">
             <Grid item xs={12} sm={4}>
               <Box
                 component="img"
-                // src={image_url ?? storeIconMap.default}
-                src={storeIconMap.default}
-                sx={{
-                  maxWidth: "200px",
-                  height: "auto",
-                  borderRadius: "30px",
-                }}
+                src={prod_img}
+                id="selected-product-img"
+                className="selected-product-img"
               />
             </Grid>
 
@@ -87,7 +74,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 {price_and_market.map((price_market: string, index: number) => {
                   const market_price_vec = price_market.split(" ");
                   /* Suponiendo que no existe market con espacio en el nombre */
-                  const logo = storeIconMap[market_price_vec[0] as StoreNames];
+                  const logo = getStoreIcon(market_price_vec[0]);
                   const price = market_price_vec[1];
                   return (
                     <Price

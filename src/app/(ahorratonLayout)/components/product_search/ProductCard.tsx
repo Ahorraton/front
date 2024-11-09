@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import IconMarket from "@/utils/IconMarket";
+import IconMarket from "@/utils/storeIconMap/IconMarket";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -7,7 +7,7 @@ import { Card, CardMedia } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { addItem, removeItem } from "../../../../redux/store/listSlice";
-import Product from "../types/Product";
+import { Product } from "@/app/types/Product";
 import "./product_card.css";
 import {
   Box,

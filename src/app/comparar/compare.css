@@ -74,3 +74,10 @@
   flex-wrap: wrap;
   align-content: center;
 }
+
+.alert-box {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 16px;
+}

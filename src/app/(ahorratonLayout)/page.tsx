@@ -1,10 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
-import { Box, Paper, Skeleton, Typography } from "@mui/material";
-import { Button } from "@mui/material";
-import { Grid } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
-import Product from "@/app/(ahorratonLayout)/components/types/Product";
+import { Product } from "@/app/types/Product";
 import { fetch_async } from "@/utils/common/fetch_async";
 import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";
@@ -63,14 +61,14 @@ export default function Home() {
   return (
     <MetaDataContainer title="Ahorraton" description="Ahorra en grande">
       {loading ? (
-        <Box py={4} p={4} component="div" sx={{ position: "relative" }}>
+        <Box component="div">
           <LoadingHeroComponent />
           <Box py={4} p={4}>
             <LoadingFeaturedProducts />
           </Box>
         </Box>
       ) : (
-        <Box component="div" sx={{ position: "relative" }}>
+        <Box component="div">
           <HeroSection recipes={recipes} />
           <Box className="page-layout">
             {products.length === 0 ? (
@@ -78,7 +76,7 @@ export default function Home() {
                 No se encontraron productos.
               </Typography>
             ) : (
-              <Box py={4} p={4}>
+              <Box component="div" id="selected-product-div">
                 <FeaturedProducts
                   products={products}
                   setSelectedFeaturedProduct={setSelectedFeaturedProduct}
