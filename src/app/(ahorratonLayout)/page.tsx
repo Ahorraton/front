@@ -61,14 +61,14 @@ export default function Home() {
   return (
     <MetaDataContainer title="Ahorraton" description="Ahorra en grande">
       {loading ? (
-        <Box py={4} p={4} component="div" sx={{ position: "relative" }}>
+        <Box component="div">
           <LoadingHeroComponent />
           <Box py={4} p={4}>
             <LoadingFeaturedProducts />
           </Box>
         </Box>
       ) : (
-        <Box component="div" sx={{ position: "relative" }}>
+        <Box component="div">
           <HeroSection recipes={recipes} />
           <Box className="page-layout">
             {products.length === 0 ? (
@@ -76,7 +76,7 @@ export default function Home() {
                 No se encontraron productos.
               </Typography>
             ) : (
-              <Box py={4} p={4}>
+              <Box component="div" id="selected-product-div">
                 <FeaturedProducts
                   products={products}
                   setSelectedFeaturedProduct={setSelectedFeaturedProduct}
