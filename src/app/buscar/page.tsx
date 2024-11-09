@@ -6,7 +6,7 @@ import { Box, Typography, Button } from "@mui/material";
 import MetaDataContainer from "../global_layout/MetaDataContainer";
 import ProductFilters from "../(ahorratonLayout)/components/product_search/GridFilter";
 import { fetch_async } from "../../utils/common/fetch_async";
-import Product from "../(ahorratonLayout)/components/types/Product";
+import { Product } from "@/app/types/Product";
 import FeaturedProducts from "../(ahorratonLayout)/components/product_search/ProductGrid";
 import Filters from "@/app/buscar/types/Filters";
 import "./search_page.css";

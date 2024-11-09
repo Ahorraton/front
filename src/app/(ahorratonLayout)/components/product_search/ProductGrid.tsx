@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid, Paper, Typography } from "@mui/material";
-import Product from "../types/Product";
+import { Product } from "@/app/types/Product";
 import ProductCard from "./ProductCard";
 import { addItem } from "@/redux/store/listSlice";
 import { useDispatch } from "react-redux";

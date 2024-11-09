@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import Product from "../types/Product";
+import { Product } from "@/app/types/Product";
 import "./product_card.css";
 
 const defaultProdImage = "/images/stock_product/default_prod_img.png";

@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
-import Product from "@/app/(ahorratonLayout)/components/types/Product";
+import { Product } from "@/app/types/Product";
 import { fetch_async } from "@/utils/common/fetch_async";
 import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";

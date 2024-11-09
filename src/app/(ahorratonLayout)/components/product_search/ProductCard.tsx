@@ -7,7 +7,7 @@ import { Card, CardMedia } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import { addItem, removeItem } from "../../../../redux/store/listSlice";
-import Product from "../types/Product";
+import { Product } from "@/app/types/Product";
 import "./product_card.css";
 import {
   Box,
