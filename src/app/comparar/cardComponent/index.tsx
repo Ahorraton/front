@@ -6,9 +6,6 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  Icon,
-  Link,
-  Paper,
   Typography,
 } from "@mui/material";
 import { Card } from "@mui/material";
@@ -47,7 +44,7 @@ const storeIconMap: Record<StoreNames, string> = {
   jumbo: "/images/logos/logo_jumbo.png",
   disco: "/images/logos/logo_disco.svg",
   default:
-    "https://i5.walmartimages.com/asr/e9ff8590-58ad-44f4-8a74-99aff8a72ea9.1bb69167e16a3d0209eb310e758fcb36.jpeg",
+    "/images/stock_product/rat.png",
 };
 
 const ProductCardSearch: React.FC<cardComponentProps> = ({
@@ -115,6 +112,9 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
             <Box
               component="img"
               src={image_url ?? storeIconMap.default}
+              onError={(e) => {
+              e.currentTarget.src = storeIconMap.default;
+              }}
               sx={{
                 maxWidth: "200px",
                 height: "auto",

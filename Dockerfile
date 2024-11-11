@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
-
 COPY . .
+
+RUN npm install
 
 ENV NEXT_PUBLIC_API_URL=http://localhost:8000
 
