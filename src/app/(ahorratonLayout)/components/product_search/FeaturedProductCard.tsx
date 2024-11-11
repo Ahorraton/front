@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
-import IconMarket from "@/utils/storeIconMap/IconMarket";
-import IconButton from "@mui/material/IconButton";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import React from "react";
 import {
   Box,
-  Card,
   CardActionArea,
-  CardMedia,
   Paper,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
 import { Product } from "@/app/types/Product";
 import "./product_card.css";
 
-const DEFAULT_PROD_IMG = "/images/stock_product/default_prod_img.png";
+const DEFAULT_PROD_IMG = "/images/stock_product/rat.png";
 
 export const FeaturedProductCard = ({
   product,
@@ -44,6 +36,9 @@ export const FeaturedProductCard = ({
             className="featured-product-image"
             id="featured-product-image"
             src={productImg}
+            onError={(e) => {
+              e.currentTarget.src = DEFAULT_PROD_IMG;
+            }}
             alt={`Featured Product: ${product.name}`}
           />
 
