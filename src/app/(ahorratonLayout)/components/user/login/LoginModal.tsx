@@ -33,7 +33,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 password,
             });
             const { _username, id } = response.data.user
-            dispatch(login({ _username, id }));
+            dispatch(login({ username: _username, id }));
             onClose();
         } catch (error) {
             console.error(error);

@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Box, Typography, Button } from "@mui/material";
 import MetaDataContainer from "../global_layout/MetaDataContainer";
@@ -28,14 +27,10 @@ const toQueryParams = (filters: Filters) => {
 };
 
 const Search = () => {
-  const [error, setError] = React.useState<string | null>(null);
-  const [products, setProducts] = React.useState<Product[]>([]);
-  const [loadMore, setLoadMore] = React.useState<boolean>(false);
-  /**This filters is only used for the fetchMoreProducts function
-   * it saves the filters done in the children component
-   * even if IT re-renders.
-   * */
-  const [filters, setFilters] = React.useState<Filters | null>({
+  const [error, setError] = useState<string | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loadMore, setLoadMore] = useState<boolean>(false);
+  const [filters, setFilters] = useState<Filters | null>({
     markets: [],
     min_price: null,
     max_price: null,
@@ -120,4 +115,10 @@ const Search = () => {
   );
 };
 
-export default Search;
+const SearchWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Search />
+  </Suspense>
+);
+
+export default SearchWithSuspense;

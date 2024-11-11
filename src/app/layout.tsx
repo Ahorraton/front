@@ -4,7 +4,7 @@ import { baselightTheme } from "./global_layout/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, Container, Typography, Box } from "@mui/material";
-import React from "react";
+import React, { Suspense } from "react";
 import NavBar from "./global_layout/navBar/NavBar";
 import Footer from "./global_layout/footer/Footer";
 import { useSearchParams } from "next/navigation";
@@ -24,11 +24,7 @@ const BodyStyle = styled("div")(() => ({
   maxWidth: "xl",
 }));
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
 
@@ -56,4 +52,12 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+const RootLayoutWithSuspense = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <RootLayout>{children}</RootLayout>
+  </Suspense>
+);
+
+export default RootLayoutWithSuspense;
