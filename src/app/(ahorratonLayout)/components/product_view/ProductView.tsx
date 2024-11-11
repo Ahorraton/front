@@ -9,7 +9,7 @@ interface ProductPageDetailsProps {
   onClose: () => void;
 }
 
-const DEFAULT_PROD_IMG = "/images/stock_product/default_prod_img.png";
+const DEFAULT_PROD_IMG = "/images/stock_product/rat.png";
 
 export const ProductView: React.FC<ProductPageDetailsProps> = ({
   product,
@@ -64,6 +64,9 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
               <Box
                 component="img"
                 src={prod_img}
+                onError={(e) => {
+                  e.currentTarget.src = DEFAULT_PROD_IMG;
+                }}
                 id="selected-product-img"
                 className="selected-product-img"
               />
