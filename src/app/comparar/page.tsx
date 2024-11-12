@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import {
   Box,
   Grid,
@@ -31,10 +31,10 @@ import ErrorPage from "./errorMessage/ErrorComponent";
 const LIMIT = 8;
 
 const Compare = () => {
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const [products, setProducts] = React.useState<Product[]>([]);
-  const [error, setError] = React.useState<string | null>(null);
-  const [loadMore, setLoadMore] = React.useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loadMore, setLoadMore] = useState<boolean>(false);
   const dispatch = useDispatch();
   const query = useSearchParams().get("query");
   const [selectedMarkets, setSelectedMarkets] = useState<string[]>([
@@ -184,4 +184,10 @@ const Compare = () => {
   );
 };
 
-export default Compare;
+const CompareWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Compare />
+  </Suspense>
+);
+
+export default CompareWithSuspense;
