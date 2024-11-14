@@ -17,9 +17,9 @@ const NavBarDesktop: React.FC<NavBarProps> = ({ query, setQuery }) => {
           <Typography variant="h1">Ahorratón</Typography>
         </ButtonBase>
       </Box>
-      <Box flex="2">
+      {/* <Box flex="2">
         <SearchBar starting_query={query} set={setQuery} />
-      </Box>
+      </Box> */}
       <Box
         className="about-us-layout"
         flex="0.8"

@@ -36,10 +36,19 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <ThemeProvider theme={baselightTheme}>
               <CssBaseline />
               <MainWrapper className="mainwrapper" id="main-wrapper-style">
-                <NavBar query_param={query} />
+                {/* <NavBar query_param={query} /> */}
 
                 <BodyStyle className="bodystyle" id="main-content-style">
-                  <Container component="main" id="main-content">
+                  <Container
+                    component="main"
+                    id="main-content"
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      minHeight: "120vh",
+                    }}
+                  >
                     {children}
                   </Container>
                 </BodyStyle>
@@ -54,7 +63,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const RootLayoutWithSuspense = ({ children }: { children: React.ReactNode }) => (
+const RootLayoutWithSuspense = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => (
   <Suspense fallback={<div>Loading...</div>}>
     <RootLayout>{children}</RootLayout>
   </Suspense>
