@@ -23,10 +23,11 @@ import { useDispatch } from "react-redux";
 import { addItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
-import { LoadingCompareScreen } from "./loadingScreens/LoadingPrices";
+
 import SelectedItemAlert from "./selectedItemAlert";
 import NoProductsFound from "./errorMessage/NoProductsFound";
 import ErrorPage from "./errorMessage/ErrorComponent";
+import { LoadingCompareScreen } from "../loadingScreens/LoadingPrices";
 
 const LIMIT = 8;
 
