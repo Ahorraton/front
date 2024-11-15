@@ -28,6 +28,7 @@ import SelectedItemAlert from "./selectedItemAlert";
 import NoProductsFound from "./errorMessage/NoProductsFound";
 import ErrorPage from "./errorMessage/ErrorComponent";
 import { LoadingCompareScreen } from "../loadingScreens/LoadingPrices";
+import Loading from "../loadingScreens/loading";
 
 const LIMIT = 8;
 
@@ -186,7 +187,7 @@ const Compare = () => {
 };
 
 const CompareWithSuspense = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<Loading />}>
     <Compare />
   </Suspense>
 );

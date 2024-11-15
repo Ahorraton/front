@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import Loading from "./loadingScreens/loading";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -36,7 +37,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <ThemeProvider theme={baselightTheme}>
               <CssBaseline />
               <MainWrapper className="mainwrapper" id="main-wrapper-style">
-                {/* <NavBar query_param={query} /> */}
+                <NavBar query_param={query} />
 
                 <BodyStyle className="bodystyle" id="main-content-style">
                   <Container
@@ -68,7 +69,7 @@ const RootLayoutWithSuspense = ({
 }: {
   children: React.ReactNode;
 }) => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<Loading />}>
     <RootLayout>{children}</RootLayout>
   </Suspense>
 );

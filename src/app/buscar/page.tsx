@@ -9,6 +9,7 @@ import { Product } from "@/app/types/Product";
 import FeaturedProducts from "../(ahorratonLayout)/components/product_search/ProductGrid";
 import Filters from "@/app/buscar/types/Filters";
 import "./search_page.css";
+import Loading from "../loadingScreens/loading";
 
 const LIMIT = 8;
 
@@ -116,7 +117,7 @@ const Search = () => {
 };
 
 const SearchWithSuspense = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<Loading />}>
     <Search />
   </Suspense>
 );

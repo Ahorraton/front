@@ -8,11 +8,10 @@ import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
 import { Recipe } from "../types/Recipe";
-import { LoadingFeaturedProducts } from "./loadingScreens/LoadingFeaturedProducts";
-import { LoadingHeroComponent } from "./loadingScreens/LoadingRecipes";
 import SearchBar from "../global_layout/navBar/SearchBar";
 import { useSearchParams } from "next/navigation";
 import FeaturedRecipes from "./components/featuredRecipes/FeaturedRecipes";
+import { LoadingCompareScreen } from "../loadingScreens/LoadingPrices";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -67,11 +66,8 @@ export default function Home() {
   return (
     <MetaDataContainer title="Ahorraton" description="Ahorra en grande">
       {loading ? (
-        <Box component="div" id="outsideBox">
-          <LoadingHeroComponent />
-          <Box py={4} p={4}>
-            <LoadingFeaturedProducts />
-          </Box>
+        <Box component="div" id="outsideBox" className="loading-layout">
+          <LoadingCompareScreen />
         </Box>
       ) : (
         <Box component="div" id="outsideBox">
