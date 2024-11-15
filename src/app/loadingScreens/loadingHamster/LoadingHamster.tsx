@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from "@mui/material";
-import "./loadingPrices.css"; // Import the CSS file
+import "./loading_hamster.css"; // Import the CSS file
 
-export const LoadingCompareScreen = () => {
+export const LoadingHamsterScreen = () => {
   return (
     <Box>
       <Box

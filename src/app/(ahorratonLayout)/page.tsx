@@ -11,7 +11,7 @@ import { Recipe } from "../types/Recipe";
 import SearchBar from "../global_layout/navBar/SearchBar";
 import { useSearchParams } from "next/navigation";
 import FeaturedRecipes from "./components/featuredRecipes/FeaturedRecipes";
-import { LoadingCompareScreen } from "../loadingScreens/LoadingPrices";
+import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -67,7 +67,7 @@ export default function Home() {
     <MetaDataContainer title="Ahorraton" description="Ahorra en grande">
       {loading ? (
         <Box component="div" id="outsideBox" className="loading-layout">
-          <LoadingCompareScreen />
+          <LoadingHamsterScreen />
         </Box>
       ) : (
         <Box component="div" id="outsideBox">

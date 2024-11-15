@@ -27,7 +27,7 @@ import { ProductView } from "../(ahorratonLayout)/components/product_view/Produc
 import SelectedItemAlert from "./selectedItemAlert";
 import NoProductsFound from "./errorMessage/NoProductsFound";
 import ErrorPage from "./errorMessage/ErrorComponent";
-import { LoadingCompareScreen } from "../loadingScreens/LoadingPrices";
+import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 import Loading from "../loadingScreens/loading";
 
 const LIMIT = 8;
@@ -117,7 +117,7 @@ const Compare = () => {
       <Box className="compare-layout">
         {loading ? (
           <Box className="loading-layout">
-            <LoadingCompareScreen />
+            <LoadingHamsterScreen />
           </Box>
         ) : error ? (
           <ErrorPage />
