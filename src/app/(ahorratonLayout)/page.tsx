@@ -70,7 +70,7 @@ export default function Home() {
           <LoadingHamsterScreen />
         </Box>
       ) : (
-        <Box component="div" id="outsideBox">
+        <Box component="div" id="outsideBox" className="home-screen-layout">
           {/* <HeroSection recipes={recipes} /> */}
           <Box
             display="flex"
@@ -86,7 +86,6 @@ export default function Home() {
             <SearchBar starting_query={query} set={setQuery} />
           </Box>
 
-          <Box flex="2"></Box>
           <Box className="page-layout">
             {products.length === 0 ? (
               <Typography variant="h6" align="center">
@@ -94,13 +93,13 @@ export default function Home() {
               </Typography>
             ) : (
               <Box component="div" id="selected-product-div">
-                <Box>
+                <Box mt={5}>
                   <FeaturedProducts
                     products={products}
                     setSelectedFeaturedProduct={setSelectedFeaturedProduct}
                   />
                 </Box>
-                <Box position="relative" top="120px">
+                <Box mt={5}>
                   <FeaturedRecipes recipes={recipes} />
                 </Box>
               </Box>

@@ -15,7 +15,7 @@ const FeaturedProducts = ({
   };
 
   return (
-    <Box sx={{ position: "relative", top: "70px" }}>
+    <Box>
       <Typography variant="h4" gutterBottom>
         Categorias Destacadas{" "}
       </Typography>

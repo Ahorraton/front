@@ -4,7 +4,7 @@ import { RecipeCard } from "./RecipeCard";
 
 const FeaturedRecipes = ({ recipes }: { recipes: Recipe[] }) => {
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box>
       <Typography variant="h4" gutterBottom>
         Recetas Destacadas{" "}
       </Typography>

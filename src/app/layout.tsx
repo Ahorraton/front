@@ -20,9 +20,14 @@ const MainWrapper = styled("div")(() => ({
 }));
 
 const BodyStyle = styled("div")(() => ({
-  marginTop: "2%",
-  marginBottom: "2%",
+  alignContent: "center",
   maxWidth: "xl",
+}));
+
+const FooterStyle = styled("div")(() => ({
+  flexShrink: 0,
+  maxWidth: "xl",
+  marginTop: "2%",
 }));
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
@@ -40,21 +45,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                 <NavBar query_param={query} />
 
                 <BodyStyle className="bodystyle" id="main-content-style">
-                  <Container
-                    component="main"
-                    id="main-content"
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      minHeight: "120vh",
-                    }}
-                  >
+                  <Container component="main" id="main-content">
                     {children}
                   </Container>
                 </BodyStyle>
 
-                <Footer />
+                <FooterStyle id="footer-style" className="footerstyle">
+                  <Footer />
+                </FooterStyle>
               </MainWrapper>
             </ThemeProvider>
           </PersistGate>
