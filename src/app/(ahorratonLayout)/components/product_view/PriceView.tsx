@@ -3,13 +3,13 @@ import { Box, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import "./price_view.css";
 
 export default function PriceView({
-  index,
+  key,
   logo,
   price,
   cheapest,
   url,
 }: {
-  index: number;
+  key: string;
   logo: string;
   price: string;
   cheapest: boolean;
@@ -21,7 +21,7 @@ export default function PriceView({
   };
 
   return (
-    <ListItem disablePadding id={logo + price} key={index}>
+    <ListItem disablePadding id={key} key={key}>
       <Box className={classNameCheapest}>
         <ListItemButton onClick={() => handleClick(url)}>
           <Box component="img" src={logo} className="price-market-logo" />

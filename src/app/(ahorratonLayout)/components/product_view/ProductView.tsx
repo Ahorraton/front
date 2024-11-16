@@ -110,10 +110,10 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 id="selected-product-list-prices"
                 className="selected-product-list-prices"
               >
-                {product_items.map((product, index) => {
+                {product_items.map((product) => {
                   return (
                     <PriceView
-                      index={index}
+                      key={product.name + product.market}
                       logo={getStoreIcon(product.market)}
                       price={product.price.toString()}
                       cheapest={product.price === minPrice}
