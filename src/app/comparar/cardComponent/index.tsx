@@ -14,6 +14,7 @@ import React from "react";
 import { process_prod_item } from "../utils/process_prod_item";
 import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
 import { Product } from "@/app/types/Product";
+import "./product_card.css";
 
 interface cardComponentProps {
   product_items: ProductItems;
@@ -34,64 +35,41 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
   return (
     <Card
       key={cheapestProduct.ean}
-      sx={{
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        borderRadius: "30px",
-        justifyContent: "space-between",
-      }}
+      id="product-card-container"
+      className="product-card"
     >
       <CardActionArea
+        id="product-card-action-area"
+        className="product-card-action-area"
         onClick={() => setProductPage(product_items)}
-        sx={{
-          flexGrow: 1,
-          borderBottomLeftRadius: "0px",
-          borderBottomRightRadius: "0px",
-        }}
       >
         <CardContent>
           <CardHeader
             title={cheapestProduct.name}
-            sx={{ textAlign: "center" }}
-          ></CardHeader>
+            className="product-card-header"
+          />
           <Box
             component="div"
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            id="product-card-body"
+            className="product-card-body"
           >
             <Box
               component="img"
+              id="product-card-image"
+              className="product-card-image"
               src={product_image}
               onError={(e) => {
                 e.currentTarget.src = getStoreIcon("default");
-              }}
-              sx={{
-                maxWidth: "200px",
-                height: "auto",
-                borderRadius: "30px",
               }}
             />
             <Box component="div">
               <Box
                 component="div"
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                id="product-card-price"
+                className="product-card-price"
               >
                 <Typography variant="body1">
-                  {product_items.dir_sucursal}
-                </Typography>
-                <Typography variant="body1">
-                  <strong>Mejor precio:</strong> ${cheapestProduct.price}
+                  <strong>Mejor precio:</strong> ${cheapestProduct.price}{" "}
                   <IconMarket icon={cheapestProduct.market} />
                 </Typography>
               </Box>
@@ -99,31 +77,25 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
           </Box>
         </CardContent>
       </CardActionArea>
-      <CardActions
-        sx={{
-          width: "100%",
-          padding: 0,
+      <CardActionArea
+        id="add-to-list-action-area"
+        onClick={() => {
+          addProduct(product_items);
         }}
       >
-        <Button
-          size="large"
-          sx={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "lightblue",
-            "&:hover": {
-              backgroundColor: "#522719",
-            },
-          }}
-          onClick={() => {
-            addProduct(product_items);
-          }}
+        <CardContent
+          id="add-to-list-button-container"
+          className="add-to-list-button-container"
         >
-          <Typography variant="h6" color="white">
+          <Typography
+            variant="h6"
+            id="add-to-list-button-text"
+            className="add-to-list-button-text"
+          >
             {"Agregar a la lista"}
           </Typography>
-        </Button>
-      </CardActions>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };
