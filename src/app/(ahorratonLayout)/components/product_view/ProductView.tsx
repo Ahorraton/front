@@ -13,9 +13,13 @@ import { Product } from "@/app/types/Product";
 import "./product_view.css";
 import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";
 import PriceView from "./PriceView";
+import {
+  process_prod_item,
+  get_min_price,
+} from "@/app/comparar/utils/process_prod_item";
 
 interface ProductPageDetailsProps {
-  product: ProductItems;
+  product_items: ProductItems;
   addProduct: (product: ProductItems) => void;
   onClose: () => void;
 }
@@ -23,56 +27,19 @@ interface ProductPageDetailsProps {
 const DEFAULT_PROD_IMG = "/images/stock_product/rat.png";
 
 export const ProductView: React.FC<ProductPageDetailsProps> = ({
-  product,
+  product_items,
   addProduct,
   onClose,
 }) => {
-  const titles = product.names_list.split(",");
+  const products: Product[] = process_prod_item(product_items);
 
-  const price_and_market = product.market_price
-    .split(",")
-    .map((pair) => pair.trim());
-
-  const markets = price_and_market.map(
-    (price_market) => price_market.split(" ")[0]
-  );
-
-  const prices = price_and_market.map((price_market) =>
-    parseFloat(price_market.split(" ")[1])
-  );
-
-  const urls = product.urls.split(",");
-  const dir_sucursal = product.dir_sucursal?.split(",");
-
-  const product_items: Product[] = titles
-    .map((prod_name, index) => {
-      return {
-        id: Number(product.ean),
-        name: prod_name,
-        price: Number(prices[index]),
-        price_per_unit: null,
-        created_at: "",
-        market: markets[index],
-        image_url: null,
-        ean: product.ean,
-        url: urls[index],
-        dir_sucursal: dir_sucursal ? dir_sucursal[index] : "",
-      };
-    })
-    .filter((product) => !isNaN(product.price))
-    .sort((a, b) => a.price - b.price);
-
-  const product_title = titles[0];
-  const product_image = product.image_url ?? DEFAULT_PROD_IMG;
-  const minPrice = Math.min(
-    ...product_items
-      .map((product) => product.price)
-      .filter((price) => !isNaN(price))
-  );
+  const product_image = product_items.image_url ?? DEFAULT_PROD_IMG;
+  const product_title = products[0].name;
+  const minPrice = get_min_price(products);
 
   return (
     <Dialog
-      open={product ? true : false}
+      open={product_items ? true : false}
       onClose={onClose}
       aria-labelledby="product-page-title"
       className="selected-product-view"
@@ -114,7 +81,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 id="selected-product-list-prices"
                 className="selected-product-list-prices"
               >
-                {product_items.map((product) => {
+                {products.map((product) => {
                   return (
                     <PriceView
                       key={product.name + product.market}
@@ -136,7 +103,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
           <Button
             id="agregar-a-list-button"
             className="agregar-a-list-button"
-            onClick={() => addProduct(product)}
+            onClick={() => addProduct(product_items)}
           >
             <Typography variant="h6" color="white">
               Agregar a lista

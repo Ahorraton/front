@@ -65,7 +65,6 @@ const Compare = () => {
       setLoading(false);
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
-      console.log("products_result", products_result);
     } catch (e: unknown) {
       setError("error");
       setLoading(false);
@@ -173,7 +172,7 @@ const Compare = () => {
 
         {productPage && (
           <ProductView
-            product={productPage}
+            product_items={productPage}
             addProduct={handleAddProduct}
             onClose={() => setProductPage(null)}
           />
