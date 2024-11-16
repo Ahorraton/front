@@ -26,9 +26,8 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
   setProductPage,
 }) => {
   const products = process_prod_item(product_items);
-
   const cheapestProduct = products[0];
-  const title = products[0].name;
+
   return (
     <Card
       key={cheapestProduct.ean}
@@ -51,7 +50,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
       >
         <CardContent>
           <CardHeader
-            title={title ?? ""}
+            title={cheapestProduct.name ?? ""}
             sx={{ textAlign: "center" }}
           ></CardHeader>
           <Box
@@ -89,7 +88,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
                   {product_items.dir_sucursal}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Mejor precio:</strong> {cheapestProduct.price}
+                  <strong>Mejor precio:</strong> ${cheapestProduct.price}
                   <IconMarket icon={cheapestProduct.market} />
                 </Typography>
               </Box>
