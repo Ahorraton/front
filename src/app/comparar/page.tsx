@@ -14,8 +14,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
-import Product from "./types/Product";
-
+import ProductItems from "./types/Product";
 import "./compare.css";
 import { useSearchParams } from "next/navigation";
 import ProductCardSearch from "./cardComponent";
@@ -34,7 +33,7 @@ const LIMIT = 8;
 
 const Compare = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductItems[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loadMore, setLoadMore] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -47,7 +46,7 @@ const Compare = () => {
     "disco",
     "jumbo",
   ]);
-  const [productPage, setProductPage] = useState<Product | null>(null);
+  const [productPage, setProductPage] = useState<ProductItems | null>(null);
 
   const [showAlert, setShowAlert] = useState<Boolean>(false);
 
@@ -65,7 +64,7 @@ const Compare = () => {
       const res = await fetch_async(
         `/products_ean/${query}?offset=0&limit=${LIMIT}`
       );
-      const products_result: Product[] = res.products ? res.products : [];
+      const products_result: ProductItems[] = res.products ? res.products : [];
       setLoading(false);
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
@@ -82,7 +81,7 @@ const Compare = () => {
       const res = await fetch_async(
         `/products_ean/${query}?offset=${products.length}&limit=${LIMIT}`
       );
-      const products_result: Product[] = res.products ? res.products : [];
+      const products_result: ProductItems[] = res.products ? res.products : [];
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
     } catch (e: unknown) {
@@ -92,7 +91,7 @@ const Compare = () => {
     }
   };
 
-  const handleAddProduct = (product: Product) => {
+  const handleAddProduct = (product: ProductItems) => {
     const productToSave = {
       ...product,
       name: product.names_list,
@@ -143,7 +142,7 @@ const Compare = () => {
             </Accordion>
 
             <Grid container spacing={2} py={4}>
-              {products.map((product: Product) => (
+              {products.map((product: ProductItems) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
                   <ProductCardSearch
                     product={product}

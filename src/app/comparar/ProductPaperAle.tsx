@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
-import Product from "@/app/comparar/types/Product";
+import ProductItems from "@/app/comparar/types/Product";
 import "@/app/comparar/compare.css";
 import Price from "@/app/comparar/Price";
 import { useDispatch } from "react-redux";
@@ -56,7 +56,7 @@ export const marketImage = (market: string) => {
   }
 };
 
-const ProductPaperAle = ({ product }: { product: Product }) => {
+const ProductPaperAle = ({ product }: { product: ProductItems }) => {
   const price_and_market = product.market_price
     .split(",")
     .map((pair) => pair.trim());

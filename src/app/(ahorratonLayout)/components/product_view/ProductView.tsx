@@ -8,15 +8,15 @@ import {
   List,
   Typography,
 } from "@mui/material";
-import Product from "@/app/comparar/types/Product";
-// import Product from "@/app/types/Product"
+import ProductItems from "@/app/comparar/types/Product";
+import { Product } from "@/app/types/Product";
 import "./product_view.css";
 import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";
 import PriceView from "./PriceView";
 
 interface ProductPageDetailsProps {
-  product: Product;
-  addProduct: (product: Product) => void;
+  product: ProductItems;
+  addProduct: (product: ProductItems) => void;
   onClose: () => void;
 }
 
@@ -44,15 +44,19 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   const urls = product.urls.split(",");
   const dir_sucursal = product.dir_sucursal?.split(",");
 
-  const product_items = titles
+  const product_items: Product[] = titles
     .map((prod_name, index) => {
       return {
-        ean: product.ean,
+        id: Number(product.ean),
         name: prod_name,
-        market: markets[index],
         price: Number(prices[index]),
+        price_per_unit: null,
+        created_at: "",
+        market: markets[index],
+        image_url: null,
+        ean: product.ean,
         url: urls[index],
-        dir_sucursal: dir_sucursal ? [index] : "",
+        dir_sucursal: dir_sucursal ? dir_sucursal[index] : "",
       };
     })
     .filter((product) => !isNaN(product.price))
@@ -115,8 +119,8 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                     <PriceView
                       key={product.name + product.market}
                       logo={getStoreIcon(product.market)}
-                      price={product.price.toString()}
-                      cheapest={product.price === minPrice}
+                      product={product}
+                      is_cheapest={product.price === minPrice}
                       url={product.url}
                     />
                   );
@@ -132,14 +136,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
           <Button
             id="agregar-a-list-button"
             className="agregar-a-list-button"
-            // onClick={{
-            //   product.ean,
-            //   market_price,
-            //   names_list,
-            //   image_url,
-            //   urls,
-            //   dir_sucursal,
-            // }}
+            onClick={() => addProduct(product)}
           >
             <Typography variant="h6" color="white">
               Agregar a lista

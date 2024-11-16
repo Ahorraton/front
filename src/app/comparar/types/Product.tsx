@@ -1,4 +1,4 @@
-export default interface Product {
+export default interface ProductItems {
   ean: string;
   market_price: string;
   names_list: string;
