@@ -33,8 +33,12 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
 }) => {
   const products: Product[] = process_prod_item(product_items);
 
+  if (!products) {
+    return <></>;
+  }
+
   const product_image = product_items.image_url ?? DEFAULT_PROD_IMG;
-  const product_title = products[0].name;
+  const cheapestProduct = products[0];
   const minPrice = get_min_price(products);
 
   return (
@@ -74,7 +78,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 id="selected-product-title"
                 className="selected_product-title"
               >
-                {product_title}
+                {cheapestProduct.name}
               </DialogTitle>
 
               <List

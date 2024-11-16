@@ -25,6 +25,7 @@ import NoProductsFound from "@/app/error_pages/NoProductsFound";
 import ErrorPage from "@/app/error_pages/ErrorComponent";
 import { LoadingHamsterScreen } from "@/app/loadingScreens/loadingHamster/LoadingHamster";
 import Loading from "@/app/loadingScreens/loading";
+import { process_prod_item } from "./utils/process_prod_item";
 
 const LIMIT = 8;
 
@@ -139,15 +140,24 @@ const Compare = () => {
             </Accordion>
 
             <Grid container spacing={2} py={4}>
-              {products.map((product: ProductItems) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
-                  <ProductCardSearch
-                    product_items={product}
-                    addProduct={handleAddProduct}
-                    setProductPage={setProductPage}
-                  />
-                </Grid>
-              ))}
+              {products.map((product: ProductItems) => {
+                const products = process_prod_item(product);
+
+                if (products.length === 0) {
+                  return <></>;
+                }
+
+                return (
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
+                    <ProductCardSearch
+                      product_items={product}
+                      products={products}
+                      addProduct={handleAddProduct}
+                      setProductPage={setProductPage}
+                    />
+                  </Grid>
+                );
+              })}
             </Grid>
 
             {loadMore && (

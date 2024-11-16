@@ -13,20 +13,23 @@ import { Card } from "@mui/material";
 import React from "react";
 import { process_prod_item } from "../utils/process_prod_item";
 import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
+import { Product } from "@/app/types/Product";
 
 interface cardComponentProps {
   product_items: ProductItems;
+  products: Product[];
   addProduct: (product: ProductItems) => void;
   setProductPage: (product: ProductItems) => void;
 }
 
 const ProductCardSearch: React.FC<cardComponentProps> = ({
   product_items,
+  products,
   addProduct,
   setProductPage,
 }) => {
-  const products = process_prod_item(product_items);
   const cheapestProduct = products[0];
+  const product_image = product_items.image_url;
 
   return (
     <Card
@@ -50,7 +53,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
       >
         <CardContent>
           <CardHeader
-            title={cheapestProduct.name ?? ""}
+            title={cheapestProduct.name}
             sx={{ textAlign: "center" }}
           ></CardHeader>
           <Box
@@ -64,7 +67,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
           >
             <Box
               component="img"
-              src={product_items.image_url}
+              src={product_image}
               onError={(e) => {
                 e.currentTarget.src = getStoreIcon("default");
               }}
