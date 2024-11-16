@@ -8,7 +8,7 @@ import {
   List,
   Typography,
 } from "@mui/material";
-import ProductItems from "@/app/comparar/types/Product";
+import ProductItems from "@/app/types/ProductItems";
 import { Product } from "@/app/types/Product";
 import "./product_view.css";
 import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";

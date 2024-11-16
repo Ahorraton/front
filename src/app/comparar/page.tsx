@@ -14,7 +14,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProductPaperAle from "@/app/comparar/ProductPaperAle";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
-import ProductItems from "./types/Product";
+import ProductItems from "../types/ProductItems";
 import "./compare.css";
 import { useSearchParams } from "next/navigation";
 import ProductCardSearch from "./cardComponent";

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
-import ProductItems from "@/app/comparar/types/Product";
+import ProductItems from "@/app/types/ProductItems";
 import "@/app/comparar/compare.css";
 import Price from "@/app/comparar/Price";
 import { useDispatch } from "react-redux";
