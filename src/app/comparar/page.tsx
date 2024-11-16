@@ -142,7 +142,7 @@ const Compare = () => {
               {products.map((product: ProductItems) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
                   <ProductCardSearch
-                    product={product}
+                    product_items={product}
                     addProduct={handleAddProduct}
                     setProductPage={setProductPage}
                   />

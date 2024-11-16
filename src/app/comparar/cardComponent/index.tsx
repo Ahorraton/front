@@ -1,3 +1,4 @@
+import ProductItems from "@/app/types/ProductItems";
 import IconMarket from "@/utils/storeIconMap/IconMarket";
 import {
   Box,
@@ -9,63 +10,28 @@ import {
   Typography,
 } from "@mui/material";
 import { Card } from "@mui/material";
-import React, { useState } from "react";
-
-interface Product {
-  ean: string;
-  market_price: string;
-  names_list: string;
-  image_url: string;
-  urls: string;
-  dir_sucursal: string;
-}
+import React from "react";
+import { process_prod_item } from "../utils/process_prod_item";
+import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
 
 interface cardComponentProps {
-  product: Product;
-  addProduct: (product: Product) => void;
-  setProductPage: (product: Product) => void;
+  product_items: ProductItems;
+  addProduct: (product: ProductItems) => void;
+  setProductPage: (product: ProductItems) => void;
 }
 
-type StoreNames =
-  | "dia"
-  | "carrefour"
-  | "vea"
-  | "coto"
-  | "jumbo"
-  | "disco"
-  | "default";
-
-const storeIconMap: Record<StoreNames, string> = {
-  dia: "/images/logos/logo_dia.svg",
-  carrefour: "/images/logos/logo_carrefour.svg",
-  vea: "/images/logos/logo_vea.png",
-  coto: "/images/logos/logo_coto.svg",
-  jumbo: "/images/logos/logo_jumbo.png",
-  disco: "/images/logos/logo_disco.svg",
-  default: "/images/stock_product/rat.png",
-};
-
 const ProductCardSearch: React.FC<cardComponentProps> = ({
-  product: { ean, market_price, names_list, image_url, urls, dir_sucursal },
+  product_items,
   addProduct,
   setProductPage,
 }) => {
-  const products = market_price
-    .split(", ")
-    .map((price_market) => {
-      const [store, price] = price_market.split(" ");
-      return {
-        market: store,
-        price: Number(price),
-      };
-    })
-    .sort((a, b) => a.price - b.price);
-  console.log(dir_sucursal);
+  const products = process_prod_item(product_items);
+
   const cheapestProduct = products[0];
-  const title = names_list.split(",")[0];
+  const title = products[0].name;
   return (
     <Card
-      key={ean}
+      key={cheapestProduct.ean}
       sx={{
         height: "100%",
         display: "flex",
@@ -76,16 +42,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
       }}
     >
       <CardActionArea
-        onClick={() =>
-          setProductPage({
-            ean,
-            market_price,
-            names_list,
-            image_url,
-            urls,
-            dir_sucursal,
-          })
-        }
+        onClick={() => setProductPage(product_items)}
         sx={{
           flexGrow: 1,
           borderBottomLeftRadius: "0px",
@@ -108,9 +65,9 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
           >
             <Box
               component="img"
-              src={image_url ?? storeIconMap.default}
+              src={getStoreIcon(product_items.image_url)}
               onError={(e) => {
-                e.currentTarget.src = storeIconMap.default;
+                e.currentTarget.src = getStoreIcon("default");
               }}
               sx={{
                 maxWidth: "200px",
@@ -128,7 +85,9 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
                   alignItems: "center",
                 }}
               >
-                <Typography variant="body1">{dir_sucursal}</Typography>
+                <Typography variant="body1">
+                  {product_items.dir_sucursal}
+                </Typography>
                 <Typography variant="body1">
                   <strong>Mejor precio:</strong> {cheapestProduct.price}
                   <IconMarket icon={cheapestProduct.market} />
@@ -155,14 +114,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
             },
           }}
           onClick={() => {
-            addProduct({
-              ean,
-              market_price,
-              names_list,
-              image_url,
-              urls,
-              dir_sucursal,
-            });
+            addProduct(product_items);
           }}
         >
           <Typography variant="h6" color="white">
