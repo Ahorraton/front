@@ -21,10 +21,10 @@ import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
 
 import SelectedItemAlert from "./selectedItemAlert";
-import NoProductsFound from "./errorMessage/NoProductsFound";
-import ErrorPage from "./errorMessage/ErrorComponent";
-import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
-import Loading from "../loadingScreens/loading";
+import NoProductsFound from "@/app/error_pages/NoProductsFound";
+import ErrorPage from "@/app/error_pages/ErrorComponent";
+import { LoadingHamsterScreen } from "@/app/loadingScreens/loadingHamster/LoadingHamster";
+import Loading from "@/app/loadingScreens/loading";
 
 const LIMIT = 8;
 
