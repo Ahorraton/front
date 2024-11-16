@@ -11,7 +11,7 @@ import {
   interpolateColor,
   rgbToHex,
   marketImage,
-} from "../comparar/ProductPaperAle";
+} from "../../obsolete/ProductPaperAle";
 import WarningModal from "./WarningModal";
 import { Product } from "../types/Product";
 
