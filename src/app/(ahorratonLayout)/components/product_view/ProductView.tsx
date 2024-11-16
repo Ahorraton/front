@@ -150,24 +150,3 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
     </Dialog>
   );
 };
-
-// <Grid item xs={12} sm={8}>
-//   <Box className="market-row">
-//     {price_and_market.map((price_market: string, index: number) => {
-//       const market_price_vec = price_market.split(" ");
-//       /* Suponiendo que no existe market con espacio en el nombre */
-//       const logo = getStoreIcon(market_price_vec[0]);
-//       const price = market_price_vec[1];
-//       return (
-//         <Price
-//           key={price_market}
-//           logo={logo}
-//           price={price}
-//           color={"blue"}
-//           cheapest={parseFloat(price) === minPrice}
-//           url={urls[index]}
-//         />
-//       );
-//     })}
-//   </Box>
-// </Grid>;

@@ -25,7 +25,7 @@ export default function PriceView({
       <Box className={classNameCheapest}>
         <ListItemButton onClick={() => handleClick(url)}>
           <Box component="img" src={logo} className="price-market-logo" />
-          <ListItemText primary={price} />
+          <ListItemText primary={"$" + price} />
         </ListItemButton>
       </Box>
     </ListItem>
