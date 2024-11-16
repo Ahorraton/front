@@ -42,7 +42,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
 
   return (
     <Dialog
-      open={true}
+      open={product ? true : false}
       onClose={onClose}
       aria-labelledby="product-page-title"
       className="selected-product-view"
@@ -60,17 +60,15 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
           id="selected-product-grid"
         >
           <Box display="flex" alignItems="center" justifyContent="center">
-            <Grid item xs={12} sm={4}>
-              <Box
-                component="img"
-                src={prod_img}
-                onError={(e) => {
-                  e.currentTarget.src = DEFAULT_PROD_IMG;
-                }}
-                id="selected-product-img"
-                className="selected-product-img"
-              />
-            </Grid>
+            <Box
+              component="img"
+              src={prod_img}
+              onError={(e) => {
+                e.currentTarget.src = DEFAULT_PROD_IMG;
+              }}
+              id="selected-product-img"
+              className="selected-product-img"
+            />
 
             <Grid item xs={12} sm={8}>
               <Box className="market-row">
