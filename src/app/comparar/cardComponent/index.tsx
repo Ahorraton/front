@@ -24,7 +24,6 @@ interface cardComponentProps {
   product: Product;
   addProduct: (product: Product) => void;
   setProductPage: (product: Product) => void;
-  setShowAlert: (showAlert: Boolean) => void;
 }
 
 type StoreNames =
@@ -43,15 +42,13 @@ const storeIconMap: Record<StoreNames, string> = {
   coto: "/images/logos/logo_coto.svg",
   jumbo: "/images/logos/logo_jumbo.png",
   disco: "/images/logos/logo_disco.svg",
-  default:
-    "/images/stock_product/rat.png",
+  default: "/images/stock_product/rat.png",
 };
 
 const ProductCardSearch: React.FC<cardComponentProps> = ({
   product: { ean, market_price, names_list, image_url, urls, dir_sucursal },
   addProduct,
   setProductPage,
-  setShowAlert,
 }) => {
   const products = market_price
     .split(", ")
@@ -113,7 +110,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
               component="img"
               src={image_url ?? storeIconMap.default}
               onError={(e) => {
-              e.currentTarget.src = storeIconMap.default;
+                e.currentTarget.src = storeIconMap.default;
               }}
               sx={{
                 maxWidth: "200px",
@@ -166,7 +163,6 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
               urls,
               dir_sucursal,
             });
-            setShowAlert(true);
           }}
         >
           <Typography variant="h6" color="white">

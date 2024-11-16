@@ -95,6 +95,7 @@ const Compare = () => {
       quantity: 1,
     };
     dispatch(addItem(productToSave));
+    setShowAlert(true);
   };
 
   const handleMarketChange = (market: string) => {
@@ -145,7 +146,6 @@ const Compare = () => {
                     product={product}
                     addProduct={handleAddProduct}
                     setProductPage={setProductPage}
-                    setShowAlert={setShowAlert}
                   />
                 </Grid>
               ))}
