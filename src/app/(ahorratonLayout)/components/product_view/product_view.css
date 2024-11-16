@@ -10,9 +10,27 @@
   justify-content: center;
 }
 
+.selected-product-img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .selected-product-img {
   min-width: 200px;
   max-width: 200px;
   height: auto;
   border-radius: 30px;
+}
+
+.selected-product-info-container {
+}
+
+.selected_product-title {
+  text-align: center;
+}
+
+.agregar-a-list-button-container {
+  border-radius: 5px;
+  cursor: pointer;
 }

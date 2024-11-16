@@ -1,8 +1,17 @@
-import { Box, Dialog, DialogContent, DialogTitle, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  List,
+  Typography,
+} from "@mui/material";
 import Product from "@/app/comparar/types/Product";
-import Price from "@/app/comparar/Price";
 import "./product_view.css";
 import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";
+import PriceView from "./PriceView";
 
 interface ProductPageDetailsProps {
   product: Product;
@@ -48,10 +57,6 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
       className="selected-product-view"
       id="selected-product-view"
     >
-      <DialogTitle id="selected-product-title" align="center">
-        {title}
-      </DialogTitle>
-
       <DialogContent>
         <Grid
           container
@@ -59,7 +64,10 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
           className="selected-product-view-grid"
           id="selected-product-grid"
         >
-          <Box display="flex" alignItems="center" justifyContent="center">
+          <Box
+            id="selected-producto-img-container"
+            className="selected-product-img-container"
+          >
             <Box
               component="img"
               src={prod_img}
@@ -70,29 +78,61 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
               className="selected-product-img"
             />
 
-            <Grid item xs={12} sm={8}>
-              <Box className="market-row">
+            <Box
+              id="selected-product-info-container"
+              className="selected-product-info-container"
+            >
+              <DialogTitle
+                id="selected-product-title"
+                className="selected_product-title"
+              >
+                {title}
+              </DialogTitle>
+
+              <List>
                 {price_and_market.map((price_market: string, index: number) => {
                   const market_price_vec = price_market.split(" ");
-                  /* Suponiendo que no existe market con espacio en el nombre */
                   const logo = getStoreIcon(market_price_vec[0]);
                   const price = market_price_vec[1];
-                  return (
-                    <Price
-                      key={price_market}
-                      logo={logo}
-                      price={price}
-                      color={"blue"}
-                      cheapest={parseFloat(price) === minPrice}
-                      url={urls[index]}
-                    />
-                  );
+                  return <PriceView logo={logo} price={price} />;
                 })}
-              </Box>
-            </Grid>
+              </List>
+            </Box>
+          </Box>
+          <Box
+            id="agregar-a-list-button-container"
+            className="agregar-a-list-button-container"
+          >
+            <Button
+              id="agregar-a-list-button"
+              className="agregar-a-list-button"
+            >
+              Agregar a lista
+            </Button>
           </Box>
         </Grid>
       </DialogContent>
     </Dialog>
   );
 };
+
+// <Grid item xs={12} sm={8}>
+//   <Box className="market-row">
+//     {price_and_market.map((price_market: string, index: number) => {
+//       const market_price_vec = price_market.split(" ");
+//       /* Suponiendo que no existe market con espacio en el nombre */
+//       const logo = getStoreIcon(market_price_vec[0]);
+//       const price = market_price_vec[1];
+//       return (
+//         <Price
+//           key={price_market}
+//           logo={logo}
+//           price={price}
+//           color={"blue"}
+//           cheapest={parseFloat(price) === minPrice}
+//           url={urls[index]}
+//         />
+//       );
+//     })}
+//   </Box>
+// </Grid>;
