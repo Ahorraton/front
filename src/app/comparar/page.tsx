@@ -178,6 +178,7 @@ const Compare = () => {
         {productPage && (
           <ProductView
             product={productPage}
+            addProduct={handleAddProduct}
             onClose={() => setProductPage(null)}
           />
         )}

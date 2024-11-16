@@ -9,12 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import Product from "@/app/comparar/types/Product";
+// import Product from "@/app/types/Product"
 import "./product_view.css";
 import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";
 import PriceView from "./PriceView";
 
 interface ProductPageDetailsProps {
   product: Product;
+  addProduct: (product: Product) => void;
   onClose: () => void;
 }
 
@@ -22,6 +24,7 @@ const DEFAULT_PROD_IMG = "/images/stock_product/rat.png";
 
 export const ProductView: React.FC<ProductPageDetailsProps> = ({
   product,
+  addProduct,
   onClose,
 }) => {
   const products = product.market_price
@@ -37,6 +40,10 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   console.log(product.dir_sucursal);
   const cheapestProduct = products[0];
   const title = product.names_list.split(",")[0];
+
+  console.log("Dentro");
+  console.log(products);
+  console.log("productos", product);
 
   const price_and_market = product.market_price
     .split(",")
@@ -89,7 +96,10 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 {title}
               </DialogTitle>
 
-              <List>
+              <List
+                id="selected-product-list-prices"
+                className="selected-product-list-prices"
+              >
                 {price_and_market.map((price_market: string, index: number) => {
                   const market_price_vec = price_market.split(" ");
                   const logo = getStoreIcon(market_price_vec[0]);
@@ -104,8 +114,21 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
           id="agregar-a-list-button-container"
           className="agregar-a-list-button-container"
         >
-          <Button id="agregar-a-list-button" className="agregar-a-list-button">
-            Agregar a lista
+          <Button
+            id="agregar-a-list-button"
+            className="agregar-a-list-button"
+            // onClick={{
+            //   product.ean,
+            //   market_price,
+            //   names_list,
+            //   image_url,
+            //   urls,
+            //   dir_sucursal,
+            // }}
+          >
+            <Typography variant="h6" color="white">
+              Agregar a lista
+            </Typography>
           </Button>
         </Box>
       </DialogContent>
