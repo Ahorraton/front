@@ -27,34 +27,44 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   addProduct,
   onClose,
 }) => {
-  const products = product.market_price
-    .split(", ")
-    .map((price_market) => {
-      const [store, price] = price_market.split(" ");
-      return {
-        market: store,
-        price: Number(price),
-      };
-    })
-    .sort((a, b) => a.price - b.price);
-  console.log(product.dir_sucursal);
-  const cheapestProduct = products[0];
-  const title = product.names_list.split(",")[0];
-
-  console.log("Dentro");
-  console.log(products);
-  console.log("productos", product);
+  const titles = product.names_list.split(",");
 
   const price_and_market = product.market_price
     .split(",")
     .map((pair) => pair.trim());
+
+  const markets = price_and_market.map(
+    (price_market) => price_market.split(" ")[0]
+  );
+
   const prices = price_and_market.map((price_market) =>
     parseFloat(price_market.split(" ")[1])
   );
-  const urls = product.urls.split(",");
-  const minPrice = Math.min(...prices);
 
-  const prod_img = product.image_url ?? DEFAULT_PROD_IMG;
+  const urls = product.urls.split(",");
+  const dir_sucursal = product.dir_sucursal?.split(",");
+
+  const product_items = titles
+    .map((prod_name, index) => {
+      return {
+        ean: product.ean,
+        name: prod_name,
+        market: markets[index],
+        price: Number(prices[index]),
+        url: urls[index],
+        dir_sucursal: dir_sucursal ? [index] : "",
+      };
+    })
+    .filter((product) => !isNaN(product.price))
+    .sort((a, b) => a.price - b.price);
+
+  const product_title = titles[0];
+  const product_image = product.image_url ?? DEFAULT_PROD_IMG;
+  const minPrice = Math.min(
+    ...product_items
+      .map((product) => product.price)
+      .filter((price) => !isNaN(price))
+  );
 
   return (
     <Dialog
@@ -77,7 +87,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
           >
             <Box
               component="img"
-              src={prod_img}
+              src={product_image}
               onError={(e) => {
                 e.currentTarget.src = DEFAULT_PROD_IMG;
               }}
@@ -93,18 +103,23 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 id="selected-product-title"
                 className="selected_product-title"
               >
-                {title}
+                {product_title}
               </DialogTitle>
 
               <List
                 id="selected-product-list-prices"
                 className="selected-product-list-prices"
               >
-                {price_and_market.map((price_market: string, index: number) => {
-                  const market_price_vec = price_market.split(" ");
-                  const logo = getStoreIcon(market_price_vec[0]);
-                  const price = market_price_vec[1];
-                  return <PriceView index={index} logo={logo} price={price} />;
+                {product_items.map((product, index) => {
+                  return (
+                    <PriceView
+                      index={index}
+                      logo={getStoreIcon(product.market)}
+                      price={product.price.toString()}
+                      cheapest={product.price === minPrice}
+                      url={product.url}
+                    />
+                  );
                 })}
               </List>
             </Box>
