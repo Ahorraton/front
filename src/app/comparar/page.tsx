@@ -5,13 +5,10 @@ import {
   Grid,
   Button,
   Typography,
-  CircularProgress,
   AccordionSummary,
   Accordion,
-  Alert,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ProductPaperAle from "@/app/comparar/ProductPaperAle";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
 import ProductItems from "../types/ProductItems";
