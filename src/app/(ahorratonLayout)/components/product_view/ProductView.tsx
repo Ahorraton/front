@@ -66,7 +66,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
         >
           <Box
             id="selected-producto-img-container"
-            className="selected-product-img-container"
+            className="selected-product-container"
           >
             <Box
               component="img"
@@ -79,8 +79,8 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
             />
 
             <Box
-              id="selected-product-info-container"
-              className="selected-product-info-container"
+              id="selected-product-title-prices-container"
+              className="selected-product-title-prices-container"
             >
               <DialogTitle
                 id="selected-product-title"
@@ -94,23 +94,20 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                   const market_price_vec = price_market.split(" ");
                   const logo = getStoreIcon(market_price_vec[0]);
                   const price = market_price_vec[1];
-                  return <PriceView logo={logo} price={price} />;
+                  return <PriceView index={index} logo={logo} price={price} />;
                 })}
               </List>
             </Box>
           </Box>
-          <Box
-            id="agregar-a-list-button-container"
-            className="agregar-a-list-button-container"
-          >
-            <Button
-              id="agregar-a-list-button"
-              className="agregar-a-list-button"
-            >
-              Agregar a lista
-            </Button>
-          </Box>
         </Grid>
+        <Box
+          id="agregar-a-list-button-container"
+          className="agregar-a-list-button-container"
+        >
+          <Button id="agregar-a-list-button" className="agregar-a-list-button">
+            Agregar a lista
+          </Button>
+        </Box>
       </DialogContent>
     </Dialog>
   );
