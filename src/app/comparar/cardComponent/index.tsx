@@ -65,7 +65,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
           >
             <Box
               component="img"
-              src={getStoreIcon(product_items.image_url)}
+              src={product_items.image_url}
               onError={(e) => {
                 e.currentTarget.src = getStoreIcon("default");
               }}
