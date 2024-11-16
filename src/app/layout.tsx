@@ -4,14 +4,13 @@ import { baselightTheme } from "./global_layout/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, Container, Typography, Box } from "@mui/material";
-import React, { Suspense } from "react";
+import React from "react";
 import NavBar from "./global_layout/navBar/NavBar";
 import Footer from "./global_layout/footer/Footer";
 import { useSearchParams } from "next/navigation";
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import Loading from "./loadingScreens/loading";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -66,10 +65,6 @@ const RootLayoutWithSuspense = ({
   children,
 }: {
   children: React.ReactNode;
-}) => (
-  <Suspense fallback={<Loading />}>
-    <RootLayout>{children}</RootLayout>
-  </Suspense>
-);
+}) => <RootLayout>{children}</RootLayout>;
 
 export default RootLayoutWithSuspense;
