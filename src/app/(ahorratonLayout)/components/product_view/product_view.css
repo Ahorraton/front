@@ -70,3 +70,8 @@
   transform: scale(1.1);
   cursor: pointer;
 }
+
+.more-items-icon {
+  display: flex;
+  justify-content: right;
+}

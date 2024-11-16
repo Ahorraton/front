@@ -17,6 +17,8 @@ import {
   process_prod_item,
   get_min_price,
 } from "@/app/comparar/utils/process_prod_item";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { useEffect, useState } from "react";
 
 interface ProductPageDetailsProps {
   product_items: ProductItems;
@@ -32,10 +34,19 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   onClose,
 }) => {
   const products: Product[] = process_prod_item(product_items);
+  const [isScrollable, setIsScrollable] = useState(false);
 
   if (!products) {
     return <></>;
   }
+
+  useEffect(() => {
+    if (products.length > 3) {
+      setIsScrollable(true);
+    } else {
+      setIsScrollable(false);
+    }
+  });
 
   const product_image = product_items.image_url ?? DEFAULT_PROD_IMG;
   const cheapestProduct = products[0];
@@ -97,6 +108,15 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                   );
                 })}
               </List>
+              {isScrollable && (
+                <Box
+                  id="more-items-icon"
+                  component="div"
+                  className="more-items-icon"
+                >
+                  <ArrowDownwardIcon />
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>
