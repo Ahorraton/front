@@ -5,7 +5,7 @@
   justify-content: space-between;
   padding-top: 1%;
   padding-bottom: 1%;
-  background-color: white;
+  background-color: inherit;
 }
 
 .nav-bar-mobile {

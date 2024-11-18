@@ -30,7 +30,7 @@ import NotificationDialog from "./NotificationDialog";
 import "./myList.css";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
-import { Product } from "./types";
+import { Product } from "@/app/types/Product";
 
 const MiLista: React.FC = () => {
   const list = useSelector((state: RootState) => state.list.items);

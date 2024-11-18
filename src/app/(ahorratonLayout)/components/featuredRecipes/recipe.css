@@ -1,0 +1,8 @@
+.featured-recipe-card {
+  display: flex;
+  background-color: inherit;
+  position: relative;
+
+  width: 140;
+  height: 160px;
+}

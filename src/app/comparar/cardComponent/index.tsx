@@ -1,3 +1,4 @@
+import ProductItems from "@/app/types/ProductItems";
 import IconMarket from "@/utils/storeIconMap/IconMarket";
 import {
   Box,
@@ -9,131 +10,66 @@ import {
   Typography,
 } from "@mui/material";
 import { Card } from "@mui/material";
-import React, { useState } from "react";
-
-interface Product {
-  ean: string;
-  market_price: string;
-  names_list: string;
-  image_url: string;
-  urls: string;
-  dir_sucursal: string;
-}
+import React from "react";
+import { process_prod_item } from "../utils/process_prod_item";
+import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
+import { Product } from "@/app/types/Product";
+import "./product_card.css";
 
 interface cardComponentProps {
-  product: Product;
-  addProduct: (product: Product) => void;
-  setProductPage: (product: Product) => void;
-  setShowAlert: (showAlert: Boolean) => void;
+  product_items: ProductItems;
+  products: Product[];
+  addProduct: (product: ProductItems) => void;
+  setProductPage: (product: ProductItems) => void;
 }
 
-type StoreNames =
-  | "dia"
-  | "carrefour"
-  | "vea"
-  | "coto"
-  | "jumbo"
-  | "disco"
-  | "default";
-
-const storeIconMap: Record<StoreNames, string> = {
-  dia: "/images/logos/logo_dia.svg",
-  carrefour: "/images/logos/logo_carrefour.svg",
-  vea: "/images/logos/logo_vea.png",
-  coto: "/images/logos/logo_coto.svg",
-  jumbo: "/images/logos/logo_jumbo.png",
-  disco: "/images/logos/logo_disco.svg",
-  default:
-    "/images/stock_product/rat.png",
-};
-
 const ProductCardSearch: React.FC<cardComponentProps> = ({
-  product: { ean, market_price, names_list, image_url, urls, dir_sucursal },
+  product_items,
+  products,
   addProduct,
   setProductPage,
-  setShowAlert,
 }) => {
-  const products = market_price
-    .split(", ")
-    .map((price_market) => {
-      const [store, price] = price_market.split(" ");
-      return {
-        market: store,
-        price: Number(price),
-      };
-    })
-    .sort((a, b) => a.price - b.price);
-  console.log(dir_sucursal);
   const cheapestProduct = products[0];
-  const title = names_list.split(",")[0];
+  const product_image = product_items.image_url;
+
   return (
     <Card
-      key={ean}
-      sx={{
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        borderRadius: "30px",
-        justifyContent: "space-between",
-      }}
+      key={cheapestProduct.ean}
+      id="product-card-container"
+      className="product-card"
     >
       <CardActionArea
-        onClick={() =>
-          setProductPage({
-            ean,
-            market_price,
-            names_list,
-            image_url,
-            urls,
-            dir_sucursal,
-          })
-        }
-        sx={{
-          flexGrow: 1,
-          borderBottomLeftRadius: "0px",
-          borderBottomRightRadius: "0px",
-        }}
+        id="product-card-action-area"
+        className="product-card-action-area"
+        onClick={() => setProductPage(product_items)}
       >
         <CardContent>
           <CardHeader
-            title={title ?? ""}
-            sx={{ textAlign: "center" }}
-          ></CardHeader>
+            title={cheapestProduct.name}
+            className="product-card-header"
+          />
           <Box
             component="div"
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            id="product-card-body"
+            className="product-card-body"
           >
             <Box
               component="img"
-              src={image_url ?? storeIconMap.default}
+              id="product-card-image"
+              className="product-card-image"
+              src={product_image}
               onError={(e) => {
-              e.currentTarget.src = storeIconMap.default;
-              }}
-              sx={{
-                maxWidth: "200px",
-                height: "auto",
-                borderRadius: "30px",
+                e.currentTarget.src = getStoreIcon("default");
               }}
             />
             <Box component="div">
               <Box
                 component="div"
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                id="product-card-price"
+                className="product-card-price"
               >
-                <Typography variant="body1">{dir_sucursal}</Typography>
                 <Typography variant="body1">
-                  <strong>Mejor precio:</strong> {cheapestProduct.price}
+                  <strong>Mejor precio:</strong> ${cheapestProduct.price}{" "}
                   <IconMarket icon={cheapestProduct.market} />
                 </Typography>
               </Box>
@@ -141,39 +77,25 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
           </Box>
         </CardContent>
       </CardActionArea>
-      <CardActions
-        sx={{
-          width: "100%",
-          padding: 0,
+      <CardActionArea
+        id="add-to-list-action-area"
+        onClick={() => {
+          addProduct(product_items);
         }}
       >
-        <Button
-          size="large"
-          sx={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "lightblue",
-            "&:hover": {
-              backgroundColor: "#522719",
-            },
-          }}
-          onClick={() => {
-            addProduct({
-              ean,
-              market_price,
-              names_list,
-              image_url,
-              urls,
-              dir_sucursal,
-            });
-            setShowAlert(true);
-          }}
+        <CardContent
+          id="add-to-list-button-container"
+          className="add-to-list-button-container"
         >
-          <Typography variant="h6" color="white">
+          <Typography
+            variant="h6"
+            id="add-to-list-button-text"
+            className="add-to-list-button-text"
+          >
             {"Agregar a la lista"}
           </Typography>
-        </Button>
-      </CardActions>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

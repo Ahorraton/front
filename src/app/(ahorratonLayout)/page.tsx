@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import { Product } from "@/app/types/Product";
@@ -8,8 +8,10 @@ import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/
 import "./landing_page.css";
 import HeroSection from "./components/heroSection";
 import { Recipe } from "../types/Recipe";
-import { LoadingFeaturedProducts } from "./loadingScreens/LoadingFeaturedProducts";
-import { LoadingHeroComponent } from "./loadingScreens/LoadingRecipes";
+import SearchBar from "../global_layout/navBar/SearchBar";
+import { useSearchParams } from "next/navigation";
+import FeaturedRecipes from "./components/featuredRecipes/FeaturedRecipes";
+import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -58,18 +60,32 @@ export default function Home() {
     }
   }, [selectedFeaturedProduct]);
 
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get("query") || "");
+
   return (
     <MetaDataContainer title="Ahorraton" description="Ahorra en grande">
       {loading ? (
-        <Box component="div">
-          <LoadingHeroComponent />
-          <Box py={4} p={4}>
-            <LoadingFeaturedProducts />
-          </Box>
+        <Box component="div" id="outsideBox" className="loading-layout">
+          <LoadingHamsterScreen />
         </Box>
       ) : (
-        <Box component="div">
-          <HeroSection recipes={recipes} />
+        <Box component="div" id="outsideBox" className="home-screen-layout">
+          {/* <HeroSection recipes={recipes} /> */}
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography variant="h1" className="spin-on-hover">
+              🐭
+            </Typography>
+            <Typography variant="h1">Ahorratón</Typography>
+            <br />
+            <SearchBar starting_query={query} set={setQuery} />
+          </Box>
+
           <Box className="page-layout">
             {products.length === 0 ? (
               <Typography variant="h6" align="center">
@@ -77,10 +93,15 @@ export default function Home() {
               </Typography>
             ) : (
               <Box component="div" id="selected-product-div">
-                <FeaturedProducts
-                  products={products}
-                  setSelectedFeaturedProduct={setSelectedFeaturedProduct}
-                />
+                <Box mt={5}>
+                  <FeaturedProducts
+                    products={products}
+                    setSelectedFeaturedProduct={setSelectedFeaturedProduct}
+                  />
+                </Box>
+                <Box mt={5}>
+                  <FeaturedRecipes recipes={recipes} />
+                </Box>
               </Box>
             )}
           </Box>

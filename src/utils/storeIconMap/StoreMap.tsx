@@ -4,7 +4,8 @@ export type StoreNames =
   | "vea"
   | "coto"
   | "jumbo"
-  | "disco";
+  | "disco"
+  | "default";
 
 const storeIconMap: Record<StoreNames, string> = {
   dia: "/images/logos/logo_dia.svg",
@@ -13,12 +14,13 @@ const storeIconMap: Record<StoreNames, string> = {
   coto: "/images/logos/logo_coto.svg",
   jumbo: "/images/logos/logo_jumbo.png",
   disco: "/images/logos/logo_disco.svg",
+  default: "/images/stock_product/rat.png",
 };
 
 export const getStoreIcon = (storeName: string): string => {
   if (storeName in storeIconMap) {
     return storeIconMap[storeName as StoreNames];
   } else {
-    return "";
+    return storeIconMap["default"];
   }
 };

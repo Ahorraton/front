@@ -1,57 +1,65 @@
-import { Box, Dialog, DialogContent, DialogTitle, Grid } from "@mui/material";
-import Product from "@/app/comparar/types/Product";
-import Price from "@/app/comparar/Price";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  List,
+  Typography,
+} from "@mui/material";
+import ProductItems from "@/app/types/ProductItems";
+import { Product } from "@/app/types/Product";
 import "./product_view.css";
 import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";
+import PriceView from "./PriceView";
+import {
+  process_prod_item,
+  get_min_price,
+} from "@/app/comparar/utils/process_prod_item";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { useEffect, useState } from "react";
 
 interface ProductPageDetailsProps {
-  product: Product;
+  product_items: ProductItems;
+  addProduct: (product: ProductItems) => void;
   onClose: () => void;
 }
 
 const DEFAULT_PROD_IMG = "/images/stock_product/rat.png";
 
 export const ProductView: React.FC<ProductPageDetailsProps> = ({
-  product,
+  product_items,
+  addProduct,
   onClose,
 }) => {
-  const products = product.market_price
-    .split(", ")
-    .map((price_market) => {
-      const [store, price] = price_market.split(" ");
-      return {
-        market: store,
-        price: Number(price),
-      };
-    })
-    .sort((a, b) => a.price - b.price);
-  console.log(product.dir_sucursal);
+  const products: Product[] = process_prod_item(product_items);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  if (!products) {
+    return <></>;
+  }
+
+  useEffect(() => {
+    if (products.length > 3) {
+      setIsScrollable(true);
+    } else {
+      setIsScrollable(false);
+    }
+  });
+
+  const product_image = product_items.image_url ?? DEFAULT_PROD_IMG;
   const cheapestProduct = products[0];
-  const title = product.names_list.split(",")[0];
-
-  const price_and_market = product.market_price
-    .split(",")
-    .map((pair) => pair.trim());
-  const prices = price_and_market.map((price_market) =>
-    parseFloat(price_market.split(" ")[1])
-  );
-  const urls = product.urls.split(",");
-  const minPrice = Math.min(...prices);
-
-  const prod_img = product.image_url ?? DEFAULT_PROD_IMG;
+  const minPrice = get_min_price(products);
 
   return (
     <Dialog
-      open={true}
+      open={product_items ? true : false}
       onClose={onClose}
       aria-labelledby="product-page-title"
       className="selected-product-view"
       id="selected-product-view"
     >
-      <DialogTitle id="selected-product-title" align="center">
-        {title}
-      </DialogTitle>
-
       <DialogContent>
         <Grid
           container
@@ -59,41 +67,73 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
           className="selected-product-view-grid"
           id="selected-product-grid"
         >
-          <Box display="flex" alignItems="center" justifyContent="center">
-            <Grid item xs={12} sm={4}>
-              <Box
-                component="img"
-                src={prod_img}
-                onError={(e) => {
-                  e.currentTarget.src = DEFAULT_PROD_IMG;
-                }}
-                id="selected-product-img"
-                className="selected-product-img"
-              />
-            </Grid>
+          <Box
+            id="selected-producto-img-container"
+            className="selected-product-container"
+          >
+            <Box
+              component="img"
+              src={product_image}
+              onError={(e) => {
+                e.currentTarget.src = DEFAULT_PROD_IMG;
+              }}
+              id="selected-product-img"
+              className="selected-product-img"
+            />
 
-            <Grid item xs={12} sm={8}>
-              <Box className="market-row">
-                {price_and_market.map((price_market: string, index: number) => {
-                  const market_price_vec = price_market.split(" ");
-                  /* Suponiendo que no existe market con espacio en el nombre */
-                  const logo = getStoreIcon(market_price_vec[0]);
-                  const price = market_price_vec[1];
+            <Box
+              id="selected-product-title-prices-container"
+              className="selected-product-title-prices-container"
+            >
+              <DialogTitle
+                id="selected-product-title"
+                className="selected_product-title"
+              >
+                {cheapestProduct.name}
+              </DialogTitle>
+
+              <List
+                id="selected-product-list-prices"
+                className="selected-product-list-prices"
+              >
+                {products.map((product) => {
                   return (
-                    <Price
-                      key={price_market}
-                      logo={logo}
-                      price={price}
-                      color={"blue"}
-                      cheapest={parseFloat(price) === minPrice}
-                      url={urls[index]}
+                    <PriceView
+                      key={product.name + product.market}
+                      logo={getStoreIcon(product.market)}
+                      product={product}
+                      is_cheapest={product.price === minPrice}
+                      url={product.url}
                     />
                   );
                 })}
-              </Box>
-            </Grid>
+              </List>
+              {isScrollable && (
+                <Box
+                  id="more-items-icon"
+                  component="div"
+                  className="more-items-icon"
+                >
+                  <ArrowDownwardIcon />
+                </Box>
+              )}
+            </Box>
           </Box>
         </Grid>
+        <Box
+          id="agregar-a-list-button-container"
+          className="agregar-a-list-button-container"
+        >
+          <Button
+            id="agregar-a-list-button"
+            className="agregar-a-list-button"
+            onClick={() => addProduct(product_items)}
+          >
+            <Typography variant="h6" color="white">
+              Agregar a lista
+            </Typography>
+          </Button>
+        </Box>
       </DialogContent>
     </Dialog>
   );

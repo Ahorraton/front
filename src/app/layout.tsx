@@ -4,7 +4,7 @@ import { baselightTheme } from "./global_layout/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, Container, Typography, Box } from "@mui/material";
-import React, { Suspense } from "react";
+import React from "react";
 import NavBar from "./global_layout/navBar/NavBar";
 import Footer from "./global_layout/footer/Footer";
 import { useSearchParams } from "next/navigation";
@@ -19,9 +19,14 @@ const MainWrapper = styled("div")(() => ({
 }));
 
 const BodyStyle = styled("div")(() => ({
-  marginTop: "2%",
-  marginBottom: "2%",
+  alignContent: "center",
   maxWidth: "xl",
+}));
+
+const FooterStyle = styled("div")(() => ({
+  flexShrink: 0,
+  maxWidth: "xl",
+  marginTop: "2%",
 }));
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
@@ -44,7 +49,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                   </Container>
                 </BodyStyle>
 
-                <Footer />
+                <FooterStyle id="footer-style" className="footerstyle">
+                  <Footer />
+                </FooterStyle>
               </MainWrapper>
             </ThemeProvider>
           </PersistGate>
@@ -54,10 +61,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const RootLayoutWithSuspense = ({ children }: { children: React.ReactNode }) => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <RootLayout>{children}</RootLayout>
-  </Suspense>
-);
+const RootLayoutWithSuspense = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => <RootLayout>{children}</RootLayout>;
 
 export default RootLayoutWithSuspense;

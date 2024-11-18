@@ -1,14 +1,15 @@
 "use client";
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Box, Typography, Button } from "@mui/material";
-import MetaDataContainer from "../global_layout/MetaDataContainer";
-import ProductFilters from "../(ahorratonLayout)/components/product_search/GridFilter";
+import MetaDataContainer from "../../app/global_layout/MetaDataContainer";
+import ProductFilters from "../../app/(ahorratonLayout)/components/product_search/GridFilter";
 import { fetch_async } from "../../utils/common/fetch_async";
 import { Product } from "@/app/types/Product";
-import FeaturedProducts from "../(ahorratonLayout)/components/product_search/ProductGrid";
-import Filters from "@/app/buscar/types/Filters";
+import FeaturedProducts from "../../app/(ahorratonLayout)/components/product_search/ProductGrid";
+import Filters from "@/app/types/Filters";
 import "./search_page.css";
+import Loading from "../../app/loadingScreens/loading";
 
 const LIMIT = 8;
 
@@ -115,10 +116,4 @@ const Search = () => {
   );
 };
 
-const SearchWithSuspense = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <Search />
-  </Suspense>
-);
-
-export default SearchWithSuspense;
+export default Search;
