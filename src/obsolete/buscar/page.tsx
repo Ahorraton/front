@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Box, Typography, Button } from "@mui/material";
 import MetaDataContainer from "../../app/global_layout/MetaDataContainer";
@@ -116,4 +116,10 @@ const Search = () => {
   );
 };
 
-export default Search;
+const SearchWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Search />
+  </Suspense>
+);
+
+export default SearchWithSuspense;

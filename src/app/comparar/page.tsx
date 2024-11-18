@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -192,4 +192,10 @@ const Compare = () => {
   );
 };
 
-export default Compare;
+const CompareWithSuspense = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Compare />
+  </Suspense>
+);
+
+export default CompareWithSuspense;
