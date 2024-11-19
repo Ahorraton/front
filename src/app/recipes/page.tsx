@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Typography } from "@mui/material";
 import RecipePage from "./Recipe";
 import "./recipe.css";
