@@ -13,10 +13,15 @@ import FeaturedRecipes from "./components/featuredRecipes/FeaturedRecipes";
 import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 
 export default function Home() {
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const [featuredProducts, setFeaturedProducts] = React.useState<Product[]>([]);
   const [error, setError] = React.useState<string | null>(null);
-  const [recipes, setRecipes] = React.useState<any[]>([]);
+
+  const [loadingFeaturedProducts, setLoadingFeaturedProducts] =
+    React.useState<boolean>(true);
+  const [featuredProducts, setFeaturedProducts] = React.useState<Product[]>([]);
+
+  const [loadingFeaturedRecipes, setLoadingFeaturedRecipes] =
+    React.useState<boolean>(true);
+  const [featuredRecipes, setRecipes] = React.useState<Recipe[]>([]);
   const [selectedFeaturedProduct, setSelectedFeaturedProduct] = React.useState<
     string | null
   >(null);
@@ -27,8 +32,9 @@ export default function Home() {
         const res = await fetch_async("/recipes");
         const recipes_result: Recipe[] = res.recipes ? res.recipes : [];
         setRecipes(recipes_result);
+        setLoadingFeaturedRecipes(false);
       } catch (e: unknown) {
-        setError("error");
+        setError("error fetching featured recipes");
         throw new Error(String(e));
       }
     };
@@ -43,9 +49,9 @@ export default function Home() {
           ? res.featured_products
           : [];
         setFeaturedProducts(products_result);
-        setLoading(false);
+        setLoadingFeaturedProducts(false);
       } catch (e: unknown) {
-        setError("error");
+        setError("error fetching featured products");
         throw new Error(String(e));
       }
     };
@@ -64,7 +70,7 @@ export default function Home() {
 
   return (
     <MetaDataContainer title="Ahorraton" description="Ahorra en grande">
-      {loading ? (
+      {loadingFeaturedProducts || loadingFeaturedRecipes ? (
         <Box component="div" id="outsideBox" className="loading-layout">
           <LoadingHamsterScreen />
         </Box>
@@ -110,7 +116,7 @@ export default function Home() {
               id="featured-recipes-div"
               className="featured-recipes-layout"
             >
-              <FeaturedRecipes recipes={recipes} />
+              <FeaturedRecipes recipes={featuredRecipes} />
             </Box>
           </Box>
         </Box>
