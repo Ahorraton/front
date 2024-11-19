@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { Recipe } from "../../../types/Recipe";
+import { Recipe } from "@/app/types/Recipe";
 import { RecipeDescription } from "./recipeDescription";
 
 const RecipeSlide: React.FC<Recipe> = (recipe) => {
