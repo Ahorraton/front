@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useRef } from "react";
 import { ArrowInterface, HeroSectionProps } from "./recipeInterface";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -21,6 +21,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ recipes }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
   return (
     <Box component="div" sx={{ position: "relative" }}>
       <Box
@@ -31,7 +32,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ recipes }) => {
           paddingBottom: "2%",
         }}
       >
-        <Slider {...settings} ref={sliderRef}>
+        <Slider {...settings} ref={sliderRef} key={"recipes"}>
           {recipes.map((recipe) => (
             <RecipeSlide {...recipe} />
           ))}
