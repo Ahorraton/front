@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import {
   Typography,
@@ -7,19 +5,14 @@ import {
   Card,
   CardContent,
   CardMedia,
-  CircularProgress,
   Box,
 } from "@mui/material";
 import RecipeDetails from "./RecipeDetails";
-import { fetchRecipe } from "../../utils/apiUtils";
-import { useDispatch } from "react-redux";
 import { Recipe } from "@/app/types/Recipe";
-import { fetch_async } from "../../utils/common/fetch_async";
 import "./recipe.css";
 
 export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   const [selectedRecipe, setSelectedRecipe] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
   const handleRecipeClick = (recipeId: number) => {
     setSelectedRecipe(recipeId);

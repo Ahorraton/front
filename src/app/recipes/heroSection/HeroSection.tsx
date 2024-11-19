@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useRef } from "react";
 import { ArrowInterface, HeroSectionProps } from "./recipeInterface";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";

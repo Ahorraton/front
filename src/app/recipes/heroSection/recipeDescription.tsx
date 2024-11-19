@@ -4,7 +4,6 @@ import { Recipe } from "@/app/types/Recipe";
 export const RecipeDescription: React.FC<Recipe> = ({
   title,
   description,
-  img_url,
   ingredients,
 }) => {
   return (
