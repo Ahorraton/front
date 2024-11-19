@@ -9,17 +9,17 @@ import NavBarProps from "./NavBarProps";
 const NavBarDesktop: React.FC<NavBarProps> = ({ query, setQuery }) => {
   return (
     <Box className="nav-bar-desktop" id="nav-bar-desktop-style">
-      <Box className="title-layout" flex="1" mr={2}>
+      <Box className="title-layout" flex="1">
         <ButtonBase disableRipple href="/" className="title-hover">
-          {/* <Typography variant="h1" className="spin-on-hover">
+          <Typography variant="h1" className="spin-on-hover">
             🐭
           </Typography>
-          <Typography variant="h1">Ahorratón</Typography> */}
+          <Typography variant="h1">Ahorratón</Typography>
         </ButtonBase>
       </Box>
-      {/* <Box flex="2">
+      <Box flex="2" display="flex" justifyContent="center">
         <SearchBar starting_query={query} set={setQuery} />
-      </Box> */}
+      </Box>
       <Box
         className="about-us-layout"
         flex="0.8"
