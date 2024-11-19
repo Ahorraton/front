@@ -22,7 +22,7 @@ export default function SearchBar({
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
   return (
-    <Box width="50%" display="flex" justifyContent="center">
+    <Box width="100%" display="flex" justifyContent="center">
       <Box display="flex" flexDirection="row" alignItems="center">
         <TextField
           id="search-bar"

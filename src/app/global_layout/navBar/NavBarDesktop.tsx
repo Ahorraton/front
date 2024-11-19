@@ -6,33 +6,56 @@ import ListIcon from "../../(ahorratonLayout)/components/list/ListIcon";
 import "./nav_bar.css";
 import NavBarProps from "./NavBarProps";
 
-const NavBarDesktop: React.FC<NavBarProps> = ({ query, setQuery }) => {
+const NavBarDesktop: React.FC<NavBarProps> = ({
+  query,
+  setQuery,
+  isHomeScreen,
+}) => {
   return (
-    <Box className="nav-bar-desktop" id="nav-bar-desktop-style">
-      <Box className="title-layout" flex="1">
-        <ButtonBase disableRipple href="/" className="title-hover">
-          <Typography variant="h1" className="spin-on-hover">
-            🐭
-          </Typography>
-          <Typography variant="h1">Ahorratón</Typography>
-        </ButtonBase>
-      </Box>
-      <Box flex="2" display="flex" justifyContent="center">
-        <SearchBar starting_query={query} set={setQuery} />
-      </Box>
-      <Box
-        className="about-us-layout"
-        flex="0.8"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        padding="10px"
-      >
-        <Box mr={4}>
-          <ListIcon />
+    <Box>
+      {isHomeScreen ? (
+        <Box className="nav-bar-desktop" id="nav-bar-desktop-style">
+          <Box
+            className="about-us-layout"
+            flex="0.8"
+            display="flex"
+            justifyContent="right"
+            padding="10px"
+          >
+            <Box mr={4}>
+              <ListIcon />
+            </Box>
+            <UserIcon />
+          </Box>
         </Box>
-        <UserIcon />
-      </Box>
+      ) : (
+        <Box className="nav-bar-desktop" id="nav-bar-desktop-style">
+          <Box className="title-layout" flex="1">
+            <ButtonBase disableRipple href="/" className="title-hover">
+              <Typography variant="h1" className="spin-on-hover">
+                🐭
+              </Typography>
+              <Typography variant="h1">Ahorratón</Typography>
+            </ButtonBase>
+          </Box>
+          <Box flex="2" display="flex" justifyContent="center">
+            <SearchBar starting_query={query} set={setQuery} />
+          </Box>
+          <Box
+            className="about-us-layout"
+            flex="0.8"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            padding="10px"
+          >
+            <Box mr={4}>
+              <ListIcon />
+            </Box>
+            <UserIcon />
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 };

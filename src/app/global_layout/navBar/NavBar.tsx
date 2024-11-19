@@ -9,16 +9,20 @@ const NavBar = ({ query_param }: { query_param: string }) => {
 
   const currentPath = window.location.pathname;
 
-  if (currentPath === "/") {
-    return <Box />;
-  }
-
   return (
     <AppBar position="sticky" color="primary" elevation={0} id="nav-bar">
       {isMobile ? (
-        <NavBarMobile query={query} setQuery={setQuery} />
+        <NavBarMobile
+          query={query}
+          setQuery={setQuery}
+          isHomeScreen={currentPath === "/"}
+        />
       ) : (
-        <NavBarDesktop query={query} setQuery={setQuery} />
+        <NavBarDesktop
+          query={query}
+          setQuery={setQuery}
+          isHomeScreen={currentPath === "/"}
+        />
       )}
     </AppBar>
   );
