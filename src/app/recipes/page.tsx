@@ -34,11 +34,15 @@ export default function Page() {
   return (
     <Box>
       {loading ? (
-        <Box component="div">
-          <LoadingHamsterScreen />;
+        <Box component="div" id="loading-recipes" className="loading-recipes">
+          <LoadingHamsterScreen />
         </Box>
       ) : error ? (
-        <Box component="div">
+        <Box
+          component="div"
+          id="error-loading-recipes-div"
+          className="error-loading-recipes"
+        >
           <Typography>Error {error}</Typography>
         </Box>
       ) : (
@@ -47,7 +51,6 @@ export default function Page() {
           <RecipePage recipes={recipes} />
         </Box>
       )}
-      ;
     </Box>
   );
 }
