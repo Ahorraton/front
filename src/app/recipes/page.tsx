@@ -3,7 +3,7 @@
 import { Box, Typography } from "@mui/material";
 import RecipePage from "./Recipe";
 import "./recipe.css";
-// import HeroSection from "../(ahorratonLayout)/components/heroSection";
+import HeroSection from "./heroSection";
 import { useEffect, useState } from "react";
 import { LoadingHamsterScreen } from "@/app/loadingScreens/loadingHamster/LoadingHamster";
 import { fetch_async } from "@/utils/common/fetch_async";

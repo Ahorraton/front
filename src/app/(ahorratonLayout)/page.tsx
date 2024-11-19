@@ -6,7 +6,6 @@ import { Product } from "@/app/types/Product";
 import { fetch_async } from "@/utils/common/fetch_async";
 import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/ProductGrid";
 import "./landing_page.css";
-import HeroSection from "./components/heroSection";
 import { Recipe } from "../types/Recipe";
 import SearchBar from "../global_layout/navBar/SearchBar";
 import { useSearchParams } from "next/navigation";
