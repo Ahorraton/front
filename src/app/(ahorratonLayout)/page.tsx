@@ -93,27 +93,25 @@ export default function Home() {
 
           <Box
             component="div"
-            id="featured-prod-recipes-style"
-            className="page-layout"
+            id="featured-prod-recipes-div"
+            className="featured-prod-recipes-div"
           >
-            <Box component="div" id="featured-prod-recipes-div">
-              <Box
-                component="div"
-                id="featured-product-div"
-                className="featured-products-layout"
-              >
-                <FeaturedProducts
-                  products={featuredProducts}
-                  setSelectedFeaturedProduct={setSelectedFeaturedProduct}
-                />
-              </Box>
-              <Box
-                component="div"
-                id="featured-recipes-div"
-                className="featured-recipes-layout"
-              >
-                <FeaturedRecipes recipes={recipes} />
-              </Box>
+            <Box
+              component="div"
+              id="featured-product-div"
+              className="featured-products-layout"
+            >
+              <FeaturedProducts
+                products={featuredProducts}
+                setSelectedFeaturedProduct={setSelectedFeaturedProduct}
+              />
+            </Box>
+            <Box
+              component="div"
+              id="featured-recipes-div"
+              className="featured-recipes-layout"
+            >
+              <FeaturedRecipes recipes={recipes} />
             </Box>
           </Box>
         </Box>

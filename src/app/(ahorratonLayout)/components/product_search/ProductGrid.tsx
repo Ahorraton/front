@@ -20,7 +20,7 @@ const FeaturedProducts = ({
         Categorias Destacadas{" "}
       </Typography>
       <Grid container spacing={2}>
-        {products.map((product, index) => (
+        {products.slice(0, 6).map((product, index) => (
           <Grid item key={index}>
             <FeaturedProductCard
               product={product}
