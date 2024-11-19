@@ -15,7 +15,7 @@ import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHa
 
 export default function Home() {
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [products, setProducts] = React.useState<Product[]>([]);
+  const [featuredProducts, setFeaturedProducts] = React.useState<Product[]>([]);
   const [error, setError] = React.useState<string | null>(null);
   const [recipes, setRecipes] = React.useState<any[]>([]);
   const [selectedFeaturedProduct, setSelectedFeaturedProduct] = React.useState<
@@ -43,7 +43,7 @@ export default function Home() {
         const products_result: Product[] = res.featured_products
           ? res.featured_products
           : [];
-        setProducts(products_result);
+        setFeaturedProducts(products_result);
         setLoading(false);
       } catch (e: unknown) {
         setError("error");
@@ -69,9 +69,14 @@ export default function Home() {
         <Box component="div" id="outsideBox" className="loading-layout">
           <LoadingHamsterScreen />
         </Box>
+      ) : error ? (
+        <Box className="error-layout">
+          <Typography variant="h6" align="center">
+            Servicio no disponible. Error: {error}
+          </Typography>
+        </Box>
       ) : (
         <Box component="div" id="outsideBox" className="home-screen-layout">
-          {/* <HeroSection recipes={recipes} /> */}
           <Box
             display="flex"
             flexDirection="column"
@@ -86,24 +91,30 @@ export default function Home() {
             <SearchBar starting_query={query} set={setQuery} />
           </Box>
 
-          <Box className="page-layout">
-            {products.length === 0 ? (
-              <Typography variant="h6" align="center">
-                No se encontraron productos.
-              </Typography>
-            ) : (
-              <Box component="div" id="selected-product-div">
-                <Box mt={5}>
-                  <FeaturedProducts
-                    products={products}
-                    setSelectedFeaturedProduct={setSelectedFeaturedProduct}
-                  />
-                </Box>
-                <Box mt={5}>
-                  <FeaturedRecipes recipes={recipes} />
-                </Box>
+          <Box
+            component="div"
+            id="featured-prod-recipes-style"
+            className="page-layout"
+          >
+            <Box component="div" id="featured-prod-recipes-div">
+              <Box
+                component="div"
+                id="featured-product-div"
+                className="featured-products-layout"
+              >
+                <FeaturedProducts
+                  products={featuredProducts}
+                  setSelectedFeaturedProduct={setSelectedFeaturedProduct}
+                />
               </Box>
-            )}
+              <Box
+                component="div"
+                id="featured-recipes-div"
+                className="featured-recipes-layout"
+              >
+                <FeaturedRecipes recipes={recipes} />
+              </Box>
+            </Box>
           </Box>
         </Box>
       )}
