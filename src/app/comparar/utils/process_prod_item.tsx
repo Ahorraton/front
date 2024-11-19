@@ -34,7 +34,7 @@ export function process_prod_item(product_items: ProductItems): Product[] {
         dir_sucursal: dir_sucursal ? dir_sucursal[index] : "",
       };
     })
-    // .filter((product) => !isNaN(product.price))
+    .filter((product) => !isNaN(product.price))
     .sort((a, b) => a.price - b.price);
 
   return products;
