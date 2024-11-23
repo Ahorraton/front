@@ -25,7 +25,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const [warningAction, setWarningAction] = useState<() => void>(() => {});
 
   const handleAddQuantity = (ean: string) => {
-    dispatch(addItem({ ean, quantity: 1 }));
+    dispatch(addItem({ ean, amount: 1 }));
   };
 
   const handleRemoveQuantity = (ean: string) => {

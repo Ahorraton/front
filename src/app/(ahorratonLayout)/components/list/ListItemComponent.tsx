@@ -26,8 +26,8 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
   return (
     <ListItem key={item.ean}>
       <ListItemText
-        primary={item.name?.split(",")[0]}
-        secondary={`Cantidad: ${item.quantity}`}
+        primary={item.product?.name}
+        secondary={`Cantidad: ${item.amount}`}
       />
       <ListItemSecondaryAction>
         <IconButton

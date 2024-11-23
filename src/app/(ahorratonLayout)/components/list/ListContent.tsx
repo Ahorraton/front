@@ -17,6 +17,7 @@ import ListActions from "./ListActions";
 import { ConfirmDialog } from "./Dialogs";
 import { Box, List } from "@mui/material";
 import "./list-style.css";
+import { ListItemType } from "@/app/types/ListItem";
 
 const ListContent = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -34,14 +35,14 @@ const ListContent = () => {
   const handleAddItem = (ean: string) => {
     const item = list.find((item) => item.ean === ean);
     if (item) {
-      dispatch(addItem({ ...item, quantity: 1 }));
+      dispatch(addItem({ ...item, amount: 1 }));
     }
   };
 
   const handleRemoveItem = (ean: string) => {
     const item = list.find((item) => item.ean === ean);
     if (item) {
-      if (item.quantity > 1) {
+      if (item.amount > 1) {
         dispatch(removeItem(ean));
       } else {
         setItemToDelete(ean);
@@ -122,7 +123,7 @@ const ListContent = () => {
           isLoggedIn={user.isLoggedIn}
         />
         <List>
-          {list.map((item) => (
+          {list.map((item: ListItemType) => (
             <ListItemComponent
               key={item.ean}
               item={item}

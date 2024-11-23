@@ -52,7 +52,7 @@ const ListActions: React.FC<ListActionsProps> = ({
 
         const productsToSave = list.map((item) => ({
           product_code: item.ean,
-          amount: item.quantity,
+          amount: item.amount,
         }));
 
         const endpoint = selectedListId

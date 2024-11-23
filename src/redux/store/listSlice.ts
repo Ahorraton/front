@@ -16,7 +16,7 @@ const listSlice = createSlice({
         (item) => item.ean === action.payload.ean
       );
       if (existingItem) {
-        existingItem.quantity += action.payload.quantity;
+        existingItem.amount += action.payload.amount;
       } else {
         state.items.push(action.payload);
       }
@@ -27,7 +27,7 @@ const listSlice = createSlice({
       action.payload.forEach((item) => {
         const existingItem = state.items.find((i) => i.ean === item.ean);
         if (existingItem) {
-          existingItem.quantity += item.quantity;
+          existingItem.amount += item.amount;
         } else {
           state.items.push(item);
         }
@@ -38,8 +38,8 @@ const listSlice = createSlice({
         (item) => item.ean === action.payload
       );
       if (existingItem) {
-        if (existingItem.quantity > 1) {
-          existingItem.quantity -= 1;
+        if (existingItem.amount > 1) {
+          existingItem.amount -= 1;
         } else {
           state.items = state.items.filter(
             (item) => item.ean !== action.payload

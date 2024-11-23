@@ -1,15 +1,25 @@
+import { Product } from "./Product";
+
+export interface ListItemFromDB {
+  id: number;
+  name: string;
+  price: number;
+  created_at: string;
+  market: string;
+  image_url: string | null;
+  ean: string;
+  url: string | null;
+  quantity: number;
+  unit: string; // kg, Lts, g
+  dir_sucursal: string | null;
+  is_online: boolean;
+  amount: number;
+}
+
 export interface ListItemType {
   ean: string;
-  id?: string;
-  name?: string;
-  price?: number;
-  quantity: number;
-  market: string;
-  dir_sucursal?: string;
-  is_online?: false;
-  image_url?: string;
-  url?: string;
-  unit: string; // kg, Lts, g
+  product?: Product;
+  amount: number;
 }
 
 export interface ListState {
