@@ -8,6 +8,7 @@ export type Product = {
   ean: string;
   url: string | null;
   quantity?: number;
+  amount?: number;
   unit?: string; // kg, Lts, g
   dir_sucursal: string | null;
   is_online?: boolean;

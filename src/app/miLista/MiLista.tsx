@@ -81,7 +81,7 @@ const MiLista: React.FC = () => {
             );
             return {
               ...product,
-              quantity: localItem ? localItem.amount : 0,
+              amount: localItem ? localItem.amount : 0,
             };
           }
         );
@@ -223,7 +223,7 @@ const MiLista: React.FC = () => {
   );
 
   const totalPrice = cheapestProducts.reduce(
-    (total, product) => total + product.price * (product.quantity || 0),
+    (total, product) => total + product.price * (product.amount || 0),
     0
   );
 

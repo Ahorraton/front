@@ -29,7 +29,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   };
 
   const handleRemoveQuantity = (ean: string) => {
-    if (product.quantity && product.quantity > 1) {
+    if (product.amount && product.amount > 1) {
       dispatch(removeItem(ean));
     } else {
       setWarningAction(() => () => dispatch(removeItem(ean)));
@@ -107,7 +107,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                 <AddIcon />
               </IconButton>
               <Typography variant="body1" style={{ margin: "0 10px" }}>
-                {product.quantity}
+                {product.amount}
               </Typography>
               <IconButton onClick={() => handleRemoveQuantity(product.ean)}>
                 <RemoveIcon />
