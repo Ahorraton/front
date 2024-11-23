@@ -76,9 +76,10 @@ const ListActions: React.FC<ListActionsProps> = ({
         // Show modal with appropriate message
       } catch (error) {
         console.error("Error saving list:", error);
-      } finally {
-        window.location.href = "/miLista";
       }
+      // finally {
+      //   window.location.href = "/miLista";
+      // }
     } else {
       onSaveList();
     }
@@ -91,9 +92,10 @@ const ListActions: React.FC<ListActionsProps> = ({
 
   return (
     <Box textAlign="center" m={2}>
-      <Box>
+      <Box id="select-list-container" className="select-list-container">
         <FormControl fullWidth>
-          <InputLabel id="selected-list-label">Lista Seleccionada</InputLabel>
+          {/* <InputLabel id="selected-list-label">Lista Seleccionada</InputLabel> */}
+
           <ListSelector
             isListSaved={isListSaved}
             setPendingListId={setPendingListId}
@@ -101,13 +103,6 @@ const ListActions: React.FC<ListActionsProps> = ({
           />
         </FormControl>
       </Box>
-      {/* 
-      <TextField
-        label="Nombre de mi lista"
-        value={listName}
-        onChange={onListNameChange}
-        fullWidth
-      /> */}
 
       <IconButton color="primary" onClick={handleSaveList}>
         <SaveIcon />
