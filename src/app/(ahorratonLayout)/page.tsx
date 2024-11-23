@@ -11,6 +11,7 @@ import SearchBar from "../global_layout/navBar/SearchBar";
 import { useSearchParams } from "next/navigation";
 import FeaturedRecipes from "./components/featuredRecipes/FeaturedRecipes";
 import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
+import ErrorNoServiceAvailable from "@/app/error_pages/ErrorNoServiceAvailable";
 
 export default function Home() {
   const [error, setError] = React.useState<string | null>(null);
@@ -76,9 +77,7 @@ export default function Home() {
         </Box>
       ) : error ? (
         <Box className="error-layout">
-          <Typography variant="h6" align="center">
-            Servicio no disponible. Error: {error}
-          </Typography>
+          <ErrorNoServiceAvailable error={error} />
         </Box>
       ) : (
         <Box component="div" id="outsideBox" className="home-screen-layout">
