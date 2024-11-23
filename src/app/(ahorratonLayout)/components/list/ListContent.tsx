@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import {
@@ -18,6 +18,8 @@ import { ConfirmDialog } from "./Dialogs";
 import { Box, List } from "@mui/material";
 import "./list-style.css";
 import { ListItemType } from "@/app/types/ListItem";
+import { Product } from "@/app/types/Product";
+import TotalPrice from "@/app/miLista/TotalPrice";
 
 const ListContent = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -27,20 +29,20 @@ const ListContent = () => {
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
 
   const [itemToDelete, setItemToDelete] = useState<string | null>(null);
-  const list = useSelector((state: RootState) => state.list.items);
+  const listItems = useSelector((state: RootState) => state.list.items);
   const listName = useSelector((state: RootState) => state.list.name);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   const handleAddItem = (ean: string) => {
-    const item = list.find((item) => item.ean === ean);
+    const item = listItems.find((item) => item.ean === ean);
     if (item) {
       dispatch(addItem({ ...item, amount: 1 }));
     }
   };
 
   const handleRemoveItem = (ean: string) => {
-    const item = list.find((item) => item.ean === ean);
+    const item = listItems.find((item) => item.ean === ean);
     if (item) {
       if (item.amount > 1) {
         dispatch(removeItem(ean));
@@ -80,7 +82,10 @@ const ListContent = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ list, username: user.userInfo?.username }),
+          body: JSON.stringify({
+            list: listItems,
+            username: user.userInfo?.username,
+          }),
         });
 
         if (!response.ok) {
@@ -109,12 +114,56 @@ const ListContent = () => {
     setAuthChoiceDialogOpen(false);
     setRegisterDialogOpen(true);
   };
+
+  // Fix calculate value
+
+  const [selectedMarkets, setSelectedMarkets] = useState<string[]>([
+    "carrefour",
+    "coto",
+    "dia",
+    "vea",
+    "disco",
+    "jumbo",
+  ]);
+
+  const [products, setProducts] = useState<Product[]>([]);
+
+  console.log("List Items", listItems);
+
+  useEffect(
+    () =>
+      setProducts(
+        listItems
+          .map((item: ListItemType) => item.product)
+          .filter((product): product is Product => product !== undefined)
+      ),
+    [listItems]
+  );
+
+  const filteredProducts = products.filter((product) =>
+    selectedMarkets.includes(product.market)
+  );
+
+  const cheapestProducts = Object.values(
+    filteredProducts.reduce((acc, product) => {
+      if (!acc[product.ean] || acc[product.ean].price > product.price) {
+        acc[product.ean] = product;
+      }
+      return acc;
+    }, {} as { [key: string]: Product })
+  );
+
+  const totalPrice = cheapestProducts.reduce(
+    (total, product) => total + product.price * (product.amount || 0),
+    0
+  );
+
   return (
     <Box className="list-content" id="list-content" role="presentation">
       <Box>
         <ListActions
           listName={listName}
-          list={list}
+          list={listItems}
           onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             dispatch(setListName(event.target.value))
           }
@@ -123,7 +172,7 @@ const ListContent = () => {
           isLoggedIn={user.isLoggedIn}
         />
         <List>
-          {list.map((item: ListItemType) => (
+          {listItems.map((item: ListItemType) => (
             <ListItemComponent
               key={item.ean}
               item={item}
@@ -133,6 +182,9 @@ const ListContent = () => {
             />
           ))}
         </List>
+        <Box mt={1.5}>
+          <TotalPrice totalPrice={totalPrice} />
+        </Box>
       </Box>
       <ConfirmDialog
         open={dialogOpen}
