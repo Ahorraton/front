@@ -18,6 +18,7 @@ export interface ListItemFromDB {
 
 export interface ListItemType {
   ean: string;
+  name?: string;
   product?: Product;
   amount: number;
 }

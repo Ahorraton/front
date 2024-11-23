@@ -47,6 +47,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({
         response.data.items.forEach((item: ListItemFromDB) => {
           itemsMap.set(item.ean, {
             product: { ...item },
+            name: item.name,
             ean: item.ean,
             amount: item.amount,
           });
