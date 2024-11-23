@@ -6,6 +6,7 @@ import { selectList, setLists } from "../../redux/store/multipleListsSlice";
 import { setList, setListName } from "../../redux/store/listSlice";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
+import { ListItemType } from "../types/ListItem";
 
 type ListSelectorProps = {
   isListSaved: boolean;
@@ -42,11 +43,9 @@ const ListSelector: React.FC<ListSelectorProps> = ({
         }
 
         // Merge products with the same ean code
-        const itemsMap = new Map();
-        response.data.items.forEach((item: any) => {
-          if (!itemsMap.has(item.ean)) {
-            itemsMap.set(item.ean, { ...item, quantity: item.amount });
-          }
+        const itemsMap: Map<string, ListItemType> = new Map();
+        response.data.items.forEach((item: ListItemType) => {
+          itemsMap.set(item.ean, { ...item });
         });
         const mergedItems = Array.from(itemsMap.values());
 

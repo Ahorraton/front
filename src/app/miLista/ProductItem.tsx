@@ -78,9 +78,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                 variant="h5"
                 padding="2%"
               >
-                {product.name
-                  ? product.name.split(",")[0]
-                  : "Producto sin nombre"}
+                {product.name ? product.name : "Producto sin nombre"}
               </Typography>
             </Box>
             <Box className="product-row">

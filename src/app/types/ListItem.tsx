@@ -1,12 +1,15 @@
 export interface ListItemType {
+  ean: string;
   id?: string;
   name?: string;
-  quantity: number;
   price?: number;
-  ean: string; // Changed to required
+  quantity: number;
+  market: string;
+  dir_sucursal?: string;
+  is_online?: false;
   image_url?: string;
-  urls?: string;
-  market_price?: string; // We have the price here (e.g. coto 2500)
+  url?: string;
+  unit: string; // kg, Lts, g
 }
 
 export interface ListState {
