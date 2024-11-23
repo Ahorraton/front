@@ -60,7 +60,7 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
           name: i.name,
           amount: i.amount,
           ean: i.ean,
-        })) || []
+        }))
       )
     );
   };
