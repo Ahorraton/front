@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +16,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import ListSelector from "@/app/miLista/ListSelector";
 
 interface ListActionsProps {
   listName: string;
@@ -83,26 +84,21 @@ const ListActions: React.FC<ListActionsProps> = ({
     }
   };
 
-  const [selectedList, setSelectedList] = React.useState<string>(listName);
+  const [selectedList, setSelectedList] = useState<string>(listName);
+  const [isListSaved, setIsListSaved] = useState<boolean>(true);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [pendingListId, setPendingListId] = useState<number | null>(null);
 
   return (
     <Box textAlign="center" m={2}>
       <Box>
         <FormControl fullWidth>
           <InputLabel id="selected-list-label">Lista Seleccionada</InputLabel>
-          <Select
-            labelId="selected-list-label"
-            id="selected-list"
-            value={selectedList}
-            label="Lista Seleccionada"
-            onChange={(event: SelectChangeEvent) =>
-              setSelectedList(event.target.value as string)
-            }
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
+          <ListSelector
+            isListSaved={isListSaved}
+            setPendingListId={setPendingListId}
+            setOpenDialog={setOpenDialog}
+          />
         </FormControl>
       </Box>
       {/* 
