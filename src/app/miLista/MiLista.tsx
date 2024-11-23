@@ -34,8 +34,8 @@ import { Product } from "@/app/types/Product";
 import { ListItemType } from "../types/ListItem";
 
 const MiLista: React.FC = () => {
-  const list = useSelector((state: RootState) => state.list.items);
-  const listName = useSelector((state: RootState) => state.list.name);
+  const selectedList = useSelector((state: RootState) => state.list.items);
+  const selectedListName = useSelector((state: RootState) => state.list.name);
   const selectedListId = useSelector(
     (state: RootState) => state.multipleLists.selectedListId
   );
@@ -68,15 +68,15 @@ const MiLista: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const products_eans: string[] = list.map(
+        const list_product_eans: string[] = selectedList.map(
           (item: ListItemType) => item.ean
         );
-        const response = await axios.post("/api/list/addCachedProducts", {
-          products_eans: products_eans,
+        const response = await axios.post("/api/list/fetchListProducts", {
+          products_eans: list_product_eans,
         });
         const productsWithAmount = response.data.data.products.map(
           (product: Product) => {
-            const localItem = list.find(
+            const localItem = selectedList.find(
               (item: ListItemType) => item.ean === product.ean
             );
             return {
@@ -92,7 +92,7 @@ const MiLista: React.FC = () => {
     };
 
     fetchProducts();
-  }, [list]);
+  }, [selectedList]);
 
   useEffect(() => {
     if (user.userInfo?.id) {
@@ -113,7 +113,7 @@ const MiLista: React.FC = () => {
         return;
       }
 
-      const productsToSave = list.map((item: ListItemType) => ({
+      const productsToSave = selectedList.map((item: ListItemType) => ({
         product_code: item.ean,
         amount: item.amount,
       }));
@@ -125,10 +125,10 @@ const MiLista: React.FC = () => {
         ? {
             user_id,
             grocery_list_id: selectedListId,
-            name: listName,
+            name: selectedListName,
             products: productsToSave,
           }
-        : { user_id, name: listName, products: productsToSave };
+        : { user_id, name: selectedListName, products: productsToSave };
 
       const response = await axios.post(endpoint, payload);
 
@@ -258,7 +258,7 @@ const MiLista: React.FC = () => {
       <Box mt={1.5}>
         <TextField
           label="Nombre de mi lista"
-          value={listName}
+          value={selectedListName}
           onChange={handleListNameChange}
           fullWidth
           disabled={editingEnabled}
