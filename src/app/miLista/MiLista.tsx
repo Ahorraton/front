@@ -71,7 +71,7 @@ const MiLista: React.FC = () => {
         const products_eans: string[] = list.map(
           (item: ListItemType) => item.ean
         );
-        const response = await axios.post("/api/list/getProducts", {
+        const response = await axios.post("/api/list/addCachedProducts", {
           products_eans: products_eans,
         });
         const productsWithQuantity = response.data.data.products.map(
