@@ -30,10 +30,16 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
         secondary={`Cantidad: ${item.quantity}`}
       />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="add" onClick={() => onAdd(item.ean)}>
+        <IconButton
+          id="add-item-button"
+          edge="end"
+          aria-label="add"
+          onClick={() => onAdd(item.ean)}
+        >
           <AddCircleIcon />
         </IconButton>
         <IconButton
+          id="remove-item-button"
           edge="end"
           aria-label="remove"
           onClick={() => onRemove(item.ean)}
@@ -41,6 +47,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
           <RemoveCircleIcon />
         </IconButton>
         <IconButton
+          id="delete-product-button"
           edge="end"
           aria-label="delete"
           onClick={() => onDelete(item.ean)}
