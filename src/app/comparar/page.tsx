@@ -90,9 +90,8 @@ const Compare = () => {
 
   const handleAddProduct = (product: ProductItems) => {
     const productToSave = {
-      ...product,
-      name: product.names_list,
-      quantity: 1,
+      ean: product.ean,
+      amount: 1,
     };
     dispatch(addItem(productToSave));
     setShowAlert(true);

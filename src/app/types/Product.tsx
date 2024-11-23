@@ -7,8 +7,8 @@ export type Product = {
   image_url: string | null;
   ean: string;
   url: string | null;
-  quantity: number;
-  unit: string; // kg, Lts, g
+  quantity?: number;
+  unit?: string; // kg, Lts, g
   dir_sucursal: string | null;
-  is_online: boolean;
+  is_online?: boolean;
 };

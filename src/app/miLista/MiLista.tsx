@@ -31,6 +31,7 @@ import "./myList.css";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { Product } from "@/app/types/Product";
+import { ListItemType } from "../types/ListItem";
 
 const MiLista: React.FC = () => {
   const list = useSelector((state: RootState) => state.list.items);
@@ -67,7 +68,9 @@ const MiLista: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const products_eans = list.map((item) => item.ean);
+        const products_eans: string[] = list.map(
+          (item: ListItemType) => item.ean
+        );
         const response = await axios.post("/api/list/getProducts", {
           products_eans: products_eans,
         });
@@ -76,7 +79,7 @@ const MiLista: React.FC = () => {
             const localItem = list.find((item) => item.ean === product.ean);
             return {
               ...product,
-              quantity: localItem ? localItem.quantity : 0,
+              quantity: localItem ? localItem.amount : 0,
             };
           }
         );
@@ -108,9 +111,9 @@ const MiLista: React.FC = () => {
         return;
       }
 
-      const productsToSave = list.map((item) => ({
+      const productsToSave = list.map((item: ListItemType) => ({
         product_code: item.ean,
-        amount: item.quantity,
+        amount: item.amount,
       }));
 
       const endpoint = selectedListId
