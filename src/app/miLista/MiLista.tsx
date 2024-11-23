@@ -74,16 +74,18 @@ const MiLista: React.FC = () => {
         const response = await axios.post("/api/list/addCachedProducts", {
           products_eans: products_eans,
         });
-        const productsWithQuantity = response.data.data.products.map(
+        const productsWithAmount = response.data.data.products.map(
           (product: Product) => {
-            const localItem = list.find((item) => item.ean === product.ean);
+            const localItem = list.find(
+              (item: ListItemType) => item.ean === product.ean
+            );
             return {
               ...product,
               quantity: localItem ? localItem.amount : 0,
             };
           }
         );
-        setProducts(productsWithQuantity);
+        setProducts(productsWithAmount);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
