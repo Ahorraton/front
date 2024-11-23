@@ -73,9 +73,9 @@ const ListSelector: React.FC<ListSelectorProps> = ({
       fullWidth
     >
       {Array.isArray(multipleLists.lists) && multipleLists.lists.length > 0 ? (
-        multipleLists.lists.map((list) => (
-          <MenuItem key={list.id} value={list.id}>
-            {list.name}
+        multipleLists.lists.map((selectedList) => (
+          <MenuItem key={selectedList.id} value={selectedList.id}>
+            {selectedList.name}
           </MenuItem>
         ))
       ) : (
