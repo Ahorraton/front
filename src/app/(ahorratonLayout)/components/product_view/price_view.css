@@ -31,11 +31,6 @@
   align-items: center;
 }
 
-/* .price-column-cheapest:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-} */
-
 .icon-container {
   display: flex;
   flex-direction: row;

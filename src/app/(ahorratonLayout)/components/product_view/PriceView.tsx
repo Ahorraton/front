@@ -29,6 +29,7 @@ export default function PriceView({
     if (product.url) {
       window.open(product.url);
     }
+    console.log(product);
   };
 
   return (
