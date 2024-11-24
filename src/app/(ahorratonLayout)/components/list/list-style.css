@@ -14,6 +14,7 @@
 }
 
 .list-items-container {
+  min-height: 80vh;
   max-height: 100%;
   overflow-y: auto;
 }
