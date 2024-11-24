@@ -19,8 +19,8 @@ const FeaturedProducts = ({
       <Typography variant="h4" gutterBottom>
         Categorias Destacadas{" "}
       </Typography>
-      <Grid container spacing={2}>
-        {products.slice(0, 6).map((product, index) => (
+      <Grid container spacing={4}>
+        {products.slice(0, 12).map((product, index) => (
           <Grid item key={index}>
             <FeaturedProductCard
               product={product}

@@ -24,12 +24,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const [isWarningOpen, setIsWarningOpen] = useState(false);
   const [warningAction, setWarningAction] = useState<() => void>(() => {});
 
-  const handleAddQuantity = (ean: string) => {
-    dispatch(addItem({ ean, quantity: 1 }));
+  const handleAddAmount = (ean: string) => {
+    dispatch(addItem({ ean, amount: 1 }));
   };
 
-  const handleRemoveQuantity = (ean: string) => {
-    if (product.quantity && product.quantity > 1) {
+  const handleRemoveAmount = (ean: string) => {
+    if (product.amount && product.amount > 1) {
       dispatch(removeItem(ean));
     } else {
       setWarningAction(() => () => dispatch(removeItem(ean)));
@@ -78,9 +78,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
                 variant="h5"
                 padding="2%"
               >
-                {product.name
-                  ? product.name.split(",")[0]
-                  : "Producto sin nombre"}
+                {product.name ? product.name : "Producto sin nombre"}
               </Typography>
             </Box>
             <Box className="product-row">
@@ -105,13 +103,13 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
               display="flex"
               alignItems="center"
             >
-              <IconButton onClick={() => handleAddQuantity(product.ean)}>
+              <IconButton onClick={() => handleAddAmount(product.ean)}>
                 <AddIcon />
               </IconButton>
               <Typography variant="body1" style={{ margin: "0 10px" }}>
-                {product.quantity}
+                {product.amount}
               </Typography>
-              <IconButton onClick={() => handleRemoveQuantity(product.ean)}>
+              <IconButton onClick={() => handleRemoveAmount(product.ean)}>
                 <RemoveIcon />
               </IconButton>
               <IconButton onClick={() => handleDeleteItem(product.ean)}>

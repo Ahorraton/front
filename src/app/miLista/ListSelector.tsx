@@ -6,6 +6,9 @@ import { selectList, setLists } from "../../redux/store/multipleListsSlice";
 import { setList, setListName } from "../../redux/store/listSlice";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
+import { ListItemFromDB, ListItemType } from "@/app/types/ListItem";
+import { Product } from "../types/Product";
+import { getCheapestItems } from "./utils/cheapestItems";
 
 type ListSelectorProps = {
   isListSaved: boolean;
@@ -41,17 +44,13 @@ const ListSelector: React.FC<ListSelectorProps> = ({
           dispatch(setListName(selectedList.name));
         }
 
-        // Merge products with the same ean code
-        const itemsMap = new Map();
-        response.data.items.forEach((item: any) => {
-          if (!itemsMap.has(item.ean)) {
-            itemsMap.set(item.ean, { ...item, quantity: item.amount });
-          }
-        });
-        const mergedItems = Array.from(itemsMap.values());
+        const prods: Product[] = response.data.items.map((item: Product) => ({
+          ...item,
+        }));
 
         dispatch(selectList(selectedListId));
-        dispatch(setList(mergedItems));
+        dispatch(setList(Array.from(getCheapestItems(prods))));
+
         await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
 
         // Save the selected list ID to cookies
@@ -69,9 +68,9 @@ const ListSelector: React.FC<ListSelectorProps> = ({
       fullWidth
     >
       {Array.isArray(multipleLists.lists) && multipleLists.lists.length > 0 ? (
-        multipleLists.lists.map((list) => (
-          <MenuItem key={list.id} value={list.id}>
-            {list.name}
+        multipleLists.lists.map((selectedList) => (
+          <MenuItem key={selectedList.id} value={selectedList.id}>
+            {selectedList.name}
           </MenuItem>
         ))
       ) : (

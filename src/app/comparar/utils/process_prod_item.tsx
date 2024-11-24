@@ -25,7 +25,6 @@ export function process_prod_item(product_items: ProductItems): Product[] {
         id: Number(product_items.ean),
         name: prod_name,
         price: Number(prices[index]),
-        price_per_unit: null,
         created_at: "",
         market: markets[index],
         image_url: null,

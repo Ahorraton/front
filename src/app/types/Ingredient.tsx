@@ -1,5 +1,12 @@
 export type Ingredient = {
   id: number;
   name: string;
-  amount: string;
+  amount: number;
+  ean?: string;
+};
+
+export type Item = {
+  name: string;
+  amount: number;
+  ean: string;
 };

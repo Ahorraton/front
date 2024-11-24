@@ -79,9 +79,8 @@ const ProductPaperAle = ({ product }: { product: ProductItems }) => {
 
   const handleAddToList = () => {
     const productToAdd = {
-      ...product,
-      name: product.names_list,
-      quantity: 1,
+      ean: product.ean,
+      amount: 1,
     };
     dispatch(addItem(productToAdd));
   };

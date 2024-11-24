@@ -31,10 +31,11 @@ import "./myList.css";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { Product } from "@/app/types/Product";
+import { ListItemType } from "../types/ListItem";
 
 const MiLista: React.FC = () => {
-  const list = useSelector((state: RootState) => state.list.items);
-  const listName = useSelector((state: RootState) => state.list.name);
+  const selectedList = useSelector((state: RootState) => state.list.items);
+  const selectedListName = useSelector((state: RootState) => state.list.name);
   const selectedListId = useSelector(
     (state: RootState) => state.multipleLists.selectedListId
   );
@@ -67,27 +68,31 @@ const MiLista: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const products_eans = list.map((item) => item.ean);
-        const response = await axios.post("/api/list/getProducts", {
-          products_eans: products_eans,
+        const list_product_eans: string[] = selectedList.map(
+          (item: ListItemType) => item.ean
+        );
+        const response = await axios.post("/api/list/fetchListProducts", {
+          products_eans: list_product_eans,
         });
-        const productsWithQuantity = response.data.data.products.map(
+        const productsWithAmount = response.data.data.products.map(
           (product: Product) => {
-            const localItem = list.find((item) => item.ean === product.ean);
+            const localItem = selectedList.find(
+              (item: ListItemType) => item.ean === product.ean
+            );
             return {
               ...product,
-              quantity: localItem ? localItem.quantity : 0,
+              amount: localItem ? localItem.amount : 0,
             };
           }
         );
-        setProducts(productsWithQuantity);
+        setProducts(productsWithAmount);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
 
     fetchProducts();
-  }, [list]);
+  }, [selectedList]);
 
   useEffect(() => {
     if (user.userInfo?.id) {
@@ -108,9 +113,9 @@ const MiLista: React.FC = () => {
         return;
       }
 
-      const productsToSave = list.map((item) => ({
+      const productsToSave = selectedList.map((item: ListItemType) => ({
         product_code: item.ean,
-        amount: item.quantity,
+        amount: item.amount,
       }));
 
       const endpoint = selectedListId
@@ -120,10 +125,10 @@ const MiLista: React.FC = () => {
         ? {
             user_id,
             grocery_list_id: selectedListId,
-            name: listName,
+            name: selectedListName,
             products: productsToSave,
           }
-        : { user_id, name: listName, products: productsToSave };
+        : { user_id, name: selectedListName, products: productsToSave };
 
       const response = await axios.post(endpoint, payload);
 
@@ -218,7 +223,7 @@ const MiLista: React.FC = () => {
   );
 
   const totalPrice = cheapestProducts.reduce(
-    (total, product) => total + product.price * (product.quantity || 0),
+    (total, product) => total + product.price * (product.amount || 0),
     0
   );
 
@@ -253,7 +258,7 @@ const MiLista: React.FC = () => {
       <Box mt={1.5}>
         <TextField
           label="Nombre de mi lista"
-          value={listName}
+          value={selectedListName}
           onChange={handleListNameChange}
           fullWidth
           disabled={editingEnabled}

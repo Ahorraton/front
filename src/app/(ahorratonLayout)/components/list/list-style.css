@@ -7,3 +7,8 @@
   justify-content: space-around;
   background-color: white;
 }
+
+.select-list-container {
+  display: flex;
+  flex-direction: column;
+}

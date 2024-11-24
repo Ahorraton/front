@@ -10,51 +10,25 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { addItems } from "../../redux/store/listSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { fetch_async } from "../../utils/common/fetch_async";
 import { Recipe } from "../types/Recipe";
 
 interface RecipeDetailsProps {
-  recipeId: number;
+  recipe: Recipe;
+  loading: boolean;
+  error: string | null;
   onClose: () => void;
   onAddList: () => void;
 }
 
-const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipeId, onClose }) => {
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        const res = await fetch_async(`/recipes/${recipeId}`);
-        setLoading(false);
-        const recipe: Recipe = res.recipe ? res.recipe : null;
-        setRecipe(recipe);
-      } catch (e: unknown) {
-        setError("error loading recipe");
-        throw new Error(String(e));
-      }
-    };
-    fetchRecipe();
-  }, [recipeId]);
-
-  const onAddList = () => {
-    dispatch(
-      addItems(
-        recipe?.ingredients.map((ingredient, index) => ({
-          name: ingredient.name,
-          quantity: index + 1,
-          ean: String(ingredient.id),
-        })) || []
-      )
-    );
-  };
-
+const RecipeDetails: React.FC<RecipeDetailsProps> = ({
+  recipe,
+  loading,
+  error,
+  onClose,
+  onAddList,
+}) => {
+  console.log("Inside recipe", recipe);
+  console.log("Items", recipe.items);
   return (
     <Dialog
       open={true}
@@ -69,36 +43,36 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({ recipeId, onClose }) => {
         {loading ? (
           <CircularProgress />
         ) : error ? (
-          <Typography color="error">{error}</Typography>
-        ) : recipe ? (
+          <Typography color="error">{`Error Loading Recipe Details: ${error}`}</Typography>
+        ) : (
           <>
             <Typography variant="h6" gutterBottom>
               Ingredients:
             </Typography>
             <ul>
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index}>{ingredient.name}</li>
+              {recipe.items?.map((item, index) => (
+                <li key={index}>{item.name}</li>
               ))}
             </ul>
+            <DialogActions>
+              <Button
+                onClick={onAddList}
+                color="secondary"
+                id="recipe-dialog-add-to-list-button"
+              >
+                Add to list
+              </Button>
+              <Button
+                onClick={onClose}
+                color="primary"
+                id="recipe-dialog-close-button"
+              >
+                Close
+              </Button>
+            </DialogActions>
           </>
-        ) : null}
+        )}
       </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={onAddList}
-          color="secondary"
-          id="recipe-dialog-add-to-list-button"
-        >
-          Add to list
-        </Button>
-        <Button
-          onClick={onClose}
-          color="primary"
-          id="recipe-dialog-close-button"
-        >
-          Close
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 };
