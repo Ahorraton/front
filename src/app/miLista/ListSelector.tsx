@@ -49,7 +49,7 @@ const ListSelector: React.FC<ListSelectorProps> = ({
         }));
 
         dispatch(selectList(selectedListId));
-        dispatch(setList(Array.from(getCheapestItems(prods))));
+        dispatch(setList(getCheapestItems(prods)));
 
         await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
 

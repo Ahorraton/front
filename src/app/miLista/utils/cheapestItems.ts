@@ -13,7 +13,7 @@ const SUPERMARKETS: string[] = [
 export function getCheapestItems(
   products: Product[],
   selectedMarkets?: string[]
-) {
+): ListItemType[] {
   const filteredProducts = products.filter((product) =>
     (selectedMarkets ?? SUPERMARKETS).includes(product.market)
   );
@@ -37,5 +37,5 @@ export function getCheapestItems(
     });
   });
 
-  return cheapestItemsMap.values();
+  return Array.from(cheapestItemsMap.values());
 }
