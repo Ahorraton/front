@@ -1,24 +1,14 @@
 import { useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { ListItemType } from "@/app/types/ListItem";
 import axios from "axios";
 import { fetchUserLists } from "@/utils/apiUtils";
-import {
-  Box,
-  IconButton,
-  TextField,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
+import { Box, IconButton, FormControl } from "@mui/material";
 import ListSelector from "@/app/miLista/ListSelector";
 
-interface ListActionsProps {
+interface SaveListButtonProps {
   listName: string;
   list: ListItemType[];
   onListNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -27,7 +17,7 @@ interface ListActionsProps {
   isLoggedIn: boolean;
 }
 
-const ListActions: React.FC<ListActionsProps> = ({
+const SaveListButton: React.FC<SaveListButtonProps> = ({
   listName,
   list,
   onListNameChange,
@@ -85,25 +75,8 @@ const ListActions: React.FC<ListActionsProps> = ({
     }
   };
 
-  const [selectedList, setSelectedList] = useState<string>(listName);
-  const [isListSaved, setIsListSaved] = useState<boolean>(true);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [pendingListId, setPendingListId] = useState<number | null>(null);
-
   return (
     <Box textAlign="center" m={2}>
-      <Box id="select-list-container" className="select-list-container">
-        <FormControl fullWidth>
-          {/* <InputLabel id="selected-list-label">Lista Seleccionada</InputLabel> */}
-
-          <ListSelector
-            isListSaved={isListSaved}
-            setPendingListId={setPendingListId}
-            setOpenDialog={setOpenDialog}
-          />
-        </FormControl>
-      </Box>
-
       <IconButton color="primary" onClick={handleSaveList}>
         <SaveIcon />
         {isLoggedIn ? "Guardar" : "Inicia sesion para guardar"}
@@ -112,4 +85,4 @@ const ListActions: React.FC<ListActionsProps> = ({
   );
 };
 
-export default ListActions;
+export default SaveListButton;

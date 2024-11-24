@@ -13,15 +13,17 @@ import LoginModal from "../user/login/LoginModal";
 import RegisterModal from "../user/register/RegisterModal";
 import AuthChoiceModal from "./AuthChoiceModal";
 import ListItemComponent from "./ListItemComponent";
-import ListActions from "./ListActions";
 import { ConfirmDialog } from "./Dialogs";
-import { Box, List } from "@mui/material";
+import { Box, Grid, List, Typography } from "@mui/material";
 import "./list-style.css";
 import { ListItemType } from "@/app/types/ListItem";
 import { Product } from "@/app/types/Product";
 import TotalPrice from "@/app/miLista/TotalPrice";
 import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
 import { calculateTotalPrice } from "@/app/miLista/utils/calculateTotalPrice";
+import SelectListComponent from "./ListSelector";
+import SaveListButton from "./SaveListAction";
+import LogInOrSignUpAlert from "./LogInOrSignUpAlert";
 
 const ListContent = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -131,7 +133,7 @@ const ListContent = () => {
   ]);
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [cheapestProducts, setCheapestProducts] = useState<Product[]>([]);
+  // const [cheapestProducts, setCheapestProducts] = useState<Product[]>([]);
 
   console.log("List Items", listItems);
 
@@ -140,8 +142,9 @@ const ListContent = () => {
       .map((item: ListItemType) => item.product)
       .filter((product): product is Product => product !== undefined);
 
-    const cheapestItems: ListItemType[] = Array.from(
-      getCheapestItems(prods, selectedMarkets)
+    const cheapestItems: ListItemType[] = getCheapestItems(
+      prods,
+      selectedMarkets
     );
     const cheapestItemsProducts: Product[] = cheapestItems
       .map((item: ListItemType) => {
@@ -160,69 +163,77 @@ const ListContent = () => {
       selectedMarkets
     );
 
-    setCheapestProducts(cheapestItemsProducts);
+    // setCheapestProducts(cheapestItemsProducts);
     setTotalPrice(totalPrice);
   }, [listItems]);
 
   return (
-    <Box className="list-content" id="list-content" role="presentation">
-      <Box>
-        <ListActions
-          listName={listName}
-          list={listItems}
-          onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            dispatch(setListName(event.target.value))
-          }
-          onClearList={() => setClearDialogOpen(true)}
-          onSaveList={handleSaveList}
-          isLoggedIn={user.isLoggedIn}
-        />
-        <List>
-          {listItems.map((item: ListItemType) => (
-            <ListItemComponent
-              key={item.ean}
-              item={item}
-              onAdd={handleAddItem}
-              onRemove={handleRemoveItem}
-              onDelete={handleDeleteItem}
+    <Grid container className="slider-view-grid" id="slider-view-grid">
+      {user.isLoggedIn ? (
+        <Box className="list-content" id="list-content" role="presentation">
+          <SelectListComponent />
+
+          <List id="list-items-container" className="list-items-container">
+            {listItems.map((item: ListItemType) => (
+              <ListItemComponent
+                key={item.ean}
+                item={item}
+                onAdd={handleAddItem}
+                onRemove={handleRemoveItem}
+                onDelete={handleDeleteItem}
+              />
+            ))}
+          </List>
+
+          <Box mt={1.5}>
+            <TotalPrice totalPrice={totalPrice} />
+            <SaveListButton
+              listName={listName}
+              list={listItems}
+              onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                dispatch(setListName(event.target.value))
+              }
+              onClearList={() => setClearDialogOpen(true)}
+              onSaveList={handleSaveList}
+              isLoggedIn={user.isLoggedIn}
             />
-          ))}
-        </List>
-        <Box mt={1.5}>
-          <TotalPrice totalPrice={totalPrice} />
+          </Box>
+
+          <ConfirmDialog
+            open={dialogOpen}
+            onClose={() => setDialogOpen(false)}
+            onConfirm={confirmDeleteItem}
+            title="Borrar Item"
+            description="Quieres eliminar el producto de tu lista?"
+            confirmText="Borrar"
+          />
+          <ConfirmDialog
+            open={clearDialogOpen}
+            onClose={() => setClearDialogOpen(false)}
+            onConfirm={confirmClearList}
+            title="Borrar Lista"
+            description="Quieres borrar toda tu lista?"
+            confirmText="Borrar"
+          />
+          <AuthChoiceModal
+            open={authChoiceDialogOpen}
+            onClose={() => setAuthChoiceDialogOpen(false)}
+            onLogin={handleLogin}
+            onRegister={handleRegister}
+          />
+          <LoginModal
+            open={loginDialogOpen}
+            onClose={() => setLoginDialogOpen(false)}
+          />
+          <RegisterModal
+            open={registerDialogOpen}
+            onClose={() => setRegisterDialogOpen(false)}
+          />
         </Box>
-      </Box>
-      <ConfirmDialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        onConfirm={confirmDeleteItem}
-        title="Borrar Item"
-        description="Quieres eliminar el producto de tu lista?"
-        confirmText="Borrar"
-      />
-      <ConfirmDialog
-        open={clearDialogOpen}
-        onClose={() => setClearDialogOpen(false)}
-        onConfirm={confirmClearList}
-        title="Borrar Lista"
-        description="Quieres borrar toda tu lista?"
-        confirmText="Borrar"
-      />
-      <AuthChoiceModal
-        open={authChoiceDialogOpen}
-        onClose={() => setAuthChoiceDialogOpen(false)}
-        onLogin={handleLogin}
-        onRegister={handleRegister}
-      />
-      <LoginModal
-        open={loginDialogOpen}
-        onClose={() => setLoginDialogOpen(false)}
-      />
-      <RegisterModal
-        open={registerDialogOpen}
-        onClose={() => setRegisterDialogOpen(false)}
-      />
-    </Box>
+      ) : (
+        <LogInOrSignUpAlert />
+      )}
+    </Grid>
   );
 };
 

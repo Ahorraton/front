@@ -94,9 +94,9 @@ const Compare = () => {
   const handleAddProduct = (productItem: ProductItems) => {
     const prod: Product[] = process_prod_item(productItem);
 
-    const cheapestProducts: ListItemType[] = Array.from(getCheapestItems(prod));
+    const cheapestProducts: ListItemType[] = getCheapestItems(prod);
 
-    const productToSave = {
+    const productToSave: ListItemType = {
       ean: cheapestProducts[0].ean,
       name: cheapestProducts[0].name,
       product: cheapestProducts[0].product,

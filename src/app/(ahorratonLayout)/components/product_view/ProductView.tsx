@@ -96,14 +96,13 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 id="selected-product-list-prices"
                 className="selected-product-list-prices"
               >
-                {products.map((product) => {
+                {products.map((product: Product) => {
                   return (
                     <PriceView
-                      key={product.name + product.market}
+                      key={product.ean + product.name + product.market}
                       logo={getStoreIcon(product.market)}
                       product={product}
                       is_cheapest={product.price === minPrice}
-                      url={product.url}
                     />
                   );
                 })}
