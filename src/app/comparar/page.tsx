@@ -161,6 +161,10 @@ const Compare = () => {
       title="Comparar"
       description="Compara precios de productos"
     >
+      <Filters
+        selectedMarkets={selectedMarkets}
+        handleMarketChange={handleMarketChange}
+      />
       <Box className="compare-layout">
         {loading ? (
           <Box className="loading-layout">
@@ -172,11 +176,6 @@ const Compare = () => {
           <NoProductsFound />
         ) : (
           <Box className="compare-layout">
-            <Filters
-              selectedMarkets={selectedMarkets}
-              handleMarketChange={handleMarketChange}
-            />
-
             <Grid container spacing={2} py={4}>
               {filteredProducts.map((product: ProductItems) => {
                 const products = process_prod_item(product);
