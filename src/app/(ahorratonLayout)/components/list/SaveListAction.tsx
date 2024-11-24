@@ -75,11 +75,6 @@ const SaveListButton: React.FC<SaveListButtonProps> = ({
     }
   };
 
-  const [selectedList, setSelectedList] = useState<string>(listName);
-  const [isListSaved, setIsListSaved] = useState<boolean>(true);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [pendingListId, setPendingListId] = useState<number | null>(null);
-
   return (
     <Box textAlign="center" m={2}>
       <IconButton color="primary" onClick={handleSaveList}>

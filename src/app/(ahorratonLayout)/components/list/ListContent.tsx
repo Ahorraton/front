@@ -14,7 +14,7 @@ import RegisterModal from "../user/register/RegisterModal";
 import AuthChoiceModal from "./AuthChoiceModal";
 import ListItemComponent from "./ListItemComponent";
 import { ConfirmDialog } from "./Dialogs";
-import { Box, List } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import "./list-style.css";
 import { ListItemType } from "@/app/types/ListItem";
 import { Product } from "@/app/types/Product";
@@ -23,6 +23,7 @@ import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
 import { calculateTotalPrice } from "@/app/miLista/utils/calculateTotalPrice";
 import SelectListComponent from "./ListSelector";
 import SaveListButton from "./SaveListAction";
+import LogInAlert from "./LogInAlert";
 
 const ListContent = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -132,7 +133,7 @@ const ListContent = () => {
   ]);
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [cheapestProducts, setCheapestProducts] = useState<Product[]>([]);
+  // const [cheapestProducts, setCheapestProducts] = useState<Product[]>([]);
 
   console.log("List Items", listItems);
 
@@ -162,70 +163,76 @@ const ListContent = () => {
       selectedMarkets
     );
 
-    setCheapestProducts(cheapestItemsProducts);
+    // setCheapestProducts(cheapestItemsProducts);
     setTotalPrice(totalPrice);
   }, [listItems]);
 
   return (
-    <Box className="list-content" id="list-content" role="presentation">
-      <Box>
-        <SelectListComponent />
+    <Box>
+      {user.isLoggedIn ? (
+        <Box className="list-content" id="list-content" role="presentation">
+          <Box>
+            <SelectListComponent />
 
-        <List>
-          {listItems.map((item: ListItemType) => (
-            <ListItemComponent
-              key={item.ean}
-              item={item}
-              onAdd={handleAddItem}
-              onRemove={handleRemoveItem}
-              onDelete={handleDeleteItem}
-            />
-          ))}
-        </List>
-        <Box mt={1.5}>
-          <TotalPrice totalPrice={totalPrice} />
-          <SaveListButton
-            listName={listName}
-            list={listItems}
-            onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              dispatch(setListName(event.target.value))
-            }
-            onClearList={() => setClearDialogOpen(true)}
-            onSaveList={handleSaveList}
-            isLoggedIn={user.isLoggedIn}
+            <List>
+              {listItems.map((item: ListItemType) => (
+                <ListItemComponent
+                  key={item.ean}
+                  item={item}
+                  onAdd={handleAddItem}
+                  onRemove={handleRemoveItem}
+                  onDelete={handleDeleteItem}
+                />
+              ))}
+            </List>
+            <Box mt={1.5}>
+              <TotalPrice totalPrice={totalPrice} />
+              <SaveListButton
+                listName={listName}
+                list={listItems}
+                onListNameChange={(
+                  event: React.ChangeEvent<HTMLInputElement>
+                ) => dispatch(setListName(event.target.value))}
+                onClearList={() => setClearDialogOpen(true)}
+                onSaveList={handleSaveList}
+                isLoggedIn={user.isLoggedIn}
+              />
+            </Box>
+          </Box>
+          <ConfirmDialog
+            open={dialogOpen}
+            onClose={() => setDialogOpen(false)}
+            onConfirm={confirmDeleteItem}
+            title="Borrar Item"
+            description="Quieres eliminar el producto de tu lista?"
+            confirmText="Borrar"
+          />
+          <ConfirmDialog
+            open={clearDialogOpen}
+            onClose={() => setClearDialogOpen(false)}
+            onConfirm={confirmClearList}
+            title="Borrar Lista"
+            description="Quieres borrar toda tu lista?"
+            confirmText="Borrar"
+          />
+          <AuthChoiceModal
+            open={authChoiceDialogOpen}
+            onClose={() => setAuthChoiceDialogOpen(false)}
+            onLogin={handleLogin}
+            onRegister={handleRegister}
+          />
+          <LoginModal
+            open={loginDialogOpen}
+            onClose={() => setLoginDialogOpen(false)}
+          />
+          <RegisterModal
+            open={registerDialogOpen}
+            onClose={() => setRegisterDialogOpen(false)}
           />
         </Box>
-      </Box>
-      <ConfirmDialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-        onConfirm={confirmDeleteItem}
-        title="Borrar Item"
-        description="Quieres eliminar el producto de tu lista?"
-        confirmText="Borrar"
-      />
-      <ConfirmDialog
-        open={clearDialogOpen}
-        onClose={() => setClearDialogOpen(false)}
-        onConfirm={confirmClearList}
-        title="Borrar Lista"
-        description="Quieres borrar toda tu lista?"
-        confirmText="Borrar"
-      />
-      <AuthChoiceModal
-        open={authChoiceDialogOpen}
-        onClose={() => setAuthChoiceDialogOpen(false)}
-        onLogin={handleLogin}
-        onRegister={handleRegister}
-      />
-      <LoginModal
-        open={loginDialogOpen}
-        onClose={() => setLoginDialogOpen(false)}
-      />
-      <RegisterModal
-        open={registerDialogOpen}
-        onClose={() => setRegisterDialogOpen(false)}
-      />
+      ) : (
+        <LogInAlert />
+      )}
     </Box>
   );
 };
