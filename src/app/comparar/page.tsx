@@ -35,6 +35,7 @@ const LIMIT = 8;
 const Compare = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<ProductItems[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductItems[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loadMore, setLoadMore] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const Compare = () => {
       setLoading(false);
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
+      setFilteredProducts([...products, ...products_result]);
     } catch (e: unknown) {
       setError("error");
       setLoading(false);
@@ -84,6 +86,7 @@ const Compare = () => {
       const products_result: ProductItems[] = res.products ? res.products : [];
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
+      setFilteredProducts(getFilteredProducts(selectedMarkets));
     } catch (e: unknown) {
       setError("error");
       setLoading(false);
@@ -106,12 +109,51 @@ const Compare = () => {
     setShowAlert(true);
   };
 
-  const handleMarketChange = (market: string) => {
-    if (selectedMarkets.includes(market)) {
-      setSelectedMarkets(selectedMarkets.filter((m) => m !== market));
+  const getFilteredProducts = (markets: string[]) => {
+    let filtered_products = products.map((product) => {
+
+      const marketPrices = product.market_price.split(", ");
+      const namesList = product.names_list.split(", ");
+      const urls = product.urls.split(", ");
+
+      const filteredMarkets: string[] = [];
+      const filteredNames: string[] = [];
+      const filteredUrls: string[] = [];
+      
+      marketPrices.forEach((price, index) => {
+        const [market] = price.split(" "); 
+        if (markets.includes(market)) {
+          filteredMarkets.push(price);
+          filteredNames.push(namesList[index] || "");
+          filteredUrls.push(urls[index] || "");
+        }
+      });
+
+      if (filteredMarkets.length == 0) {
+        return null;
+      }
+
+      product.names_list = filteredNames.join(", "),
+      product.market_price = filteredMarkets.join(", "),
+      product.urls = filteredUrls.join(", ");
+      
+      return product;
+    });
+
+    filtered_products = filtered_products.filter((p) => p !== null);
+    return filtered_products as ProductItems[];
+  };
+
+  const handleMarketChange = (selectedMarket: string) => {
+    let markets = selectedMarkets;
+    if (selectedMarkets.includes(selectedMarket)) {
+      markets = selectedMarkets.filter((m) => m !== selectedMarket);
     } else {
-      setSelectedMarkets([...selectedMarkets, market]);
+      markets = [...selectedMarkets, selectedMarket];
     }
+
+    setSelectedMarkets(markets);
+    setFilteredProducts(getFilteredProducts(markets));
   };
 
   return (
@@ -126,29 +168,17 @@ const Compare = () => {
           </Box>
         ) : error ? (
           <ErrorPage />
-        ) : products.length === 0 && !loading && !error ? (
+        ) : filteredProducts.length === 0 && !loading && !error ? (
           <NoProductsFound />
         ) : (
           <Box className="compare-layout">
-            <Accordion>
-              <AccordionSummary
-                sx={{
-                  "& .MuiAccordionSummary-content": {
-                    justifyContent: "center",
-                  },
-                }}
-                expandIcon={<ExpandMoreIcon />}
-              >
-                <Typography variant="h3">Filtros</Typography>
-              </AccordionSummary>
-              <Filters
-                selectedMarkets={selectedMarkets}
-                handleMarketChange={handleMarketChange}
-              />
-            </Accordion>
+            <Filters
+              selectedMarkets={selectedMarkets}
+              handleMarketChange={handleMarketChange}
+            />
 
             <Grid container spacing={2} py={4}>
-              {products.map((product: ProductItems) => {
+              {filteredProducts.map((product: ProductItems) => {
                 const products = process_prod_item(product);
 
                 if (products.length === 0) {
