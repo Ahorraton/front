@@ -20,7 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setListName, clearList } from "../../redux/store/listSlice";
 import { selectList } from "../../redux/store/multipleListsSlice";
-import ProductList from "./ProductList";
+import ProductList from "./product_card/ProductList";
 import TotalPrice from "./TotalPrice";
 import Filters from "./Filters";
 import ListSelector from "./ListSelector";
