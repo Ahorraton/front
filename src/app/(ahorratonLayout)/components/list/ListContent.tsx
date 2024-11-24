@@ -141,7 +141,7 @@ const ListContent = () => {
       .filter((product): product is Product => product !== undefined);
 
     const cheapestItems = getCheapestItems(prods, selectedMarkets);
-    const cheapestProds: Product[] = Array.from(cheapestItems)
+    const cheapestItemsProducts: Product[] = Array.from(cheapestItems)
       .map((item: ListItemType) => {
         if (item.product) {
           const localItem = selectedList.find(
@@ -154,11 +154,11 @@ const ListContent = () => {
       .filter((product): product is Product => product !== undefined);
 
     const totalPrice: number = calculateTotalPrice(
-      cheapestProds,
+      cheapestItemsProducts,
       selectedMarkets
     );
 
-    setCheapestProducts(cheapestProds);
+    setCheapestProducts(cheapestItemsProducts);
     setTotalPrice(totalPrice);
   }, [listItems]);
 
