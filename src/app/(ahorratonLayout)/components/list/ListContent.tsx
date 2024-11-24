@@ -13,7 +13,6 @@ import LoginModal from "../user/login/LoginModal";
 import RegisterModal from "../user/register/RegisterModal";
 import AuthChoiceModal from "./AuthChoiceModal";
 import ListItemComponent from "./ListItemComponent";
-import ListActions from "./ListActions";
 import { ConfirmDialog } from "./Dialogs";
 import { Box, List } from "@mui/material";
 import "./list-style.css";
@@ -22,6 +21,8 @@ import { Product } from "@/app/types/Product";
 import TotalPrice from "@/app/miLista/TotalPrice";
 import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
 import { calculateTotalPrice } from "@/app/miLista/utils/calculateTotalPrice";
+import SelectListComponent from "./ListSelector";
+import SaveListButton from "./SaveListAction";
 
 const ListContent = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -168,16 +169,8 @@ const ListContent = () => {
   return (
     <Box className="list-content" id="list-content" role="presentation">
       <Box>
-        <ListActions
-          listName={listName}
-          list={listItems}
-          onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            dispatch(setListName(event.target.value))
-          }
-          onClearList={() => setClearDialogOpen(true)}
-          onSaveList={handleSaveList}
-          isLoggedIn={user.isLoggedIn}
-        />
+        <SelectListComponent />
+
         <List>
           {listItems.map((item: ListItemType) => (
             <ListItemComponent
@@ -191,6 +184,16 @@ const ListContent = () => {
         </List>
         <Box mt={1.5}>
           <TotalPrice totalPrice={totalPrice} />
+          <SaveListButton
+            listName={listName}
+            list={listItems}
+            onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              dispatch(setListName(event.target.value))
+            }
+            onClearList={() => setClearDialogOpen(true)}
+            onSaveList={handleSaveList}
+            isLoggedIn={user.isLoggedIn}
+          />
         </Box>
       </Box>
       <ConfirmDialog
