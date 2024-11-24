@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { ListItem, Paper, Box, Typography, IconButton } from "@mui/material";
+import { Grid, Paper, Box, Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { addItem, removeItem, deleteItem } from "../../redux/store/listSlice";
-import Price from "@/app/comparar/Price";
 import {
   hexToRgb,
   interpolateColor,
@@ -14,6 +13,8 @@ import {
 } from "../../obsolete/ProductPaperAle";
 import WarningModal from "./WarningModal";
 import { Product } from "../types/Product";
+import './myList.css';
+import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
 
 type ProductItemProps = {
   product: Product;
@@ -65,60 +66,65 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
 
   const color = getColorForPrice(product.price);
   const logo = marketImage(product.market);
-
   return (
     <>
-      <ListItem>
-        <Paper className="card-layout" elevation={8} style={{ width: "100%" }}>
-          <Box className="product-layout">
-            <Box className="card-title-box">
-              <Typography
-                justifyContent="center"
-                align="center"
-                variant="h5"
-                padding="2%"
-              >
-                {product.name ? product.name : "Producto sin nombre"}
-              </Typography>
-            </Box>
-            <Box className="product-row">
-              <Box
-                component="img"
-                src={product.image_url || ""}
-                className="product-image"
-                style={{ width: "100px", height: "100px" }}
-              />
-              <Box className="market-row">
-                <Price
-                  logo={logo}
-                  price={product.price.toString()}
-                  color={color}
-                  cheapest={product.price === minPrice}
-                  url={product.url || ""}
+      <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Box display='flex' height='100%'>
+          <Paper elevation={8}>
+            <Box className='product-card'>
+              <Box>
+                <Box component='img' src={logo} className='market-image' />
+              </Box>
+              <Box className='card-title'>
+                <Typography
+                  justifyContent="center"
+                  align="center"
+                  variant="h5"
+                  padding="2%"
+                >
+                  {product.name ? product.name : "Producto sin nombre"}
+                </Typography>
+              </Box>
+              <Box className='product-card'>
+                <Box
+                  component="img"
+                  className='product-image'
+                  id="product-image"
+                  src={product.image_url || ""}
+                  onError={(e) => {
+                    e.currentTarget.src = getStoreIcon("default");
+                  }}
                 />
+                <Box className='market-price'>
+                  <Typography
+                    variant="body1"
+                  >
+                    <strong>${product.price}</strong>
+                  </Typography>
+                </Box>
+              </Box>
+              <Box className='actions-layout'>
+                <Box>
+                  <IconButton onClick={() => handleDeleteItem(product.ean)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+                <Box className='actions-quantity'>
+                  <IconButton onClick={() => handleRemoveAmount(product.ean)}>
+                    <RemoveIcon />
+                  </IconButton>
+                  <Typography variant="body1" style={{ margin: "0 10px" }}>
+                    {product.amount}
+                  </Typography>
+                  <IconButton onClick={() => handleAddAmount(product.ean)}>
+                    <AddIcon />
+                  </IconButton>
+                </Box>
               </Box>
             </Box>
-            <Box
-              className="quantity-controls"
-              display="flex"
-              alignItems="center"
-            >
-              <IconButton onClick={() => handleAddAmount(product.ean)}>
-                <AddIcon />
-              </IconButton>
-              <Typography variant="body1" style={{ margin: "0 10px" }}>
-                {product.amount}
-              </Typography>
-              <IconButton onClick={() => handleRemoveAmount(product.ean)}>
-                <RemoveIcon />
-              </IconButton>
-              <IconButton onClick={() => handleDeleteItem(product.ean)}>
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          </Box>
-        </Paper>
-      </ListItem>
+          </Paper>
+        </Box>
+      </Grid>
       <WarningModal
         open={isWarningOpen}
         onClose={handleCloseWarning}

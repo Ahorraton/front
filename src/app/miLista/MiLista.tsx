@@ -267,7 +267,7 @@ const MiLista: React.FC = () => {
       <Box mt={1.5}>
         <TotalPrice totalPrice={totalPrice} />
       </Box>
-      <Box display="flex" justifyContent="space-between" mt={1.5}>
+      <Box display="flex" justifyContent="space-between">
         <Button
           variant="contained"
           color="error"

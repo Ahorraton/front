@@ -1,11 +1,58 @@
 .product-image {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
+    min-width: 200px;
+    height: auto;
+    border-radius: 30px;
 }
 
-.market-row img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
+.market-image {
+    min-width: 75px;
+    max-width: 75px;
+    min-height: 75px;
+    max-height: 75px;
+    height: auto;
+    border-radius: 30px;
+}
+ 
+.card-title {
+    display: flex;
+}
+
+.market-price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10%;
+    margin-bottom: 2%;
+}
+
+.actions-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.actions-quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.grid-layout-desktop {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+.product-paper {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

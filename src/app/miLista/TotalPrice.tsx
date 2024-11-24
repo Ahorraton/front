@@ -22,7 +22,7 @@ const TotalPrice: React.FC<TotalPriceProps> = ({ totalPrice }) => {
         component="div"
         sx={{ fontWeight: "bold", color: "#ff5722" }}
       >
-        Total: ${totalPrice}
+        Total: ${totalPrice.toFixed(2)}
       </Typography>
     </Box>
   );
