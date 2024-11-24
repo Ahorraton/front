@@ -6,9 +6,15 @@
 .list-content {
   justify-content: space-around;
   background-color: white;
+  min-width: 350px;
+  max-width: 350px;
 }
 
 .select-list-container {
   display: flex;
   flex-direction: column;
+}
+
+.list-item-card {
+  width: auto;
 }
