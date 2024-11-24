@@ -13,9 +13,17 @@
   max-width: 350px;
 }
 
+.slider-view-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 350px;
+  max-width: 350px;
+}
+
 .list-items-container {
-  min-height: 80vh;
-  max-height: 100%;
+  min-height: 65vh;
+  max-height: 65vh;
   overflow-y: auto;
 }
 
@@ -32,10 +40,4 @@
 
 .list-item-card {
   width: auto;
-}
-
-.sticky-botton-container {
-  position: sticky;
-  bottom: 0;
-  background-color: white;
 }

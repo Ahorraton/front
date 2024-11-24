@@ -14,7 +14,7 @@ import RegisterModal from "../user/register/RegisterModal";
 import AuthChoiceModal from "./AuthChoiceModal";
 import ListItemComponent from "./ListItemComponent";
 import { ConfirmDialog } from "./Dialogs";
-import { Box, List, Typography } from "@mui/material";
+import { Box, Grid, List, Typography } from "@mui/material";
 import "./list-style.css";
 import { ListItemType } from "@/app/types/ListItem";
 import { Product } from "@/app/types/Product";
@@ -168,7 +168,7 @@ const ListContent = () => {
   }, [listItems]);
 
   return (
-    <Box>
+    <Grid container className="slider-view-grid" id="slider-view-grid">
       {user.isLoggedIn ? (
         <Box className="list-content" id="list-content" role="presentation">
           <SelectListComponent />
@@ -185,7 +185,7 @@ const ListContent = () => {
             ))}
           </List>
 
-          <Box mt={1.5} className="sticky-botton-container">
+          <Box mt={1.5}>
             <TotalPrice totalPrice={totalPrice} />
             <SaveListButton
               listName={listName}
@@ -233,7 +233,7 @@ const ListContent = () => {
       ) : (
         <LogInOrSignUpAlert />
       )}
-    </Box>
+    </Grid>
   );
 };
 
