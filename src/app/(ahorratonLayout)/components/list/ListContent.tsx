@@ -23,7 +23,7 @@ import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
 import { calculateTotalPrice } from "@/app/miLista/utils/calculateTotalPrice";
 import SelectListComponent from "./ListSelector";
 import SaveListButton from "./SaveListAction";
-import LogInAlert from "./LogInAlert";
+import LogInOrSignUpAlert from "./LogInOrSignUpAlert";
 
 const ListContent = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -174,17 +174,19 @@ const ListContent = () => {
           <Box>
             <SelectListComponent />
 
-            <List>
-              {listItems.map((item: ListItemType) => (
-                <ListItemComponent
-                  key={item.ean}
-                  item={item}
-                  onAdd={handleAddItem}
-                  onRemove={handleRemoveItem}
-                  onDelete={handleDeleteItem}
-                />
-              ))}
-            </List>
+            <Box>
+              <List>
+                {listItems.map((item: ListItemType) => (
+                  <ListItemComponent
+                    key={item.ean}
+                    item={item}
+                    onAdd={handleAddItem}
+                    onRemove={handleRemoveItem}
+                    onDelete={handleDeleteItem}
+                  />
+                ))}
+              </List>
+            </Box>
             <Box mt={1.5}>
               <TotalPrice totalPrice={totalPrice} />
               <SaveListButton
@@ -231,7 +233,7 @@ const ListContent = () => {
           />
         </Box>
       ) : (
-        <LogInAlert />
+        <LogInOrSignUpAlert />
       )}
     </Box>
   );
