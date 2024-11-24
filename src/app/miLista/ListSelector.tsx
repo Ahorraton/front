@@ -8,7 +8,7 @@ import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { ListItemFromDB, ListItemType } from "@/app/types/ListItem";
 import { Product } from "../types/Product";
-import { getCheapestItems } from "./utils/cheapest_prod";
+import { getCheapestItems } from "./utils/cheapestItems";
 
 type ListSelectorProps = {
   isListSaved: boolean;
