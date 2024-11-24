@@ -86,7 +86,7 @@ const Compare = () => {
       const products_result: ProductItems[] = res.products ? res.products : [];
       setLoadMore(products.length + products_result.length < res.count);
       setProducts([...products, ...products_result]);
-      setFilteredProducts([...products, ...products_result]);
+      setFilteredProducts(getFilteredProducts(selectedMarkets));
     } catch (e: unknown) {
       setError("error");
       setLoading(false);
@@ -109,14 +109,7 @@ const Compare = () => {
     setShowAlert(true);
   };
 
-  const handleMarketChange = (selectedMarket: string) => {
-    let markets = selectedMarkets;
-    if (selectedMarkets.includes(selectedMarket)) {
-      markets = selectedMarkets.filter((m) => m !== selectedMarket);
-    } else {
-      markets = [...selectedMarkets, selectedMarket];
-    }
-
+  const getFilteredProducts = (markets: string[]) => {
     let filtered_products = products.map((product) => {
 
       const marketPrices = product.market_price.split(", ");
@@ -148,9 +141,19 @@ const Compare = () => {
     });
 
     filtered_products = filtered_products.filter((p) => p !== null);
+    return filtered_products as ProductItems[];
+  };
+
+  const handleMarketChange = (selectedMarket: string) => {
+    let markets = selectedMarkets;
+    if (selectedMarkets.includes(selectedMarket)) {
+      markets = selectedMarkets.filter((m) => m !== selectedMarket);
+    } else {
+      markets = [...selectedMarkets, selectedMarket];
+    }
 
     setSelectedMarkets(markets);
-    setFilteredProducts(filtered_products as ProductItems[]);
+    setFilteredProducts(getFilteredProducts(markets));
   };
 
   return (
