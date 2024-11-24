@@ -7,6 +7,7 @@ import { setList, setListName } from "../../redux/store/listSlice";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { ListItemFromDB, ListItemType } from "@/app/types/ListItem";
+import { Product } from "../types/Product";
 
 type ListSelectorProps = {
   isListSaved: boolean;
@@ -42,20 +43,32 @@ const ListSelector: React.FC<ListSelectorProps> = ({
           dispatch(setListName(selectedList.name));
         }
 
-        // Merge products with the same ean code
-        const itemsMap: Map<string, ListItemType> = new Map();
-        response.data.items.forEach((item: ListItemFromDB) => {
-          itemsMap.set(item.ean, {
+        const prods: Product[] = response.data.items.map((item: Product) => ({
+          ...item,
+        }));
+
+        const cheapestItems: Product[] = Object.values(
+          prods.reduce((acc, product) => {
+            if (!acc[product.ean] || acc[product.ean].price > product.price) {
+              acc[product.ean] = product;
+            }
+            return acc;
+          }, {} as { [key: string]: Product })
+        );
+
+        const cheapestItemsMap: Map<string, ListItemType> = new Map();
+        cheapestItems.forEach((item: Product) => {
+          cheapestItemsMap.set(item.ean, {
             product: { ...item },
             name: item.name,
             ean: item.ean,
-            amount: item.amount,
+            amount: item.amount ?? 0,
           });
         });
-        const mergedItems = Array.from(itemsMap.values());
 
         dispatch(selectList(selectedListId));
-        dispatch(setList(mergedItems));
+        dispatch(setList(Array.from(cheapestItemsMap.values())));
+
         await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
 
         // Save the selected list ID to cookies
