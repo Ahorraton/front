@@ -26,6 +26,9 @@ import ErrorPage from "@/app/error_pages/ErrorComponent";
 import { LoadingHamsterScreen } from "@/app/loadingScreens/loadingHamster/LoadingHamster";
 import Loading from "@/app/loadingScreens/loading";
 import { process_prod_item } from "./utils/process_prod_item";
+import { Product } from "@/app/types/Product";
+import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
+import { ListItemType } from "../types/ListItem";
 
 const LIMIT = 8;
 
@@ -88,9 +91,15 @@ const Compare = () => {
     }
   };
 
-  const handleAddProduct = (product: ProductItems) => {
+  const handleAddProduct = (productItem: ProductItems) => {
+    const prod: Product[] = process_prod_item(productItem);
+
+    const cheapestProducts: ListItemType[] = Array.from(getCheapestItems(prod));
+
     const productToSave = {
-      ean: product.ean,
+      ean: cheapestProducts[0].ean,
+      name: cheapestProducts[0].name,
+      product: cheapestProducts[0].product,
       amount: 1,
     };
     dispatch(addItem(productToSave));

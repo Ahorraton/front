@@ -20,8 +20,12 @@ import "./list-style.css";
 import { ListItemType } from "@/app/types/ListItem";
 import { Product } from "@/app/types/Product";
 import TotalPrice from "@/app/miLista/TotalPrice";
+import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
+import { calculateTotalPrice } from "@/app/miLista/utils/calculateTotalPrice";
 
 const ListContent = () => {
+  const selectedList = useSelector((state: RootState) => state.list.items);
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const [clearDialogOpen, setClearDialogOpen] = useState(false);
   const [authChoiceDialogOpen, setAuthChoiceDialogOpen] = useState(false);
@@ -126,37 +130,37 @@ const ListContent = () => {
     "jumbo",
   ]);
 
-  const [products, setProducts] = useState<Product[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [cheapestProducts, setCheapestProducts] = useState<Product[]>([]);
 
   console.log("List Items", listItems);
 
-  useEffect(
-    () =>
-      setProducts(
-        listItems
-          .map((item: ListItemType) => item.product)
-          .filter((product): product is Product => product !== undefined)
-      ),
-    [listItems]
-  );
+  useEffect(() => {
+    const prods = listItems
+      .map((item: ListItemType) => item.product)
+      .filter((product): product is Product => product !== undefined);
 
-  const filteredProducts = products.filter((product) =>
-    selectedMarkets.includes(product.market)
-  );
+    const cheapestItems = getCheapestItems(prods, selectedMarkets);
+    const cheapestProds: Product[] = Array.from(cheapestItems)
+      .map((item: ListItemType) => {
+        if (item.product) {
+          const localItem = selectedList.find(
+            (savedItem: ListItemType) => savedItem.ean === item.ean
+          );
+          item.product.amount = localItem ? localItem.amount : 1;
+        }
+        return item.product;
+      })
+      .filter((product): product is Product => product !== undefined);
 
-  const cheapestProducts = Object.values(
-    filteredProducts.reduce((acc, product) => {
-      if (!acc[product.ean] || acc[product.ean].price > product.price) {
-        acc[product.ean] = product;
-      }
-      return acc;
-    }, {} as { [key: string]: Product })
-  );
+    const totalPrice: number = calculateTotalPrice(
+      cheapestProds,
+      selectedMarkets
+    );
 
-  const totalPrice = cheapestProducts.reduce(
-    (total, product) => total + product.price * (product.amount || 0),
-    0
-  );
+    setCheapestProducts(cheapestProds);
+    setTotalPrice(totalPrice);
+  }, [listItems]);
 
   return (
     <Box className="list-content" id="list-content" role="presentation">

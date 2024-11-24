@@ -28,12 +28,12 @@ export function getCheapestItems(
   );
 
   const cheapestItemsMap: Map<string, ListItemType> = new Map();
-  cheapestItems.forEach((item: Product) => {
-    cheapestItemsMap.set(item.ean, {
-      product: { ...item },
-      name: item.name,
-      ean: item.ean,
-      amount: item.amount ?? 0,
+  cheapestItems.forEach((product: Product) => {
+    cheapestItemsMap.set(product.ean, {
+      product: { ...product },
+      name: product.name,
+      ean: product.ean,
+      amount: product.amount ?? 0,
     });
   });
 
