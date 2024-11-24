@@ -1,7 +1,15 @@
 import React from "react";
-import { Box, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {
+  Box,
+  Icon,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import "./price_view.css";
 import { Product } from "@/app/types/Product";
+import LanguageIcon from "@mui/icons-material/Language";
+import StoreIcon from "@mui/icons-material/Store";
 
 export default function PriceView({
   key,
@@ -37,6 +45,9 @@ export default function PriceView({
               primary={"$" + product.price.toString()}
               className="price-text"
             />
+          </Box>
+          <Box id="icon-container" className="icon-container">
+            {product.url ? <LanguageIcon /> : <StoreIcon />}
           </Box>
         </ListItemButton>
       </ListItem>

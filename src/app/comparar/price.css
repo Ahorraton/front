@@ -1,55 +1,59 @@
 .price-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  width: 30%;
 }
 
 .price-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1%;
-    height: 90%;
-    padding: 5%;
-    transition: transform 0.3s ease-in-out !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1%;
+  height: 90%;
+  padding: 5%;
+  transition: transform 0.3s ease-in-out !important;
 }
 
 .price-market-logo {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    margin-top: 2%;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin-top: 2%;
 }
 
-.price-column:hover {
+/* .price-column:hover {
     transform: scale(1.1);
     cursor: pointer;
-}
+} */
 
 .price-column-cheapest {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1%;
-    height: 90%;
-    border: 3px;
-    border-style: solid;
-    border-color: #FFD700;
-    transition: transform 0.3s ease-in-out !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1%;
+  height: 90%;
+  border: 3px;
+  border-style: solid;
+  border-color: #ffd700;
+  transition: transform 0.3s ease-in-out !important;
 }
 
-.price-column-cheapest:hover {
-    transform: scale(1.1);
-    cursor: pointer;
+.is-online {
+  cursor: pointer;
 }
+
+/* .price-column-cheapest:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+} */
 
 .price {
-    padding: 5%;
-    font-size: 1.0em;
-    font-weight: bold;
+  padding: 5%;
+  font-size: 1em;
+  font-weight: bold;
 }
