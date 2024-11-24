@@ -96,7 +96,7 @@ const Compare = () => {
 
     const cheapestProducts: ListItemType[] = getCheapestItems(prod);
 
-    const productToSave = {
+    const productToSave: ListItemType = {
       ean: cheapestProducts[0].ean,
       name: cheapestProducts[0].name,
       product: cheapestProducts[0].product,
