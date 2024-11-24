@@ -13,7 +13,7 @@ const SUPERMARKETS: string[] = [
 export function getCheapestItems(
   products: Product[],
   selectedMarkets?: string[]
-): MapIterator<ListItemType> {
+) {
   const filteredProducts = products.filter((product) =>
     (selectedMarkets ?? SUPERMARKETS).includes(product.market)
   );

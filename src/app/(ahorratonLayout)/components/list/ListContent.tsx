@@ -136,12 +136,14 @@ const ListContent = () => {
   console.log("List Items", listItems);
 
   useEffect(() => {
-    const prods = listItems
+    const prods: Product[] = listItems
       .map((item: ListItemType) => item.product)
       .filter((product): product is Product => product !== undefined);
 
-    const cheapestItems = getCheapestItems(prods, selectedMarkets);
-    const cheapestItemsProducts: Product[] = Array.from(cheapestItems)
+    const cheapestItems: ListItemType[] = Array.from(
+      getCheapestItems(prods, selectedMarkets)
+    );
+    const cheapestItemsProducts: Product[] = cheapestItems
       .map((item: ListItemType) => {
         if (item.product) {
           const localItem = selectedList.find(

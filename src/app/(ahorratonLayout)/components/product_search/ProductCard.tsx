@@ -21,6 +21,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import { ListItemType } from "@/app/types/ListItem";
 
 const ProductCard = ({
   product,
@@ -34,9 +35,9 @@ const ProductCard = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const item = list.find((item) => item.id === product.id.toString());
+    const item = list.find((item: ListItemType) => item.ean === product.ean);
     if (item) {
-      setProdCount(item.quantity);
+      setProdCount(item.amount);
     } else {
       setProdCount(0);
     }
