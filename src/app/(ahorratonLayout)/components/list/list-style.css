@@ -1,13 +1,27 @@
 .list-layout {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
 }
 
 .list-content {
+  display: flex;
+  flex-direction: column;
   justify-content: space-around;
   background-color: white;
   min-width: 350px;
   max-width: 350px;
+}
+
+.list-items-container {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.select-and-items-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .select-list-container {
@@ -17,4 +31,10 @@
 
 .list-item-card {
   width: auto;
+}
+
+.sticky-botton-container {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
 }

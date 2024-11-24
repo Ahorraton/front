@@ -171,36 +171,34 @@ const ListContent = () => {
     <Box>
       {user.isLoggedIn ? (
         <Box className="list-content" id="list-content" role="presentation">
-          <Box>
-            <SelectListComponent />
+          <SelectListComponent />
 
-            <Box>
-              <List>
-                {listItems.map((item: ListItemType) => (
-                  <ListItemComponent
-                    key={item.ean}
-                    item={item}
-                    onAdd={handleAddItem}
-                    onRemove={handleRemoveItem}
-                    onDelete={handleDeleteItem}
-                  />
-                ))}
-              </List>
-            </Box>
-            <Box mt={1.5}>
-              <TotalPrice totalPrice={totalPrice} />
-              <SaveListButton
-                listName={listName}
-                list={listItems}
-                onListNameChange={(
-                  event: React.ChangeEvent<HTMLInputElement>
-                ) => dispatch(setListName(event.target.value))}
-                onClearList={() => setClearDialogOpen(true)}
-                onSaveList={handleSaveList}
-                isLoggedIn={user.isLoggedIn}
+          <List id="list-items-container" className="list-items-container">
+            {listItems.map((item: ListItemType) => (
+              <ListItemComponent
+                key={item.ean}
+                item={item}
+                onAdd={handleAddItem}
+                onRemove={handleRemoveItem}
+                onDelete={handleDeleteItem}
               />
-            </Box>
+            ))}
+          </List>
+
+          <Box mt={1.5}>
+            <TotalPrice totalPrice={totalPrice} />
+            <SaveListButton
+              listName={listName}
+              list={listItems}
+              onListNameChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                dispatch(setListName(event.target.value))
+              }
+              onClearList={() => setClearDialogOpen(true)}
+              onSaveList={handleSaveList}
+              isLoggedIn={user.isLoggedIn}
+            />
           </Box>
+
           <ConfirmDialog
             open={dialogOpen}
             onClose={() => setDialogOpen(false)}
