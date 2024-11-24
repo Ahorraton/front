@@ -1,4 +1,37 @@
 .price-market-logo {
-  width: 20%;
-  height: 20%;
+  min-width: 20%;
+  max-width: 20%;
+  min-height: 20%;
+  max-height: 20%;
+}
+
+.price-item-layout {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+}
+
+.price-text-container {
+  flex: 1;
+}
+
+.price-text {
+  width: 100%;
+}
+
+.price-column {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.price-column-cheapest {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.price-column-cheapest:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }

@@ -26,13 +26,22 @@ export default function PriceView({
   };
 
   return (
-    <ListItem disablePadding id={key} key={key}>
-      <Box className={classNameCheapest}>
-        <ListItemButton onClick={() => handleClick(url)}>
+    <Box className={classNameCheapest}>
+      <ListItem disablePadding id={key} key={key} className="price-item-layout">
+        <ListItemButton
+          onClick={() => handleClick(url)}
+          id="list-action-button"
+        >
           <Box component="img" src={logo} className="price-market-logo" />
-          <ListItemText primary={"$" + product.price.toString()} />
+          <Box id="price-text-container" className="price-text-container">
+            <ListItemText
+              id="price-text"
+              primary={"$" + product.price.toString()}
+              className="price-text"
+            />
+          </Box>
         </ListItemButton>
-      </Box>
-    </ListItem>
+      </ListItem>
+    </Box>
   );
 }
