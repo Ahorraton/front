@@ -8,6 +8,7 @@ import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { ListItemFromDB, ListItemType } from "@/app/types/ListItem";
 import { Product } from "../types/Product";
+import { getCheapestItems } from "./utils/cheapest_prod";
 
 type ListSelectorProps = {
   isListSaved: boolean;
@@ -47,27 +48,8 @@ const ListSelector: React.FC<ListSelectorProps> = ({
           ...item,
         }));
 
-        const cheapestItems: Product[] = Object.values(
-          prods.reduce((acc, product) => {
-            if (!acc[product.ean] || acc[product.ean].price > product.price) {
-              acc[product.ean] = product;
-            }
-            return acc;
-          }, {} as { [key: string]: Product })
-        );
-
-        const cheapestItemsMap: Map<string, ListItemType> = new Map();
-        cheapestItems.forEach((item: Product) => {
-          cheapestItemsMap.set(item.ean, {
-            product: { ...item },
-            name: item.name,
-            ean: item.ean,
-            amount: item.amount ?? 0,
-          });
-        });
-
         dispatch(selectList(selectedListId));
-        dispatch(setList(Array.from(cheapestItemsMap.values())));
+        dispatch(setList(Array.from(getCheapestItems(prods))));
 
         await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
 
