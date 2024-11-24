@@ -185,7 +185,7 @@ const ListContent = () => {
             ))}
           </List>
 
-          <Box mt={1.5}>
+          <Box mt={1.5} className="sticky-botton-container">
             <TotalPrice totalPrice={totalPrice} />
             <SaveListButton
               listName={listName}
