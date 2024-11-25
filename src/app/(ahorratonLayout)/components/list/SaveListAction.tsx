@@ -20,8 +20,6 @@ interface SaveListButtonProps {
 const SaveListButton: React.FC<SaveListButtonProps> = ({
   listName,
   list,
-  onListNameChange,
-  onClearList,
   onSaveList,
   isLoggedIn,
 }) => {
@@ -67,9 +65,6 @@ const SaveListButton: React.FC<SaveListButtonProps> = ({
       } catch (error) {
         console.error("Error saving list:", error);
       }
-      // finally {
-      //   window.location.href = "/miLista";
-      // }
     } else {
       onSaveList();
     }
