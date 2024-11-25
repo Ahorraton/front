@@ -45,7 +45,6 @@ const MiLista: React.FC = () => {
     "disco",
     "jumbo",
   ]);
-  const [isListSaved, setIsListSaved] = useState<boolean>(true);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
   const [openNewListDialog, setOpenNewListDialog] = useState<boolean>(false); // New state variable for new list dialog
@@ -121,7 +120,6 @@ const MiLista: React.FC = () => {
 
       const response = await axios.post("/api/list/updateList", payload);
 
-      setIsListSaved(true);
       await fetchUserLists(user_id, dispatch);
 
       setModalMessage("Su lista ha sido actualizada exitosamente");
@@ -129,33 +127,6 @@ const MiLista: React.FC = () => {
     } catch (error) {
       console.error("Error saving list:", error);
     }
-  };
-
-  const handleCreateNewList = async () => {
-    dispatch(clearList());
-    dispatch(selectList(null));
-    setIsListSaved(true);
-    setOpenNewListDialog(false);
-  };
-
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-    setPendingListId(null);
-  };
-
-  const handleDialogSave = async () => {
-    await handleSaveList();
-    if (pendingListId !== null) {
-      dispatch(selectList(pendingListId));
-    }
-    handleDialogClose();
-  };
-
-  const handleDialogDiscard = () => {
-    if (pendingListId !== null) {
-      dispatch(selectList(pendingListId));
-    }
-    handleDialogClose();
   };
 
   const handleMarketChange = (market: string) => {
@@ -180,7 +151,6 @@ const MiLista: React.FC = () => {
       });
 
       console.log("List deleted:", response.data);
-      handleCreateNewList();
       await fetchUserLists(user_id, dispatch);
       setOpenDeleteDialog(false);
 
@@ -223,7 +193,6 @@ const MiLista: React.FC = () => {
         <FormControl fullWidth>
             <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
             <ListSelector
-              isListSaved={isListSaved}
               setPendingListId={setPendingListId}
               setOpenDialog={setOpenDialog}
             />
@@ -244,7 +213,7 @@ const MiLista: React.FC = () => {
           startIcon={<SaveIcon />}
           onClick={handleSaveList}
         >
-          {selectedListId ? "Actualizar lista" : "Guardar mi lista"}
+          Actualizar lista
         </Button>
         <Button
           variant="contained"
@@ -256,12 +225,6 @@ const MiLista: React.FC = () => {
         </Button>
       </Box>
       <ProductList products={cheapestProducts} />
-      <SaveListDialog
-        open={openDialog}
-        handleClose={handleDialogClose}
-        handleSave={handleDialogSave}
-        handleDiscard={handleDialogDiscard}
-      />
       <ConfirmationDialog
         open={openDeleteDialog}
         onClose={() => setOpenDeleteDialog(false)}
