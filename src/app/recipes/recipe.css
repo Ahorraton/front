@@ -18,10 +18,27 @@
   text-decoration: none;
 }
 
+.selected-recipe-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .selected-recipe-view-grid {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.selected-recipe-img {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 200px;
+  max-height: 200px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 
 .agregar-a-list-button-container {
