@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Box,
-  CardActionArea,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, CardActionArea, Paper, Typography } from "@mui/material";
 import { Product } from "@/app/types/Product";
 import "./product_card.css";
 
