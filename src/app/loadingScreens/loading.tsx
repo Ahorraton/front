@@ -5,7 +5,6 @@ export default function Loading() {
   return (
     <Box>
       <CircularProgress />
-      <Typography>Loading...</Typography>
     </Box>
   );
 }

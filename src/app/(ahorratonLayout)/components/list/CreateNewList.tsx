@@ -76,7 +76,9 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
     >
-      <DialogTitle id="dialog-title">Crear Nueva Lista</DialogTitle>
+      <DialogTitle id="dialog-title">
+        {isLoading ? "Creando Lista" : "Crear Nueva Lista"}
+      </DialogTitle>
       {isLoading ? (
         <Box
           id="loading-create-new-list"
