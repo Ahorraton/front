@@ -82,10 +82,10 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
       recipe.items.map((i: Item) => i.ean)
     );
 
-    products = products.map((p: Product) => {
-      p.amount = recipe.items.find((i: Item) => i.ean === p.ean)?.amount;
-      return p;
-    });
+    // products = products.map((p: Product) => {
+    //   p.amount = recipe.items.find((i: Item) => i.ean === p.ean)?.amount;
+    //   return p;
+    // });
 
     const items: ListItemType[] = recipe.items.map((i: Item) => ({
       name: i.name,
