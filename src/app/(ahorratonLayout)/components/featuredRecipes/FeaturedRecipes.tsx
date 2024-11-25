@@ -15,7 +15,10 @@ const FeaturedRecipes = ({ recipes }: { recipes: Recipe[] }) => {
         <Grid container spacing={4}>
           {recipes.slice(0, 5).map((recipe, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
-              <RecipeCard recipe={recipe} onClick={() => console.log("hola")} />
+              <RecipeCard
+                recipe={recipe}
+                onClick={() => (window.location.href = `/recipes`)}
+              />
             </Grid>
           ))}
           <Grid item key={"last_recipe"} xs={12} sm={6} md={4}>
