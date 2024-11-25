@@ -25,10 +25,15 @@ import SelectListComponent from "./ListSelector";
 import SaveListButton from "./SaveListAction";
 import LogInOrSignUpAlert from "./LogInOrSignUpAlert";
 import MoreOptions from "./MoreOptions";
-import CreateList from "./createList";
+import CreateListButton from "./createList";
+import { CreateNewList } from "./CreateNewList";
+import { selectList } from "@/redux/store/multipleListsSlice";
+import { post_async, post_async_with_body } from "@/utils/common/fetch_async";
 
 const ListContent = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
+
+  const [createNewList, setCreateNewList] = useState(false);
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [clearDialogOpen, setClearDialogOpen] = useState(false);
@@ -123,8 +128,6 @@ const ListContent = () => {
     setRegisterDialogOpen(true);
   };
 
-  // Fix calculate value
-
   const [selectedMarkets, setSelectedMarkets] = useState<string[]>([
     "carrefour",
     "coto",
@@ -171,7 +174,7 @@ const ListContent = () => {
       {user.isLoggedIn ? (
         <Box className="list-content" id="list-content" role="presentation">
           <Grid container className="action-buttons">
-            <CreateList />
+            <CreateListButton setCreateNewList={setCreateNewList} />
             <SelectListComponent />
 
             <MoreOptions />
@@ -203,6 +206,11 @@ const ListContent = () => {
               isLoggedIn={user.isLoggedIn}
             />
           </Box>
+
+          <CreateNewList
+            open={createNewList}
+            onClose={() => setCreateNewList(false)}
+          />
 
           <ConfirmDialog
             open={dialogOpen}

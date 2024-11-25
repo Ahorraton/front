@@ -11,8 +11,6 @@ const SelectListComponent = () => {
     <Box textAlign="center" m={2}>
       <Box id="select-list-container" className="select-list-container">
         <FormControl fullWidth>
-          {/* <InputLabel id="selected-list-label">Lista Seleccionada</InputLabel> */}
-
           <ListSelector
             isListSaved={isListSaved}
             setPendingListId={setPendingListId}
