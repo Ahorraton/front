@@ -63,30 +63,21 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
                 </ul>
               </Box>
             )}
-
-            <Box
-              id="agregar-a-list-button-container"
-              className="agregar-a-list-button-container"
-            >
-              <Button
-                onClick={() => {
-                  console.log("RecipeDetails.tsx: onAddList: ");
-                  onAddList();
-                }}
-                id="recipe-dialog-add-to-list-button"
+            <DialogActions id="add-to-list-action-button">
+              <Box
+                id="agregar-a-list-button-container"
+                className="agregar-a-list-button-container"
               >
-                <Typography variant="h6" color="white">
-                  Agregar a lista
-                </Typography>
-              </Button>
-              {/* <Button
-                onClick={onClose}
-                color="primary"
-                id="recipe-dialog-close-button"
-              >
-                Close
-              </Button> */}
-            </Box>
+                <Button
+                  onClick={onAddList}
+                  id="recipe-dialog-add-to-list-button"
+                >
+                  <Typography variant="h6" color="white">
+                    Agregar a lista
+                  </Typography>
+                </Button>
+              </Box>
+            </DialogActions>
           </Box>
         </Grid>
       </DialogContent>
