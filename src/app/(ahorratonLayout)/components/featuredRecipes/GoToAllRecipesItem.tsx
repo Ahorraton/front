@@ -5,7 +5,7 @@ import "./recipe.css";
 
 export default function GoToAllRecipesItem() {
   return (
-    <Card id="see-more-recipes-card">
+    <Card id="see-more-recipes-card" className="featured-recipe-card">
       <Link
         href="/recipes"
         underline="none"
