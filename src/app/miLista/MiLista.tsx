@@ -26,6 +26,7 @@ import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { Product } from "@/app/types/Product";
 import { ListItemType } from "../types/ListItem";
+import NewListModal from "./NewListModal";
 
 const MiLista: React.FC = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -275,15 +276,12 @@ const MiLista: React.FC = () => {
         confirmText="Eliminar"
         cancelText="Cancelar"
       />
-      <ConfirmationDialog
-        open={openNewListDialog}
-        onClose={() => setOpenNewListDialog(false)}
-        onConfirm={handleCreateNewList}
-        title="Confirmar nueva lista"
-        content="Quieres comenzar una nueva lista?"
-        confirmText="Comenzar"
-        cancelText="Cancelar"
-        confirmButtonColor="#B8860B" // Darker yellow
+      <NewListModal
+            userId={user.userInfo?.id} 
+            open={openNewListDialog}
+            onClose={() => 
+              setOpenNewListDialog(false)
+            }
       />
       <NotificationDialog
         open={openModal}

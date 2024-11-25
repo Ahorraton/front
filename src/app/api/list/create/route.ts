@@ -1,11 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-const SAVE_LIST = "/grocery_lists/create";
+const SAVE_LIST = "/grocery_lists/save_my_list";
 
 export async function POST(req: NextRequest) {
-  const { user_id, name } = await req.json();
-
+  console.log("ENTRE EN SAVE LIST CREATE");
+  const { user_id, name, products } = await req.json();
   const baseUrl =
     process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
   const backendEndpoint = baseUrl + SAVE_LIST;
@@ -13,13 +13,18 @@ export async function POST(req: NextRequest) {
   try {
     const response: AxiosResponse = await axios.post(
       backendEndpoint,
-      { user_id, name },
+      { user_id, name, products },
       { headers: { "Content-Type": "application/json" } }
     );
 
     return new NextResponse(
-      JSON.stringify(response.data),
-      {status: 200}
+      JSON.stringify({
+        status: "success",
+        data: response.data,
+      }),
+      {
+        status: 200,
+      }
     );
   } catch (error) {
     if (axios.isAxiosError(error)) {
