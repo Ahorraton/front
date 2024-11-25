@@ -9,10 +9,8 @@ import {
   Button,
   Accordion,
   AccordionSummary,
-  AccordionDetails,
   FormControl,
   InputLabel,
-  Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SaveIcon from "@mui/icons-material/Save";
@@ -246,14 +244,17 @@ const MiLista: React.FC = () => {
         />
       </Accordion>
       <Box mt={1.5}>
+        <Box mt={1.5}>
+          <TotalPrice totalPrice={totalPrice} />
+        </Box>
         <FormControl fullWidth>
-          <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
-          <ListSelector
-            isListSaved={isListSaved}
-            setPendingListId={setPendingListId}
-            setOpenDialog={setOpenDialog}
-          />
-        </FormControl>
+            <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
+            <ListSelector
+              isListSaved={isListSaved}
+              setPendingListId={setPendingListId}
+              setOpenDialog={setOpenDialog}
+            />
+          </FormControl>
       </Box>
       <Box mt={1.5}>
         <TextField
@@ -264,10 +265,7 @@ const MiLista: React.FC = () => {
           disabled={editingEnabled}
         />
       </Box>
-      <Box mt={1.5}>
-        <TotalPrice totalPrice={totalPrice} />
-      </Box>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" margin='1%'>
         <Button
           variant="contained"
           color="error"
