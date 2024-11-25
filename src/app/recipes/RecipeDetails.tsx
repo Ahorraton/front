@@ -46,7 +46,7 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
           <DialogTitle id="recipe-dialog-title">
             {loading ? "Loading Recipe..." : recipe?.title}
           </DialogTitle>
-          <Box>
+          <Box id="ingredients-and-add-button">
             {loading ? (
               <CircularProgress />
             ) : error ? (

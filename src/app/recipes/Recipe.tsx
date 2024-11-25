@@ -54,15 +54,11 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   }, [selectedRecipeId]);
 
   const onAddList = () => {
-    console.log("Adding to list");
     if (!recipe) {
       console.error("No recipe selected");
       return;
     }
 
-    console.log("Adding products", recipe.items);
-    console.log("adding to list");
-    setShowAlert(true);
     dispatch(
       addItems(
         recipe.items.map((i: Item) => ({
@@ -72,6 +68,8 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
         }))
       )
     );
+
+    setShowAlert(true);
   };
 
   return (
