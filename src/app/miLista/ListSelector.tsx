@@ -6,19 +6,11 @@ import { selectList, setLists } from "../../redux/store/multipleListsSlice";
 import { setList, setListName } from "../../redux/store/listSlice";
 import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
-import { ListItemFromDB, ListItemType } from "@/app/types/ListItem";
 import { Product } from "../types/Product";
 import { getCheapestItems } from "./utils/cheapestItems";
 
-type ListSelectorProps = {
-  setPendingListId: (id: number | null) => void;
-  setOpenDialog: (open: boolean) => void;
-};
 
-const ListSelector: React.FC<ListSelectorProps> = ({
-  setPendingListId,
-  setOpenDialog,
-}) => {
+const ListSelector = () => {
   const multipleLists = useSelector((state: RootState) => state.multipleLists);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();

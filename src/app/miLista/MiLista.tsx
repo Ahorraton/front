@@ -12,13 +12,10 @@ import {
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { setListName, clearList } from "../../redux/store/listSlice";
-import { selectList } from "../../redux/store/multipleListsSlice";
 import ProductList from "./product_card/ProductList";
 import TotalPrice from "./TotalPrice";
 import Filters from "./Filters";
 import ListSelector from "./ListSelector";
-import SaveListDialog from "./SaveListDialog";
 import ConfirmationDialog from "./ConfirmationDialog";
 import NotificationDialog from "./NotificationDialog";
 import "./myList.css";
@@ -30,7 +27,6 @@ import NewListModal from "./NewListModal";
 
 const MiLista: React.FC = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
-  const selectedListName = useSelector((state: RootState) => state.list.name);
   const selectedListId = useSelector(
     (state: RootState) => state.multipleLists.selectedListId
   );
@@ -45,10 +41,8 @@ const MiLista: React.FC = () => {
     "disco",
     "jumbo",
   ]);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
   const [openNewListDialog, setOpenNewListDialog] = useState<boolean>(false); // New state variable for new list dialog
-  const [pendingListId, setPendingListId] = useState<number | null>(null);
   const [modalMessage, setModalMessage] = useState<string>(""); // State variable for modal message
   const [openModal, setOpenModal] = useState<boolean>(false); // State variable for modal visibility
 
@@ -154,7 +148,6 @@ const MiLista: React.FC = () => {
       await fetchUserLists(user_id, dispatch);
       setOpenDeleteDialog(false);
 
-      // Show modal with appropriate message
       setModalMessage("Su lista ha sido eliminada exitosamente");
       setOpenModal(true);
     } catch (error) {
@@ -192,10 +185,7 @@ const MiLista: React.FC = () => {
         </Box>
         <FormControl fullWidth>
             <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
-            <ListSelector
-              setPendingListId={setPendingListId}
-              setOpenDialog={setOpenDialog}
-            />
+            <ListSelector/>
           </FormControl>
       </Box>
       <Box display="flex" justifyContent="space-between" margin='1%'>
@@ -219,7 +209,7 @@ const MiLista: React.FC = () => {
           variant="contained"
           color="secondary"
           startIcon={<AddIcon />}
-          onClick={() => setOpenNewListDialog(true)} // Open the new list dialog
+          onClick={() => setOpenNewListDialog(true)}
         >
           Nueva lista
         </Button>
