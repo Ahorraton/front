@@ -87,8 +87,9 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
             {recipes.map((recipe) => (
               <Grid item key={recipe.id} xs={12} sm={6} md={4}>
                 <Card
+                  id={`recipe-card-${recipe.id}`}
                   onClick={() => setSelectedRecipeId(recipe.id)}
-                  sx={{ cursor: "pointer", textDecoration: "none" }}
+                  className="recipe-card"
                 >
                   <CardMedia
                     component="img"

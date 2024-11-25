@@ -13,6 +13,11 @@
   margin-top: 2%;
 }
 
+.recipe-card {
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .recipes-titles {
 }
 
