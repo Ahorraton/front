@@ -20,6 +20,8 @@ interface SaveListButtonProps {
 const SaveListButton: React.FC<SaveListButtonProps> = ({
   listName,
   list,
+  onListNameChange,
+  onClearList,
   onSaveList,
   isLoggedIn,
 }) => {
