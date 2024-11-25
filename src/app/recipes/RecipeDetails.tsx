@@ -9,6 +9,7 @@ import {
   Typography,
   CircularProgress,
   Box,
+  Grid,
 } from "@mui/material";
 
 import { Recipe } from "../types/Recipe";
@@ -28,55 +29,68 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
   onClose,
   onAddList,
 }) => {
-  console.log("Inside recipe", recipe);
-  console.log("Items", recipe.items);
   return (
-    <Box id="recipe-container">
-      <Dialog
-        open={recipe !== null}
-        onClose={onClose}
-        aria-labelledby="recipe-dialog-title"
-        id="recipe-details-dialog"
-      >
-        <DialogTitle id="recipe-dialog-title">
-          {loading ? "Loading Recipe..." : recipe?.title}
-        </DialogTitle>
-        <DialogContent>
-          {loading ? (
-            <CircularProgress />
-          ) : error ? (
-            <Typography color="error">{`Error Loading Recipe Details: ${error}`}</Typography>
-          ) : (
-            <>
-              <Typography variant="h6" gutterBottom>
-                Ingredients:
-              </Typography>
-              <ul>
-                {recipe.items?.map((item, index) => (
-                  <li key={index}>{item.name}</li>
-                ))}
-              </ul>
-              <DialogActions>
-                <Button
-                  onClick={onAddList}
-                  color="secondary"
-                  id="recipe-dialog-add-to-list-button"
-                >
-                  Add to list
-                </Button>
-                <Button
-                  onClick={onClose}
-                  color="primary"
-                  id="recipe-dialog-close-button"
-                >
-                  Close
-                </Button>
-              </DialogActions>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
-    </Box>
+    <Dialog
+      open={recipe !== null}
+      onClose={onClose}
+      aria-labelledby="recipe-dialog-title"
+      id="recipe-details-dialog"
+    >
+      <DialogContent>
+        <Grid
+          container
+          spacing={2}
+          className="selected-recipe-view-grid"
+          id="selected-recipe-grid"
+        >
+          <DialogTitle id="recipe-dialog-title">
+            {loading ? "Loading Recipe..." : recipe?.title}
+          </DialogTitle>
+          <Box>
+            {loading ? (
+              <CircularProgress />
+            ) : error ? (
+              <Typography color="error">{`Error Loading Recipe Details: ${error}`}</Typography>
+            ) : (
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Ingredients:
+                </Typography>
+                <ul>
+                  {recipe.items?.map((item, index) => (
+                    <li key={index}>{item.name}</li>
+                  ))}
+                </ul>
+              </Box>
+            )}
+
+            <Box
+              id="agregar-a-list-button-container"
+              className="agregar-a-list-button-container"
+            >
+              <Button
+                onClick={() => {
+                  console.log("RecipeDetails.tsx: onAddList: ");
+                  onAddList();
+                }}
+                id="recipe-dialog-add-to-list-button"
+              >
+                <Typography variant="h6" color="white">
+                  Agregar a lista
+                </Typography>
+              </Button>
+              {/* <Button
+                onClick={onClose}
+                color="primary"
+                id="recipe-dialog-close-button"
+              >
+                Close
+              </Button> */}
+            </Box>
+          </Box>
+        </Grid>
+      </DialogContent>
+    </Dialog>
   );
 };
 
