@@ -118,8 +118,6 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
         {recipe && (
           <RecipeDetails
             recipe={recipe}
-            loading={loadingSelectedRecipe}
-            error={errorLoadingRecipe}
             onClose={() => {
               setSelectedRecipeId(null);
               setRecipe(null);
