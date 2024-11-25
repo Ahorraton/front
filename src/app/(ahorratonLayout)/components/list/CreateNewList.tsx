@@ -76,41 +76,44 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
     >
-      <DialogTitle id="dialog-title">
-        {isLoading ? "Creando Lista" : "Crear Nueva Lista"}
-      </DialogTitle>
-      {isLoading ? (
-        <Box
-          id="loading-create-new-list"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Loading />
+      <Box sx={{ alignItems: "center", justifyContent: "center" }}>
+        <DialogTitle id="dialog-title">
+          {isLoading ? "Creando Lista" : "Crear Nueva Lista"}
+        </DialogTitle>
+        <Box p={"10px"}>
+          {isLoading ? (
+            <Box id="loading-create-new-list">
+              <Loading />
+            </Box>
+          ) : (
+            <Box>
+              <Input
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={async (e) => {
+                  if (e.key === "Enter") {
+                    await handleCreateNewList();
+                  }
+                }}
+              />
+              <Box>
+                <DialogActions>
+                  <Button onClick={onClose} color="primary">
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={handleCreateNewList}
+                    color="primary"
+                    autoFocus
+                  >
+                    Crear
+                  </Button>
+                </DialogActions>
+              </Box>
+            </Box>
+          )}
         </Box>
-      ) : (
-        <Box>
-          <Input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={async (e) => {
-              if (e.key === "Enter") {
-                await handleCreateNewList();
-              }
-            }}
-          />
-          <DialogActions>
-            <Button onClick={onClose} color="primary">
-              Cancelar
-            </Button>
-            <Button onClick={handleCreateNewList} color="primary" autoFocus>
-              Crear
-            </Button>
-          </DialogActions>
-        </Box>
-      )}
+      </Box>
     </Dialog>
   );
 };
