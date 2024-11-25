@@ -24,6 +24,8 @@ import { calculateTotalPrice } from "@/app/miLista/utils/calculateTotalPrice";
 import SelectListComponent from "./ListSelector";
 import SaveListButton from "./SaveListAction";
 import LogInOrSignUpAlert from "./LogInOrSignUpAlert";
+import MoreOptions from "./MoreOptions";
+import CreateList from "./createList";
 
 const ListContent = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -168,7 +170,12 @@ const ListContent = () => {
     <Grid container className="slider-view-grid" id="slider-view-grid">
       {user.isLoggedIn ? (
         <Box className="list-content" id="list-content" role="presentation">
-          <SelectListComponent />
+          <Grid container className="action-buttons">
+            <CreateList />
+            <SelectListComponent />
+
+            <MoreOptions />
+          </Grid>
 
           <List id="list-items-container" className="list-items-container">
             {listItems.map((item: ListItemType) => (
@@ -184,6 +191,7 @@ const ListContent = () => {
 
           <Box mt={1.5}>
             <TotalPrice totalPrice={totalPrice} />
+
             <SaveListButton
               listName={listName}
               list={listItems}
