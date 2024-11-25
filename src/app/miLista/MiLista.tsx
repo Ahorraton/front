@@ -5,14 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
   Box,
-  TextField,
   Button,
-  Accordion,
-  AccordionSummary,
   FormControl,
   InputLabel,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -48,7 +44,6 @@ const MiLista: React.FC = () => {
     "disco",
     "jumbo",
   ]);
-  const [editingEnabled, setEditingEnabled] = useState<boolean>(false);
   const [isListSaved, setIsListSaved] = useState<boolean>(true);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
@@ -98,11 +93,6 @@ const MiLista: React.FC = () => {
     }
   }, [user, dispatch]);
 
-  const handleListNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setListName(event.target.value));
-    setIsListSaved(false);
-  };
-
   const handleSaveList = async () => {
     try {
       const user_id = user.userInfo?.id;
@@ -134,7 +124,6 @@ const MiLista: React.FC = () => {
       setIsListSaved(true);
       await fetchUserLists(user_id, dispatch);
 
-      // Show modal with appropriate message
       setModalMessage(
         selectedListId
           ? "Su lista ha sido actualizada exitosamente"
@@ -150,7 +139,7 @@ const MiLista: React.FC = () => {
     dispatch(clearList());
     dispatch(selectList(null));
     setIsListSaved(true);
-    setOpenNewListDialog(false); // Close the new list dialog
+    setOpenNewListDialog(false);
   };
 
   const handleDialogClose = () => {
@@ -227,22 +216,10 @@ const MiLista: React.FC = () => {
 
   return (
     <Box m={1.5}>
-      <Accordion>
-        <AccordionSummary
-          sx={{
-            "& .MuiAccordionSummary-content": {
-              justifyContent: "center",
-            },
-          }}
-          expandIcon={<ExpandMoreIcon />}
-        >
-          <h3>Filtros</h3>
-        </AccordionSummary>
-        <Filters
-          selectedMarkets={selectedMarkets}
-          handleMarketChange={handleMarketChange}
-        />
-      </Accordion>
+      <Filters
+        selectedMarkets={selectedMarkets}
+        handleMarketChange={handleMarketChange}
+      />
       <Box mt={1.5}>
         <Box mt={1.5}>
           <TotalPrice totalPrice={totalPrice} />
@@ -255,15 +232,6 @@ const MiLista: React.FC = () => {
               setOpenDialog={setOpenDialog}
             />
           </FormControl>
-      </Box>
-      <Box mt={1.5}>
-        <TextField
-          label="Nombre de mi lista"
-          value={selectedListName}
-          onChange={handleListNameChange}
-          fullWidth
-          disabled={editingEnabled}
-        />
       </Box>
       <Box display="flex" justifyContent="space-between" margin='1%'>
         <Button
