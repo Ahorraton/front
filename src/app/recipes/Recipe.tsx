@@ -11,11 +11,16 @@ import RecipeDetails from "./RecipeDetails";
 import { Recipe, RecipeFromDB } from "@/app/types/Recipe";
 import { addItems } from "../../redux/store/listSlice";
 import { useDispatch } from "react-redux";
-import { fetch_async } from "../../utils/common/fetch_async";
+import {
+  fetch_async,
+  post_async_with_body,
+} from "../../utils/common/fetch_async";
 import "./recipe.css";
 import { Item } from "../types/Ingredient";
 import SelectedItemAlert from "../comparar/selectedItemAlert";
 import MetaDataContainer from "../global_layout/MetaDataContainer";
+import { ListItemType } from "../types/ListItem";
+import { Product } from "../types/Product";
 
 export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
@@ -53,22 +58,38 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
     fetchRecipe();
   }, [selectedRecipeId]);
 
-  const onAddList = () => {
+  const fetchRecipeProducts = async (products_eans: string[]) => {
+    try {
+      const datos = { product_codes: products_eans };
+      const res = await post_async_with_body(
+        `/grocery_lists/add_prods_to_my_list`,
+        datos
+      );
+
+      return res.products;
+    } catch (e: unknown) {
+      throw new Error(String(e));
+    }
+  };
+
+  const onAddList = async () => {
     if (!recipe) {
       console.error("No recipe selected");
       return;
     }
 
-    dispatch(
-      addItems(
-        recipe.items.map((i: Item) => ({
-          name: i.name,
-          amount: i.amount,
-          ean: i.ean,
-        }))
-      )
+    const products: Product[] = await fetchRecipeProducts(
+      recipe.items.map((i: Item) => i.ean)
     );
 
+    const items: ListItemType[] = recipe.items.map((i: Item) => ({
+      name: i.name,
+      amount: i.amount,
+      ean: i.ean,
+      product: products.find((p: Product) => p.ean === i.ean),
+    }));
+
+    dispatch(addItems(items));
     setShowAlert(true);
   };
 
