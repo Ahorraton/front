@@ -133,9 +133,6 @@ const ListContent = () => {
   ]);
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  // const [cheapestProducts, setCheapestProducts] = useState<Product[]>([]);
-
-  console.log("List Items", listItems);
 
   useEffect(() => {
     const prods: Product[] = listItems
