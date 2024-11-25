@@ -91,3 +91,14 @@
   left: 0;
   margin: 16px;
 }
+
+.selected-recipe-list-prices {
+  max-height: 250px;
+  overflow-y: visible;
+}
+
+.recipe-item-layout {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+}

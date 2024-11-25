@@ -10,6 +10,8 @@ import {
   CircularProgress,
   Box,
   Grid,
+  List,
+  ListItem,
 } from "@mui/material";
 
 import { Recipe } from "../types/Recipe";
@@ -29,6 +31,7 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
   onClose,
   onAddList,
 }) => {
+  console.log(recipe.ingredients);
   return (
     <Dialog
       open={recipe !== null}
@@ -38,6 +41,7 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
       className="selected-recipe-layout"
     >
       <DialogContent id="dialog-content-div" className="selected-recipe-layout">
+        <DialogTitle id="recipe-dialog-title">{recipe?.title}</DialogTitle>
         <Box
           component="img"
           src={recipe.img_url}
@@ -47,23 +51,31 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
           id="selected-recipe-img"
           className="selected-recipe-img"
         />
+
         <Grid
           container
           spacing={2}
           className="selected-recipe-view-grid"
           id="selected-recipe-grid"
         >
-          <DialogTitle id="recipe-dialog-title">{recipe?.title}</DialogTitle>
+          <Typography id="ingredients-title" variant="h6" gutterBottom>
+            Ingredients:
+          </Typography>
+
           <Box id="ingredients-and-add-button">
-            <Box>
-              <Typography variant="h6" gutterBottom>
-                Ingredients:
-              </Typography>
-              <ul>
-                {recipe.items?.map((item, index) => (
-                  <li key={index}>{item.name}</li>
+            <Box id="ingredients-div" mt="5%" sx={{ alignItems: "center" }}>
+              <List
+                id="selected-recipe-list-prices"
+                className="selected-recipe-list-prices"
+              >
+                {recipe.ingredients.map((item, index) => (
+                  <ListItem key={index} className="recipe-item-layout">
+                    <Typography gutterBottom>
+                      {item.name}: {item.amount}
+                    </Typography>
+                  </ListItem>
                 ))}
-              </ul>
+              </List>
             </Box>
           </Box>
         </Grid>
