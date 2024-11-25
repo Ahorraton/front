@@ -97,8 +97,14 @@ const MiLista: React.FC = () => {
   const handleSaveList = async () => {
     try {
       const user_id = user.userInfo?.id;
+
       if (user_id === undefined || user_id === null) {
         console.error("User ID is not defined");
+        return;
+      }
+
+      if (selectedListId === undefined || selectedListId === null) {
+        console.error("No list selected");
         return;
       }
 
@@ -107,29 +113,18 @@ const MiLista: React.FC = () => {
         amount: item.amount,
       }));
 
-      const endpoint = selectedListId
-        ? "/api/list/updateList"
-        : "/api/list/createList";
-      const payload = selectedListId
-        ? {
+      const payload = {
             user_id,
             grocery_list_id: selectedListId,
-            name: selectedListName,
             products: productsToSave,
-          }
-        : { user_id, name: selectedListName, products: productsToSave };
+          };
 
-      const response = await axios.post(endpoint, payload);
+      const response = await axios.post("/api/list/updateList", payload);
 
-      console.log("List saved:", response.data);
       setIsListSaved(true);
       await fetchUserLists(user_id, dispatch);
 
-      setModalMessage(
-        selectedListId
-          ? "Su lista ha sido actualizada exitosamente"
-          : "Su lista ha sido guardada exitosamente"
-      );
+      setModalMessage("Su lista ha sido actualizada exitosamente");
       setOpenModal(true);
     } catch (error) {
       console.error("Error saving list:", error);
