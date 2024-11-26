@@ -13,11 +13,7 @@ const SelectListComponent = () => {
         <FormControl fullWidth>
           {/* <InputLabel id="selected-list-label">Lista Seleccionada</InputLabel> */}
 
-          <ListSelector
-            isListSaved={isListSaved}
-            setPendingListId={setPendingListId}
-            setOpenDialog={setOpenDialog}
-          />
+          <ListSelector/>
         </FormControl>
       </Box>
     </Box>
