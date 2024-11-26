@@ -9,11 +9,15 @@ import {
   Input,
   Box,
 } from "@mui/material";
-import { post_async_with_body } from "@/utils/common/fetch_async";
+import { fetch_async, post_async_with_body } from "@/utils/common/fetch_async";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { fetchUserLists } from "@/utils/apiUtils";
 import Loading from "@/app/loadingScreens/loading";
+import { Product } from "@/app/types/Product";
+import { clearList, setList, setListName } from "@/redux/store/listSlice";
+import { selectList } from "@/redux/store/multipleListsSlice";
+import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
 
 interface CreateNewListProps {
   open: boolean;
@@ -24,6 +28,7 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
   open,
   onClose,
 }) => {
+  const multipleLists = useSelector((state: RootState) => state.multipleLists);
   const [inputValue, setInputValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = useSelector((state: RootState) => state.user);
@@ -31,7 +36,35 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
   const [newListID, setNewListID] = useState<number | null>(null);
 
   useEffect(() => {
-    console.log(`Created new listID: ${newListID}`);
+    const fetchData = async () => {
+      if (!newListID) {
+        return;
+      }
+      console.log("Inside new data", newListID);
+      const selectedListId = Number(newListID);
+      console.log(`Created new listID: ${newListID}`);
+      try {
+        const response = await fetch_async(
+          `/grocery_lists/${newListID}/get_products`
+        );
+        console.log("Fetched list:", response);
+        const selectedList = multipleLists.lists.find(
+          (list) => list.id === selectedListId
+        );
+        if (selectedList) {
+          dispatch(setListName(selectedList.name));
+        }
+
+        dispatch(selectList(selectedListId));
+
+        await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
+      } catch (error) {
+        console.error("Error fetching list:", error);
+      }
+    };
+    dispatch(clearList());
+    dispatch(selectList(null));
+    fetchData();
   }, [newListID]);
 
   const postList = async (name: string) => {
