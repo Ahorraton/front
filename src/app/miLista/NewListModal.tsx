@@ -1,9 +1,11 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import axios from 'axios';
+import { fetchUserLists } from "../../utils/apiUtils";
+import { useDispatch } from "react-redux";
 
 interface NewListModalProps {
-    userId: number | null | undefined;
+    userId: number;
     open: boolean;
     onClose: () => void;
 }
@@ -11,6 +13,7 @@ interface NewListModalProps {
 const NewListModal: React.FC<NewListModalProps> = ({ userId, open, onClose }) => {
     const [nameList, setNameList] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const dispatch = useDispatch();
 
     const handleNameListChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNameList(e.target.value);    
@@ -26,8 +29,10 @@ const NewListModal: React.FC<NewListModalProps> = ({ userId, open, onClose }) =>
             if (response.data.data.grocery_list_id != undefined) {
                 console.log(response.data.data.grocery_list_id);
             }
-            setNameList('');
             onClose();
+            setNameList('');
+            await fetchUserLists(userId, dispatch);
+
         } catch (error) {
             console.error(error);
             setError('Ha ocurrido un error. Por favor, intente nuevamente.');

@@ -87,7 +87,7 @@ const MiLista: React.FC = () => {
     }
   }, [user, dispatch]);
 
-  const handleSaveList = async () => {
+  const handleUpdateList = async () => {
     try {
       const user_id = user.userInfo?.id;
 
@@ -201,7 +201,7 @@ const MiLista: React.FC = () => {
           variant="contained"
           color="primary"
           startIcon={<SaveIcon />}
-          onClick={handleSaveList}
+          onClick={handleUpdateList}
         >
           Actualizar lista
         </Button>
@@ -225,7 +225,7 @@ const MiLista: React.FC = () => {
         cancelText="Cancelar"
       />
       <NewListModal
-            userId={user.userInfo?.id} 
+            userId={user.userInfo?.id ?? 0}
             open={openNewListDialog}
             onClose={() => 
               setOpenNewListDialog(false)

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-const SAVE_LIST = "/grocery_lists/save_my_list";
+const SAVE_LIST = "/grocery_lists/create";
 
 export async function POST(req: NextRequest) {
   console.log("ENTRE EN SAVE LIST CREATE");
