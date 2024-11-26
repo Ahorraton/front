@@ -42,6 +42,8 @@
 .select-list-container {
   display: flex;
   flex-direction: column;
+  min-width: 170px;
+  max-width: 170px;
 }
 
 .list-item-card {
