@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, FormControl } from "@mui/material";
 import ListSelector from "@/app/miLista/ListSelector";
+import "./list-style.css";
 
 const SelectListComponent = () => {
   const [isListSaved, setIsListSaved] = useState<boolean>(true);
