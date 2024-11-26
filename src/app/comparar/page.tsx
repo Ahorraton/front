@@ -15,7 +15,7 @@ import ProductItems from "../types/ProductItems";
 import "./compare.css";
 import { useSearchParams } from "next/navigation";
 import ProductCardSearch from "./cardComponent";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
@@ -29,6 +29,7 @@ import { process_prod_item } from "./utils/process_prod_item";
 import { Product } from "@/app/types/Product";
 import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
 import { ListItemType } from "../types/ListItem";
+import { RootState } from "@/redux/store";
 
 const LIMIT = 8;
 
@@ -49,8 +50,11 @@ const Compare = () => {
     "jumbo",
   ]);
   const [productPage, setProductPage] = useState<ProductItems | null>(null);
+  const user = useSelector((state: RootState) => state.user);
 
   const [showAlert, setShowAlert] = useState<Boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
+  const [successStatus, setSuccessStatus] = useState<boolean>(false);
 
   useEffect(() => {
     fetchProducts();
@@ -95,6 +99,14 @@ const Compare = () => {
   };
 
   const handleAddProduct = (productItem: ProductItems) => {
+    if (!user.isLoggedIn) {
+      console.error("Not logged in");
+      setShowAlert(true);
+      setAlertMessage("Not Logged In");
+      setSuccessStatus(false);
+
+      return;
+    }
     const prod: Product[] = process_prod_item(productItem);
 
     const cheapestProducts: ListItemType[] = getCheapestItems(prod);
@@ -107,11 +119,12 @@ const Compare = () => {
     };
     dispatch(addItem(productToSave));
     setShowAlert(true);
+    setAlertMessage("Agregado a lista");
+    setSuccessStatus(true);
   };
 
   const getFilteredProducts = (markets: string[]) => {
     let filtered_products = products.map((product) => {
-
       const marketPrices = product.market_price.split(", ");
       const namesList = product.names_list.split(", ");
       const urls = product.urls.split(", ");
@@ -119,9 +132,9 @@ const Compare = () => {
       const filteredMarkets: string[] = [];
       const filteredNames: string[] = [];
       const filteredUrls: string[] = [];
-      
+
       marketPrices.forEach((price, index) => {
-        const [market] = price.split(" "); 
+        const [market] = price.split(" ");
         if (markets.includes(market)) {
           filteredMarkets.push(price);
           filteredNames.push(namesList[index] || "");
@@ -133,10 +146,10 @@ const Compare = () => {
         return null;
       }
 
-      product.names_list = filteredNames.join(", "),
-      product.market_price = filteredMarkets.join(", "),
-      product.urls = filteredUrls.join(", ");
-      
+      (product.names_list = filteredNames.join(", ")),
+        (product.market_price = filteredMarkets.join(", ")),
+        (product.urls = filteredUrls.join(", "));
+
       return product;
     });
 
@@ -213,7 +226,11 @@ const Compare = () => {
 
         {showAlert && (
           <Box className="alert-box" id="alert-box">
-            <SelectedItemAlert setShowAlert={setShowAlert} />
+            <SelectedItemAlert
+              setShowAlert={setShowAlert}
+              alertMessage={alertMessage}
+              success={successStatus}
+            />
           </Box>
         )}
 

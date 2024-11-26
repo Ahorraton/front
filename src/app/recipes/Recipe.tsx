@@ -10,7 +10,7 @@ import {
 import RecipeDetails from "./RecipeDetails";
 import { Recipe, RecipeFromDB } from "@/app/types/Recipe";
 import { addItems } from "../../redux/store/listSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetch_async,
   post_async_with_body,
@@ -21,6 +21,7 @@ import SelectedItemAlert from "../comparar/selectedItemAlert";
 import MetaDataContainer from "../global_layout/MetaDataContainer";
 import { ListItemType } from "../types/ListItem";
 import { Product } from "../types/Product";
+import { RootState } from "@/redux/store";
 
 export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
@@ -30,7 +31,11 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
     null
   );
 
+  const user = useSelector((state: RootState) => state.user);
+
   const [showAlert, setShowAlert] = useState<Boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
+  const [successStatus, setSuccessStatus] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -45,6 +50,7 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
           if (res.recipe) {
             setSelectedLoading(false);
             setShowAlert(false);
+            setAlertMessage("");
             setRecipe(res.recipe);
           }
         } catch (e: unknown) {
@@ -73,6 +79,13 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   };
 
   const onAddList = async () => {
+    if (!user.isLoggedIn) {
+      console.error("Not logged in");
+      setShowAlert(true);
+      setAlertMessage("Not Logged In");
+      setSuccessStatus(false);
+      return;
+    }
     if (!recipe) {
       console.error("No recipe selected");
       return;
@@ -96,6 +109,8 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
 
     dispatch(addItems(items));
     setShowAlert(true);
+    setAlertMessage("Agregado a lista");
+    setSuccessStatus(true);
   };
 
   return (
@@ -137,7 +152,11 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
 
         {showAlert && (
           <Box className="alert-box" id="alert-box">
-            <SelectedItemAlert setShowAlert={setShowAlert} />
+            <SelectedItemAlert
+              setShowAlert={setShowAlert}
+              alertMessage={alertMessage}
+              success={successStatus}
+            />
           </Box>
         )}
 

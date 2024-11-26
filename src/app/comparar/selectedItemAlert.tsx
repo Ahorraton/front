@@ -3,11 +3,17 @@ import { useEffect } from "react";
 
 interface AlertComponentProps {
   setShowAlert: (showAlert: boolean) => void;
+  alertMessage: string;
+  success: boolean;
 }
 
 const ALERT_TIMEOUT = 3000;
 
-const SelectedItemAlert: React.FC<AlertComponentProps> = ({ setShowAlert }) => {
+const SelectedItemAlert: React.FC<AlertComponentProps> = ({
+  setShowAlert,
+  alertMessage,
+  success,
+}) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowAlert(false);
@@ -17,8 +23,11 @@ const SelectedItemAlert: React.FC<AlertComponentProps> = ({ setShowAlert }) => {
   }, [setShowAlert]);
 
   return (
-    <Alert severity="success" onClose={() => setShowAlert(false)}>
-      Agregado a lista
+    <Alert
+      severity={success ? "success" : "error"}
+      onClose={() => setShowAlert(false)}
+    >
+      {alertMessage}
     </Alert>
   );
 };
