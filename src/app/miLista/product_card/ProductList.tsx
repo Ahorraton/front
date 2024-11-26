@@ -1,7 +1,7 @@
 import React from "react";
-import { List } from "@mui/material";
+import { Grid } from "@mui/material";
 import ProductItem from "./ProductItem";
-import { Product } from "../types/Product";
+import { Product } from "../../types/Product";
 
 type ProductListProps = {
   products: Product[];
@@ -9,11 +9,11 @@ type ProductListProps = {
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
-    <List>
+    <Grid container spacing={2} my={1}>
       {products.map((product) => (
         <ProductItem key={product.id} product={product} />
       ))}
-    </List>
+    </Grid>
   );
 };
 

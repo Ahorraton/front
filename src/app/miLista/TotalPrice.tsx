@@ -20,9 +20,9 @@ const TotalPrice: React.FC<TotalPriceProps> = ({ totalPrice }) => {
       <Typography
         variant="h4"
         component="div"
-        sx={{ fontWeight: "bold", color: "#ff5722" }}
+        sx={{ fontWeight: "bold", color: "black" }}
       >
-        Total: ${totalPrice}
+        Total: ${totalPrice.toFixed(2)}
       </Typography>
     </Box>
   );

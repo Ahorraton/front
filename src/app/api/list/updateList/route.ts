@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SAVE_LIST = "/grocery_lists/save_my_list";
 
 export async function POST(req: NextRequest) {
-  const { user_id, grocery_list_id, name, products } = await req.json();
+  const { user_id, grocery_list_id, products } = await req.json();
   const baseUrl =
     process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
   const backendEndpoint = baseUrl + SAVE_LIST;
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     const response: AxiosResponse = await axios.put(
       backendEndpoint,
-      { user_id, grocery_list_id, name, products },
+      { user_id, grocery_list_id, products },
       { headers: { "Content-Type": "application/json" } }
     );
 
