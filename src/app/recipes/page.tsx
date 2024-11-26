@@ -19,8 +19,6 @@ export default function Page() {
       try {
         const res = await fetch_async("/recipes");
         setLoading(false);
-        console.log("Recetas recibidas");
-        console.log(res);
         const recipes_result: Recipe[] = res.recipes ? res.recipes : [];
         setRecipes(recipes_result);
       } catch (e: unknown) {

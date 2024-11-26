@@ -27,6 +27,12 @@
   overflow-y: auto;
 }
 
+.no-user-found-container {
+  min-height: 65vh;
+  max-height: 65vh;
+  margin-top: 100%;
+}
+
 .select-and-items-container {
   display: flex;
   align-items: center;
@@ -36,8 +42,16 @@
 .select-list-container {
   display: flex;
   flex-direction: column;
+  min-width: 170px;
+  max-width: 170px;
 }
 
 .list-item-card {
   width: auto;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

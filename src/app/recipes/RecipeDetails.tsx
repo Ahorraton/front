@@ -8,70 +8,90 @@ import {
   Button,
   Typography,
   CircularProgress,
+  Box,
+  Grid,
+  List,
+  ListItem,
 } from "@mui/material";
 
 import { Recipe } from "../types/Recipe";
+import "./recipe.css";
 
 interface RecipeDetailsProps {
   recipe: Recipe;
-  loading: boolean;
-  error: string | null;
+
   onClose: () => void;
   onAddList: () => void;
 }
 
+const DEFAULT_PROD_IMG = "/images/stock_product/rat.png";
+
 const RecipeDetails: React.FC<RecipeDetailsProps> = ({
   recipe,
-  loading,
-  error,
   onClose,
   onAddList,
 }) => {
-  console.log("Inside recipe", recipe);
-  console.log("Items", recipe.items);
+  console.log(recipe.ingredients);
   return (
     <Dialog
-      open={true}
+      open={recipe !== null}
       onClose={onClose}
       aria-labelledby="recipe-dialog-title"
       id="recipe-details-dialog"
+      className="selected-recipe-layout"
     >
-      <DialogTitle id="recipe-dialog-title">
-        {loading ? "Loading Recipe..." : recipe?.title}
-      </DialogTitle>
-      <DialogContent>
-        {loading ? (
-          <CircularProgress />
-        ) : error ? (
-          <Typography color="error">{`Error Loading Recipe Details: ${error}`}</Typography>
-        ) : (
-          <>
-            <Typography variant="h6" gutterBottom>
-              Ingredients:
-            </Typography>
-            <ul>
-              {recipe.items?.map((item, index) => (
-                <li key={index}>{item.name}</li>
-              ))}
-            </ul>
-            <DialogActions>
-              <Button
-                onClick={onAddList}
-                color="secondary"
-                id="recipe-dialog-add-to-list-button"
+      <DialogContent id="dialog-content-div" className="selected-recipe-layout">
+        <DialogTitle id="recipe-dialog-title">{recipe?.title}</DialogTitle>
+        <Box
+          component="img"
+          src={recipe.img_url}
+          onError={(e) => {
+            e.currentTarget.src = DEFAULT_PROD_IMG;
+          }}
+          id="selected-recipe-img"
+          className="selected-recipe-img"
+        />
+
+        <Grid
+          container
+          spacing={2}
+          className="selected-recipe-view-grid"
+          id="selected-recipe-grid"
+        >
+          <Typography id="ingredients-title" variant="h6" gutterBottom>
+            Ingredients:
+          </Typography>
+
+          <Box id="ingredients-and-add-button">
+            <Box id="ingredients-div" mt="5%" sx={{ alignItems: "center" }}>
+              <List
+                id="selected-recipe-list-prices"
+                className="selected-recipe-list-prices"
               >
-                Add to list
-              </Button>
-              <Button
-                onClick={onClose}
-                color="primary"
-                id="recipe-dialog-close-button"
-              >
-                Close
-              </Button>
-            </DialogActions>
-          </>
-        )}
+                {recipe.ingredients.map((item, index) => (
+                  <ListItem key={index} className="recipe-item-layout">
+                    <Typography gutterBottom>
+                      {item.name}: {item.amount}
+                    </Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Box>
+        </Grid>
+
+        <DialogActions id="add-to-list-action-button">
+          <Box
+            id="agregar-a-list-button-container"
+            className="agregar-a-list-button-container"
+          >
+            <Button onClick={onAddList} id="recipe-dialog-add-to-list-button">
+              <Typography variant="h6" color="white">
+                Agregar a lista
+              </Typography>
+            </Button>
+          </Box>
+        </DialogActions>
       </DialogContent>
     </Dialog>
   );

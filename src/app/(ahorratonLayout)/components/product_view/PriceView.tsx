@@ -37,6 +37,7 @@ export default function PriceView({
         <ListItemButton
           onClick={() => handleClick(product)}
           id="list-action-button"
+          style={{ cursor: product.url ? "pointer" : "default" }}
         >
           <Box component="img" src={logo} className="price-market-logo" />
           <Box id="price-text-container" className="price-text-container">

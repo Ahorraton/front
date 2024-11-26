@@ -13,6 +13,7 @@ export default function GoToAllRecipesItem() {
       >
         <CardActionArea
           id="see-more-recipes-action-card"
+          className="featured-recipe-card"
           sx={{
             flexGrow: 1,
             borderBottomLeftRadius: "0px",

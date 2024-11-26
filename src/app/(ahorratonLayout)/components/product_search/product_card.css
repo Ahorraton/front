@@ -7,7 +7,7 @@
 
 .featured-product-card-paper {
   width: 126px;
-  height: 160px;
+  height: 150px;
   position: relative;
   background-color: #dbdbdb;
 }
@@ -41,12 +41,14 @@
   display: flex;
   flex-direction: column;
   gap: 1.5px;
-  background-color: #1c1c1c;
+  justify-content: center;
   border-radius: 1px;
 }
 
 .featured-product-title {
   text-align: center;
   align-items: center;
-  color: white;
+  color: black;
+  justify-content: center;
+  font-family: Arial, sans-serif;
 }
