@@ -77,7 +77,7 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
 
       const endpoint = "/grocery_lists/create";
       const payload = {
-        user_id,
+        user_id: user_id,
         name: name,
         products: [],
       };
