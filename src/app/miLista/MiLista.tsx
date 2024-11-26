@@ -24,6 +24,8 @@ import { fetchUserLists } from "../../utils/apiUtils";
 import { Product } from "@/app/types/Product";
 import { ListItemType } from "../types/ListItem";
 import NewListModal from "./NewListModal";
+import { clearSelectedList } from "../../redux/store/multipleListsSlice";
+import { clearList } from "../../redux/store/listSlice";
 
 const MiLista: React.FC = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -147,6 +149,8 @@ const MiLista: React.FC = () => {
       console.log("List deleted:", response.data);
       await fetchUserLists(user_id, dispatch);
       setOpenDeleteDialog(false);
+      // dispatch(clearSelectedList());
+      // dispatch(clearList());
 
       setModalMessage("Su lista ha sido eliminada exitosamente");
       setOpenModal(true);

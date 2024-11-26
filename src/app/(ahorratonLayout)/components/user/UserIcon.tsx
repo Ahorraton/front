@@ -10,8 +10,8 @@ import {
 import axios from "axios";
 import { RootState, AppDispatch } from "../../../../redux/store";
 import { logout } from "../../../../redux/store/userSlice";
-import { clearList } from "../../../../redux/store/multipleListsSlice";
-import { clearList as clearDrawerList } from "@/redux/store/listSlice";
+import { clearLists } from "../../../../redux/store/multipleListsSlice";
+import { clearList } from "@/redux/store/listSlice";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import RegisterModal from "./register/RegisterModal";
 import LoginModal from "./login/LoginModal";
@@ -56,8 +56,8 @@ const UserIcon: React.FC = () => {
     try {
       await axios.get("api/user/logout");
       dispatch(logout());
-      dispatch(clearList()); // Reset selected list
-      dispatch(clearDrawerList());
+      dispatch(clearLists());
+      dispatch(clearList());
       handleMenuClose();
     } catch (error) {
       console.error("Logout failed:", error);
