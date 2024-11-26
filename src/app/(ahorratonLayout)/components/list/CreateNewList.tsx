@@ -36,10 +36,10 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
   const [newListID, setNewListID] = useState<number | null>(null);
 
   useEffect(() => {
+    if (!newListID) {
+      return;
+    }
     const fetchData = async () => {
-      if (!newListID) {
-        return;
-      }
       console.log("Inside new data", newListID);
       const selectedListId = Number(newListID);
       console.log(`Created new listID: ${newListID}`);

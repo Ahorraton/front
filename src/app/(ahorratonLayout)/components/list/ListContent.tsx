@@ -7,6 +7,7 @@ import {
   deleteItem,
   clearList,
   setListName,
+  setList,
 } from "../../../../redux/store/listSlice";
 
 import LoginModal from "../user/login/LoginModal";
@@ -28,7 +29,12 @@ import MoreOptions from "./MoreOptions";
 import CreateListButton from "./createList";
 import { CreateNewList } from "./CreateNewList";
 import { selectList } from "@/redux/store/multipleListsSlice";
-import { post_async, post_async_with_body } from "@/utils/common/fetch_async";
+import {
+  fetch_async,
+  post_async,
+  post_async_with_body,
+} from "@/utils/common/fetch_async";
+import { fetchUserLists } from "@/utils/apiUtils";
 
 const ListContent = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -46,6 +52,66 @@ const ListContent = () => {
   const listName = useSelector((state: RootState) => state.list.name);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const multipleLists = useSelector((state: RootState) => state.multipleLists);
+
+  const setInitialList = async (listId: number) => {
+    if (!listId) {
+      return;
+    }
+
+    const selectedListId = Number(listId);
+    console.log("Inside", selectedListId);
+
+    try {
+      const response = await fetch_async(
+        `/grocery_lists/${selectedListId}/get_products`
+      );
+
+      const selectedList = multipleLists.lists.find(
+        (list) => list.id === selectedListId
+      );
+
+      if (selectedList) {
+        dispatch(setListName(selectedList.name));
+      }
+      console.log(selectedList);
+
+      const prods: Product[] = response.items.map((item: Product) => ({
+        ...item,
+      }));
+
+      dispatch(selectList(selectedListId));
+      dispatch(setList(getCheapestItems(prods)));
+
+      await fetchUserLists(user?.userInfo?.id ?? 0, dispatch);
+    } catch (error) {
+      console.error("Error fetching list:", error);
+    }
+  };
+
+  const fetchLists = () => {
+    const fetchData = async () => {
+      const userId = user?.userInfo?.id;
+
+      if (!userId) {
+        return;
+      }
+
+      const res = await fetch_async(
+        `grocery_lists/get_lists?user_id=${userId}`
+      );
+
+      if (res.grocery_list_ids && res.grocery_list_ids[0]) {
+        const listId: number = res.grocery_list_ids[0].id;
+        setInitialList(listId);
+      }
+    };
+    fetchData();
+  };
+
+  if (!multipleLists.selectedListId && user.isLoggedIn) {
+    fetchLists();
+  }
 
   const handleAddItem = (ean: string) => {
     const item = listItems.find((item) => item.ean === ean);
