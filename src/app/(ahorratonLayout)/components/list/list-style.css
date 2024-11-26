@@ -27,6 +27,12 @@
   overflow-y: auto;
 }
 
+.no-user-found-container {
+  min-height: 65vh;
+  max-height: 65vh;
+  margin-top: 100%;
+}
+
 .select-and-items-container {
   display: flex;
   align-items: center;
