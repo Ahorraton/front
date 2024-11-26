@@ -102,7 +102,7 @@ const Compare = () => {
     if (!user.isLoggedIn) {
       console.error("Not logged in");
       setShowAlert(true);
-      setAlertMessage("Not Logged In");
+      setAlertMessage("No estas loggeado");
       setSuccessStatus(false);
 
       return;

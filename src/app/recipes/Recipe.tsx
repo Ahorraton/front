@@ -82,7 +82,7 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
     if (!user.isLoggedIn) {
       console.error("Not logged in");
       setShowAlert(true);
-      setAlertMessage("Not Logged In");
+      setAlertMessage("No estas loggeado");
       setSuccessStatus(false);
       return;
     }
