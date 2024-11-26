@@ -75,11 +75,10 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
         return;
       }
 
-      const endpoint = "/grocery_lists/save_my_list";
+      const endpoint = "/grocery_lists/create";
       const payload = {
         user_id,
         name: name,
-        products: [],
       };
 
       const response = await post_async_with_body(endpoint, payload);
