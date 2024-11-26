@@ -75,16 +75,18 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
         return;
       }
 
-      const endpoint = "/grocery_lists/create";
+      const endpoint = "/grocery_lists/save_my_list";
       const payload = {
         user_id,
         name: name,
+        products: [],
       };
 
       const response = await post_async_with_body(endpoint, payload);
       await fetchUserLists(user_id, dispatch);
 
       const listID: number = response.grocery_list_id;
+      console.log(`New List ${listID}`);
       setNewListID(listID);
     } catch (error) {
       console.error("Error saving list:", error);
@@ -95,9 +97,11 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
     if (!inputValue) {
       return;
     }
-    setInputValue("");
+    console.log(`Creating Lista ${inputValue}`);
+
     setIsLoading(true);
     await postList(inputValue);
+    setInputValue("");
     setIsLoading(false);
     onClose();
   };

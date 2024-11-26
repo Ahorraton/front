@@ -101,8 +101,9 @@ const ListContent = () => {
         `grocery_lists/get_lists?user_id=${userId}`
       );
 
-      if (res.grocery_list_ids && res.grocery_list_ids[0]) {
-        const listId: number = res.grocery_list_ids[0].id;
+      if (res.grocery_list_ids && res.grocery_list_ids.length > 0) {
+        const listId: number =
+          res.grocery_list_ids[res.grocery_list_ids.length - 1].id;
         setInitialList(listId);
       }
     };
@@ -110,6 +111,7 @@ const ListContent = () => {
   };
 
   if (!multipleLists.selectedListId && user.isLoggedIn) {
+    console.log(`SelectedList: ${selectedList}`);
     fetchLists();
   }
 
