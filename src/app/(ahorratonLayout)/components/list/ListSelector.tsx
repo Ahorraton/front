@@ -12,11 +12,7 @@ const SelectListComponent = () => {
     <Box textAlign="center" m={2}>
       <Box id="select-list-container" className="select-list-container">
         <FormControl fullWidth>
-          <ListSelector
-            isListSaved={isListSaved}
-            setPendingListId={setPendingListId}
-            setOpenDialog={setOpenDialog}
-          />
+          <ListSelector />
         </FormControl>
       </Box>
     </Box>

@@ -5,26 +5,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import {
   Box,
-  TextField,
   Button,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   FormControl,
   InputLabel,
-  Typography,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { setListName, clearList } from "../../redux/store/listSlice";
-import { selectList } from "../../redux/store/multipleListsSlice";
-import ProductList from "./ProductList";
+import ProductList from "./product_card/ProductList";
 import TotalPrice from "./TotalPrice";
 import Filters from "./Filters";
 import ListSelector from "./ListSelector";
-import SaveListDialog from "./SaveListDialog";
 import ConfirmationDialog from "./ConfirmationDialog";
 import NotificationDialog from "./NotificationDialog";
 import "./myList.css";
@@ -32,10 +23,12 @@ import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { Product } from "@/app/types/Product";
 import { ListItemType } from "../types/ListItem";
+import NewListModal from "./NewListModal";
+import { clearSelectedList } from "../../redux/store/multipleListsSlice";
+import { clearList } from "../../redux/store/listSlice";
 
 const MiLista: React.FC = () => {
   const selectedList = useSelector((state: RootState) => state.list.items);
-  const selectedListName = useSelector((state: RootState) => state.list.name);
   const selectedListId = useSelector(
     (state: RootState) => state.multipleLists.selectedListId
   );
@@ -50,12 +43,8 @@ const MiLista: React.FC = () => {
     "disco",
     "jumbo",
   ]);
-  const [editingEnabled, setEditingEnabled] = useState<boolean>(false);
-  const [isListSaved, setIsListSaved] = useState<boolean>(true);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
   const [openNewListDialog, setOpenNewListDialog] = useState<boolean>(false); // New state variable for new list dialog
-  const [pendingListId, setPendingListId] = useState<number | null>(null);
   const [modalMessage, setModalMessage] = useState<string>(""); // State variable for modal message
   const [openModal, setOpenModal] = useState<boolean>(false); // State variable for modal visibility
 
@@ -100,16 +89,17 @@ const MiLista: React.FC = () => {
     }
   }, [user, dispatch]);
 
-  const handleListNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setListName(event.target.value));
-    setIsListSaved(false);
-  };
-
-  const handleSaveList = async () => {
+  const handleUpdateList = async () => {
     try {
       const user_id = user.userInfo?.id;
+
       if (user_id === undefined || user_id === null) {
         console.error("User ID is not defined");
+        return;
+      }
+
+      if (selectedListId === undefined || selectedListId === null) {
+        console.error("No list selected");
         return;
       }
 
@@ -118,61 +108,21 @@ const MiLista: React.FC = () => {
         amount: item.amount,
       }));
 
-      const endpoint = selectedListId
-        ? "/api/list/updateList"
-        : "/api/list/createList";
-      const payload = selectedListId
-        ? {
+      const payload = {
             user_id,
             grocery_list_id: selectedListId,
-            name: selectedListName,
             products: productsToSave,
-          }
-        : { user_id, name: selectedListName, products: productsToSave };
+          };
 
-      const response = await axios.post(endpoint, payload);
+      const response = await axios.post("/api/list/updateList", payload);
 
-      console.log("List saved:", response.data);
-      setIsListSaved(true);
       await fetchUserLists(user_id, dispatch);
 
-      // Show modal with appropriate message
-      setModalMessage(
-        selectedListId
-          ? "Su lista ha sido actualizada exitosamente"
-          : "Su lista ha sido guardada exitosamente"
-      );
+      setModalMessage("Su lista ha sido actualizada exitosamente");
       setOpenModal(true);
     } catch (error) {
       console.error("Error saving list:", error);
     }
-  };
-
-  const handleCreateNewList = async () => {
-    dispatch(clearList());
-    dispatch(selectList(null));
-    setIsListSaved(true);
-    setOpenNewListDialog(false); // Close the new list dialog
-  };
-
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-    setPendingListId(null);
-  };
-
-  const handleDialogSave = async () => {
-    await handleSaveList();
-    if (pendingListId !== null) {
-      dispatch(selectList(pendingListId));
-    }
-    handleDialogClose();
-  };
-
-  const handleDialogDiscard = () => {
-    if (pendingListId !== null) {
-      dispatch(selectList(pendingListId));
-    }
-    handleDialogClose();
   };
 
   const handleMarketChange = (market: string) => {
@@ -197,11 +147,11 @@ const MiLista: React.FC = () => {
       });
 
       console.log("List deleted:", response.data);
-      handleCreateNewList();
       await fetchUserLists(user_id, dispatch);
       setOpenDeleteDialog(false);
+      // dispatch(clearSelectedList());
+      // dispatch(clearList());
 
-      // Show modal with appropriate message
       setModalMessage("Su lista ha sido eliminada exitosamente");
       setOpenModal(true);
     } catch (error) {
@@ -229,45 +179,20 @@ const MiLista: React.FC = () => {
 
   return (
     <Box m={1.5}>
-      <Accordion>
-        <AccordionSummary
-          sx={{
-            "& .MuiAccordionSummary-content": {
-              justifyContent: "center",
-            },
-          }}
-          expandIcon={<ExpandMoreIcon />}
-        >
-          <h3>Filtros</h3>
-        </AccordionSummary>
-        <Filters
-          selectedMarkets={selectedMarkets}
-          handleMarketChange={handleMarketChange}
-        />
-      </Accordion>
+      <Filters
+        selectedMarkets={selectedMarkets}
+        handleMarketChange={handleMarketChange}
+      />
       <Box mt={1.5}>
+        <Box mt={1.5}>
+          <TotalPrice totalPrice={totalPrice} />
+        </Box>
         <FormControl fullWidth>
-          <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
-          <ListSelector
-            isListSaved={isListSaved}
-            setPendingListId={setPendingListId}
-            setOpenDialog={setOpenDialog}
-          />
-        </FormControl>
+            <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
+            <ListSelector/>
+          </FormControl>
       </Box>
-      <Box mt={1.5}>
-        <TextField
-          label="Nombre de mi lista"
-          value={selectedListName}
-          onChange={handleListNameChange}
-          fullWidth
-          disabled={editingEnabled}
-        />
-      </Box>
-      <Box mt={1.5}>
-        <TotalPrice totalPrice={totalPrice} />
-      </Box>
-      <Box display="flex" justifyContent="space-between" mt={1.5}>
+      <Box display="flex" justifyContent="space-between" margin='1%'>
         <Button
           variant="contained"
           color="error"
@@ -280,26 +205,20 @@ const MiLista: React.FC = () => {
           variant="contained"
           color="primary"
           startIcon={<SaveIcon />}
-          onClick={handleSaveList}
+          onClick={handleUpdateList}
         >
-          {selectedListId ? "Actualizar lista" : "Guardar mi lista"}
+          Actualizar lista
         </Button>
         <Button
           variant="contained"
           color="secondary"
           startIcon={<AddIcon />}
-          onClick={() => setOpenNewListDialog(true)} // Open the new list dialog
+          onClick={() => setOpenNewListDialog(true)}
         >
           Nueva lista
         </Button>
       </Box>
       <ProductList products={cheapestProducts} />
-      <SaveListDialog
-        open={openDialog}
-        handleClose={handleDialogClose}
-        handleSave={handleDialogSave}
-        handleDiscard={handleDialogDiscard}
-      />
       <ConfirmationDialog
         open={openDeleteDialog}
         onClose={() => setOpenDeleteDialog(false)}
@@ -309,15 +228,12 @@ const MiLista: React.FC = () => {
         confirmText="Eliminar"
         cancelText="Cancelar"
       />
-      <ConfirmationDialog
-        open={openNewListDialog}
-        onClose={() => setOpenNewListDialog(false)}
-        onConfirm={handleCreateNewList}
-        title="Confirmar nueva lista"
-        content="Quieres comenzar una nueva lista?"
-        confirmText="Comenzar"
-        cancelText="Cancelar"
-        confirmButtonColor="#B8860B" // Darker yellow
+      <NewListModal
+            userId={user.userInfo?.id ?? 0}
+            open={openNewListDialog}
+            onClose={() => 
+              setOpenNewListDialog(false)
+            }
       />
       <NotificationDialog
         open={openModal}

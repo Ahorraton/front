@@ -16,12 +16,15 @@ const multipleListsSlice = createSlice({
     selectList: (state, action: PayloadAction<number | null>) => {
       state.selectedListId = action.payload;
     },
-    clearList: (state) => {
+    clearSelectedList: (state) => {
+      state.selectedListId = null;
+    },
+    clearLists: (state) => {
       state.selectedListId = null;
       state.lists = [];
     },
   },
 });
 
-export const { setLists, selectList, clearList } = multipleListsSlice.actions;
+export const { setLists, selectList, clearLists, clearSelectedList } = multipleListsSlice.actions;
 export default multipleListsSlice.reducer;
