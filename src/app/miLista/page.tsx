@@ -13,7 +13,7 @@ export default function Page() {
           </Link>
           <Typography color="textPrimary">Mi lista</Typography>
         </Breadcrumbs>
-        <MiLista />;
+        <MiLista />
       </Box>
     </Box>
   );
