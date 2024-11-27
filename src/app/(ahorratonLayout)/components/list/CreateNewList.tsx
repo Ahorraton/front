@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
   DialogTitle,
   Button,
-  Input,
   Box,
+  Typography,
+  TextField,
 } from "@mui/material";
 import { fetch_async, post_async_with_body } from "@/utils/common/fetch_async";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { fetchUserLists } from "@/utils/apiUtils";
 import Loading from "@/app/loadingScreens/loading";
-import { Product } from "@/app/types/Product";
-import { clearList, setList, setListName } from "@/redux/store/listSlice";
+import { clearList, setListName } from "@/redux/store/listSlice";
 import { selectList } from "@/redux/store/multipleListsSlice";
-import { getCheapestItems } from "@/app/miLista/utils/cheapestItems";
 
 interface CreateNewListProps {
   open: boolean;
@@ -111,19 +107,33 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
       onClose={onClose}
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
+      id="create-list-dialog"
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
     >
-      <Box sx={{ alignItems: "center", justifyContent: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        id="create-list-container"
+      >
         <DialogTitle id="dialog-title">
-          {isLoading ? "Creando Lista" : "Crear Nueva Lista"}
+          <Typography variant="h5" component="h2" id="dialog-title-text">
+            {isLoading ? "Creando Lista" : "Nueva Lista"}
+          </Typography>
         </DialogTitle>
-        <Box p={"10px"}>
+        <Box p={"10px"} id="create-list-input">
           {isLoading ? (
             <Box id="loading-create-new-list">
               <Loading />
             </Box>
           ) : (
             <Box>
-              <Input
+              <TextField
+                id="filled-basic"
+                variant="outlined"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={async (e) => {
@@ -132,24 +142,32 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
                   }
                 }}
               />
-              <Box>
-                <DialogActions>
-                  <Button onClick={onClose} color="primary">
-                    Cancelar
-                  </Button>
-                  <Button
-                    onClick={handleCreateNewList}
-                    color="primary"
-                    autoFocus
-                  >
-                    Crear
-                  </Button>
-                </DialogActions>
-              </Box>
             </Box>
           )}
         </Box>
       </Box>
+
+      {!isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            textAlign: "center",
+            borderRadius: "5px",
+            cursor: "pointer",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "lightblue",
+          }}
+          onClick={handleCreateNewList}
+        >
+          <Button autoFocus fullWidth>
+            <Typography variant="h5" color="white">
+              Crear
+            </Typography>
+          </Button>
+        </Box>
+      ) : null}
     </Dialog>
   );
 };
