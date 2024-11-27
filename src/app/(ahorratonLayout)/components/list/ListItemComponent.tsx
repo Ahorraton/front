@@ -90,7 +90,7 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
                 justifyContent="center"
                 mt={2}
               >
-                <Typography color="red">
+                <Typography color="black" fontWeight="bold">
                   {item.amount * Number(item.product?.price.toFixed(2))} $
                 </Typography>
 
