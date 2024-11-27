@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   Box,
+  Link,
 } from "@mui/material";
 import RecipeDetails from "./RecipeDetails";
 import { Recipe, RecipeFromDB } from "@/app/types/Recipe";
@@ -22,6 +23,7 @@ import MetaDataContainer from "../global_layout/MetaDataContainer";
 import { ListItemType } from "../types/ListItem";
 import { Product } from "../types/Product";
 import { RootState } from "@/redux/store";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 
 export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
@@ -115,17 +117,16 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
 
   return (
     <MetaDataContainer title="Recipes" description="Recetas Disponibles">
-      <Typography
-        variant="h5"
-        component="h2"
-        gutterBottom
-        id="featured-recipes-title"
-        className="recipes-titles"
-      >
-        Featured Recipes
-      </Typography>
+      <Box mt={2}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/">
+            Inicio
+          </Link>
+          <Typography color="textPrimary">Recetas</Typography>
+        </Breadcrumbs>
+      </Box>
 
-      <Box className="recipe-layout">
+      <Box className="recipe-layout" mt={2}>
         <Grid container spacing={4} id="recipes-grid" className="recipes-grid">
           {recipes.map((recipe) => (
             <Grid item key={recipe.id} xs={12} sm={6} md={4}>
