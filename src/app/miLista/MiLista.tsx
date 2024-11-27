@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Box, Button, FormControl, InputLabel } from "@mui/material";
@@ -21,8 +21,11 @@ import { ListItemType } from "../types/ListItem";
 import NewListModal from "./NewListModal";
 import { clearSelectedList } from "../../redux/store/multipleListsSlice";
 import { clearList } from "../../redux/store/listSlice";
+import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 
 const MiLista: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
+
   const selectedList = useSelector((state: RootState) => state.list.items);
   const selectedListId = useSelector(
     (state: RootState) => state.multipleLists.selectedListId
@@ -76,6 +79,8 @@ const MiLista: React.FC = () => {
     };
 
     fetchProducts();
+    console.log("ESTOY ACA");
+    setLoading(false);
   }, [selectedList]);
 
   useEffect(() => {
@@ -174,65 +179,73 @@ const MiLista: React.FC = () => {
 
   return (
     <Box m={1.5}>
-      <Filters
-        selectedMarkets={selectedMarkets}
-        handleMarketChange={handleMarketChange}
-      />
-      <Box mt={1.5}>
-        <Box mt={1.5}>
-          <TotalPrice totalPrice={totalPrice} />
+      {loading ? (
+        <LoadingHamsterScreen />
+      ) : (
+        <Box>
+          <Filters
+            selectedMarkets={selectedMarkets}
+            handleMarketChange={handleMarketChange}
+          />
+          <Box mt={1.5}>
+            <Box mt={1.5}>
+              <TotalPrice totalPrice={totalPrice} />
+            </Box>
+            <FormControl fullWidth>
+              <InputLabel id="list-selector-label">
+                Seleccionar lista
+              </InputLabel>
+              <ListSelector />
+            </FormControl>
+          </Box>
+          <Box display="flex" justifyContent="space-between" margin="1%">
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<DeleteIcon />}
+              onClick={() => setOpenDeleteDialog(true)}
+            >
+              Eliminar lista
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<SaveIcon />}
+              onClick={handleUpdateList}
+            >
+              Actualizar lista
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<AddIcon />}
+              onClick={() => setOpenNewListDialog(true)}
+            >
+              Nueva lista
+            </Button>
+          </Box>
+          <ProductList products={cheapestProducts} />
+          <ConfirmationDialog
+            open={openDeleteDialog}
+            onClose={() => setOpenDeleteDialog(false)}
+            onConfirm={handleDeleteList}
+            title="Confirmar eliminación"
+            content="Quieres eliminar tu lista de forma permanente?"
+            confirmText="Eliminar"
+            cancelText="Cancelar"
+          />
+          <NewListModal
+            userId={user.userInfo?.id ?? 0}
+            open={openNewListDialog}
+            onClose={() => setOpenNewListDialog(false)}
+          />
+          <NotificationDialog
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            message={modalMessage}
+          />
         </Box>
-        <FormControl fullWidth>
-          <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
-          <ListSelector />
-        </FormControl>
-      </Box>
-      <Box display="flex" justifyContent="space-between" margin="1%">
-        <Button
-          variant="contained"
-          color="error"
-          startIcon={<DeleteIcon />}
-          onClick={() => setOpenDeleteDialog(true)}
-        >
-          Eliminar lista
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<SaveIcon />}
-          onClick={handleUpdateList}
-        >
-          Actualizar lista
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<AddIcon />}
-          onClick={() => setOpenNewListDialog(true)}
-        >
-          Nueva lista
-        </Button>
-      </Box>
-      <ProductList products={cheapestProducts} />
-      <ConfirmationDialog
-        open={openDeleteDialog}
-        onClose={() => setOpenDeleteDialog(false)}
-        onConfirm={handleDeleteList}
-        title="Confirmar eliminación"
-        content="Quieres eliminar tu lista de forma permanente?"
-        confirmText="Eliminar"
-        cancelText="Cancelar"
-      />
-      <NewListModal
-        userId={user.userInfo?.id ?? 0}
-        open={openNewListDialog}
-        onClose={() => setOpenNewListDialog(false)}
-      />
-      <NotificationDialog
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        message={modalMessage}
-      />
+      )}
     </Box>
   );
 };

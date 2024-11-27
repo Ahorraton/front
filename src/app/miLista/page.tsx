@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
 import MiLista from "./MiLista";
 
