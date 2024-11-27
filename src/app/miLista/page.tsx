@@ -4,7 +4,7 @@ import MiLista from "./MiLista";
 export default function Page() {
   return (
     <Box>
-      <Box mt={2}>
+      <Box mt={5}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/">
             Inicio

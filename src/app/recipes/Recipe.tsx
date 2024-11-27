@@ -117,60 +117,65 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
 
   return (
     <MetaDataContainer title="Recipes" description="Recetas Disponibles">
-      <Box mt={2}>
+      <Box mt={5}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/">
             Inicio
           </Link>
           <Typography color="textPrimary">Recetas</Typography>
         </Breadcrumbs>
-      </Box>
 
-      <Box className="recipe-layout" mt={2}>
-        <Grid container spacing={4} id="recipes-grid" className="recipes-grid">
-          {recipes.map((recipe) => (
-            <Grid item key={recipe.id} xs={12} sm={6} md={4}>
-              <Card
-                id={`recipe-card-${recipe.id}`}
-                onClick={() => setSelectedRecipeId(recipe.id)}
-                className="recipe-card"
-              >
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={recipe.img_url}
-                  alt={recipe.title}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {recipe.title}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        <Box className="recipe-layout" mt={5}>
+          <Grid
+            container
+            spacing={4}
+            id="recipes-grid"
+            className="recipes-grid"
+          >
+            {recipes.map((recipe) => (
+              <Grid item key={recipe.id} xs={12} sm={6} md={4}>
+                <Card
+                  id={`recipe-card-${recipe.id}`}
+                  onClick={() => setSelectedRecipeId(recipe.id)}
+                  className="recipe-card"
+                >
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={recipe.img_url}
+                    alt={recipe.title}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      {recipe.title}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
 
-        {showAlert && (
-          <Box className="alert-box" id="alert-box">
-            <SelectedItemAlert
-              setShowAlert={setShowAlert}
-              alertMessage={alertMessage}
-              success={successStatus}
+          {showAlert && (
+            <Box className="alert-box" id="alert-box">
+              <SelectedItemAlert
+                setShowAlert={setShowAlert}
+                alertMessage={alertMessage}
+                success={successStatus}
+              />
+            </Box>
+          )}
+
+          {recipe && (
+            <RecipeDetails
+              recipe={recipe}
+              onClose={() => {
+                setSelectedRecipeId(null);
+                setRecipe(null);
+              }}
+              onAddList={onAddList}
             />
-          </Box>
-        )}
-
-        {recipe && (
-          <RecipeDetails
-            recipe={recipe}
-            onClose={() => {
-              setSelectedRecipeId(null);
-              setRecipe(null);
-            }}
-            onAddList={onAddList}
-          />
-        )}
+          )}
+        </Box>
       </Box>
     </MetaDataContainer>
   );
