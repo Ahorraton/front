@@ -244,10 +244,23 @@ const ListContent = () => {
           <Box className="list-content" id="list-content" role="presentation">
             <Grid container className="action-buttons">
               <CreateListButton setCreateNewList={setCreateNewList} />
-              <SelectListComponent />
+              {/* <SelectListComponent /> */}
+              <SaveListButton
+                listName={listName}
+                list={listItems}
+                onListNameChange={(
+                  event: React.ChangeEvent<HTMLInputElement>
+                ) => dispatch(setListName(event.target.value))}
+                onClearList={() => setClearDialogOpen(true)}
+                onSaveList={handleSaveList}
+                isLoggedIn={user.isLoggedIn}
+              />
 
-              <MoreOptions />
+              <MoreOptions isLoggedIn={user.isLoggedIn} />
             </Grid>
+            <Box id="select-list-container" className="select-list-container">
+              <SelectListComponent />
+            </Box>
 
             <List id="list-items-container" className="list-items-container">
               {listItems.map((item: ListItemType) => (
@@ -261,19 +274,8 @@ const ListContent = () => {
               ))}
             </List>
 
-            <Box mt={1.5}>
+            <Box id="total-price-container" className="total-price-container">
               <TotalPrice totalPrice={totalPrice} />
-
-              <SaveListButton
-                listName={listName}
-                list={listItems}
-                onListNameChange={(
-                  event: React.ChangeEvent<HTMLInputElement>
-                ) => dispatch(setListName(event.target.value))}
-                onClearList={() => setClearDialogOpen(true)}
-                onSaveList={handleSaveList}
-                isLoggedIn={user.isLoggedIn}
-              />
             </Box>
 
             <CreateNewList
@@ -317,7 +319,7 @@ const ListContent = () => {
             <Grid container className="action-buttons">
               {/* <CreateListButton setCreateNewList={setCreateNewList} />
               <SelectListComponent /> */}
-              {/* <SaveListButton
+              <SaveListButton
                 listName={listName}
                 list={listItems}
                 onListNameChange={(
@@ -326,9 +328,9 @@ const ListContent = () => {
                 onClearList={() => setClearDialogOpen(true)}
                 onSaveList={handleSaveList}
                 isLoggedIn={user.isLoggedIn}
-              /> */}
+              />
 
-              <MoreOptions />
+              <MoreOptions isLoggedIn={user.isLoggedIn} />
             </Grid>
 
             <List id="list-items-container" className="list-items-container">
@@ -343,10 +345,9 @@ const ListContent = () => {
               ))}
             </List>
 
-            <Box mt={1.5}>
+            <Box id="total-price-container" className="total-price-container">
               <TotalPrice totalPrice={totalPrice} />
-
-              <SaveListButton
+              {/* <SaveListButton
                 listName={listName}
                 list={listItems}
                 onListNameChange={(
@@ -355,7 +356,7 @@ const ListContent = () => {
                 onClearList={() => setClearDialogOpen(true)}
                 onSaveList={handleSaveList}
                 isLoggedIn={user.isLoggedIn}
-              />
+              /> */}
             </Box>
 
             <ConfirmDialog

@@ -5,9 +5,13 @@ import {
   ListItemSecondaryAction,
   IconButton,
   Box,
+  Typography,
+  Grid,
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+// import RemoveIcon from "@mui/icons-material/RemoveCircle";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ListItemType } from "@/app/types/ListItem";
 import "./list-style.css";
@@ -40,37 +44,85 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
   return (
     <Box id="list-item-card" className="list-item-card">
       <ListItem key={item.ean}>
-        <ListItemText
-          primary={getItemNameFormated(item)}
-          secondary={`Cantidad: ${item.amount}`}
-        />
+        <Box>
+          <Box>
+            <ListItemText
+              primary={getItemNameFormated(item)}
+              secondary={
+                <Box display="flex" alignItems="center">
+                  <Typography variant="body2">
+                    {item.amount} x {item.product?.price.toFixed(2)} $
+                  </Typography>
+                  {/* <IconButton
+                    id="add-item-button"
+                    aria-label="add"
+                    onClick={() => onAdd(item.ean)}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                  <Typography variant="body1" style={{ margin: "0 10px" }}>
+                    {item.amount}
+                  </Typography>
+                  <IconButton
+                    id="remove-item-button"
+                    aria-label="remove"
+                    onClick={() => onRemove(item.ean)}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                  <IconButton
+                    id="delete-product-button"
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => onDelete(item.ean)}
+                  >
+                    <DeleteIcon />
+                  </IconButton> */}
+                </Box>
+              }
+            />
 
-        <ListItemSecondaryAction>
-          <IconButton
-            id="add-item-button"
-            edge="end"
-            aria-label="add"
-            onClick={() => onAdd(item.ean)}
-          >
-            <AddCircleIcon />
-          </IconButton>
-          <IconButton
-            id="remove-item-button"
-            edge="end"
-            aria-label="remove"
-            onClick={() => onRemove(item.ean)}
-          >
-            <RemoveCircleIcon />
-          </IconButton>
-          <IconButton
-            id="delete-product-button"
-            edge="end"
-            aria-label="delete"
-            onClick={() => onDelete(item.ean)}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </ListItemSecondaryAction>
+            <ListItemSecondaryAction>
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                mt={2}
+              >
+                <Typography color="black" fontWeight="bold">
+                  {item.amount * Number(item.product?.price.toFixed(2))} $
+                </Typography>
+
+                <Box display="flex" alignItems="center">
+                  <IconButton
+                    id="add-item-button"
+                    aria-label="add"
+                    onClick={() => onAdd(item.ean)}
+                  >
+                    <AddIcon fontSize="small" />
+                  </IconButton>
+
+                  <IconButton
+                    id="remove-item-button"
+                    aria-label="remove"
+                    onClick={() => onRemove(item.ean)}
+                  >
+                    <RemoveIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    id="delete-product-button"
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => onDelete(item.ean)}
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+              </Box>
+            </ListItemSecondaryAction>
+          </Box>
+        </Box>
       </ListItem>
     </Box>
   );
