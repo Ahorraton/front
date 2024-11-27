@@ -23,17 +23,29 @@ const UserAlert: React.FC<UserAlertProps> = ({ severity, message, showAlert, set
 
     return (
         <>
-        {showAlert && (
+        { showAlert && (
             <Box
                 sx={{
                     position: 'fixed',
                     top: '10%',
-                    left: '90%',
+                    left: '50%',
+                    width: '20%',
                     transform: 'translateX(-50%)',
-                    zIndex: 1300,
+                    zIndex: 10,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
-            <Alert severity={severity} variant="filled" icon={false}>
+            <Alert 
+                severity={severity} 
+                variant="filled" 
+                icon={false}
+                sx={{
+                    fontSize: '1rem',
+                    width: '100%',
+                    justifyContent: 'center', 
+                }}>
                 {message}
             </Alert>
             </Box>
