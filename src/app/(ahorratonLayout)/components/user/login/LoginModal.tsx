@@ -4,6 +4,7 @@ import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../../../redux/store/userSlice';
+import WelcomeAlert from '../UserAlert';
 
 interface LoginModalProps {
     open: boolean;
@@ -14,6 +15,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const [showAlert, setShowAlert] = useState(false);
     const dispatch = useDispatch();
 
     const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +36,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             });
             const { _username, id } = response.data.user
             dispatch(login({ username: _username, id }));
+            setShowAlert(true)
             onClose();
         } catch (error) {
             console.error(error);
@@ -42,6 +45,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     };
 
     return (
+        <>
         <Modal open={open} onClose={onClose}>
             <Box
                 sx={{
@@ -89,6 +93,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 </form>
             </Box>
         </Modal>
+        {showAlert && 
+            <WelcomeAlert 
+                severity={"success"} 
+                message={`¡Hola, ${username}!`} 
+                showAlert={showAlert} 
+                setShowAlert={setShowAlert} 
+            />
+        }
+        </>
     );
 };
 

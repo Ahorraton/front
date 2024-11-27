@@ -15,11 +15,13 @@ import { clearList } from "@/redux/store/listSlice";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import RegisterModal from "./register/RegisterModal";
 import LoginModal from "./login/LoginModal";
+import UserAlert from "./UserAlert";
 
 const UserIcon: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [showGoodbye, setShowGoodbye] = useState(false);
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
   const dispatch: AppDispatch = useDispatch();
 
@@ -59,12 +61,14 @@ const UserIcon: React.FC = () => {
       dispatch(clearLists());
       dispatch(clearList());
       handleMenuClose();
+      setShowGoodbye(true);
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
   return (
+    <>
     <div>
       <IconButton
         color="inherit"
@@ -94,6 +98,13 @@ const UserIcon: React.FC = () => {
       <RegisterModal open={isRegisterModalOpen} onClose={handleRegisterClose} />
       <LoginModal open={isLoginModalOpen} onClose={handleLoginClose} />
     </div>
+    <UserAlert 
+      message={"¡Gracias, vuelva prontos!"} 
+      severity={"info"} 
+      showAlert={showGoodbye} 
+      setShowAlert={setShowGoodbye}
+    />
+    </>
   );
 };
 
