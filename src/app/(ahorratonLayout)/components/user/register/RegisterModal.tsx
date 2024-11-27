@@ -1,6 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { Alert, Box, Button, Modal, TextField, Typography } from '@mui/material';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../../../redux/store/userSlice';
+import WelcomeAlert from '../UserAlert';
+import { set } from 'lodash';
 
 interface RegisterModalProps {
     open: boolean;
@@ -12,6 +16,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
+    const [showAlert, setShowAlert] = useState(false);
+    const dispatch = useDispatch();
 
     const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);    
@@ -33,11 +39,24 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
         }
 
         try {
-            const response = await axios.post('api/user/register', {
+            const register_response = await axios.post('api/user/register', {
                 username,
                 password,
             });
-            console.log(response.data);
+
+            if (register_response.data.error) {
+                setError(`El nombre de usuario ${username} ya se encuentra ocupado.`);
+                return;
+            }
+
+            const login_response = await axios.post('api/user/login', {
+                username,
+                password,
+            });
+            const { _username, id } = login_response.data.user
+            dispatch(login({ username: _username, id }));
+            setShowAlert(true)
+            setError('');
             onClose();
         } catch (error) {
             console.error(error);
@@ -46,6 +65,8 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
     };
 
     return (
+        <>
+        
         <Modal open={open} onClose={onClose}>
             <Box
                 sx={{
@@ -101,6 +122,15 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, onClose }) => {
                 </form>
             </Box>
         </Modal>
+        {showAlert && 
+            <WelcomeAlert 
+                severity={"success"} 
+                message={`¡Hola, ${username}!`} 
+                showAlert={showAlert} 
+                setShowAlert={setShowAlert} 
+            />
+        }
+        </>
     );
 };
 
