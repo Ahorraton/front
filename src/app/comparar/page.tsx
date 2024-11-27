@@ -53,6 +53,7 @@ const Compare = () => {
   ]);
   const [productPage, setProductPage] = useState<ProductItems | null>(null);
   const user = useSelector((state: RootState) => state.user);
+  const savedProducts = useSelector((state: RootState) => state.list.items);
 
   const [showAlert, setShowAlert] = useState<Boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
@@ -223,6 +224,7 @@ const Compare = () => {
                       <ProductCardSearch
                         product_items={product}
                         products={products}
+                        savedProducts={savedProducts}
                         addProduct={handleAddProduct}
                         removeProduct={handleRemoveProduct}
                         setProductPage={setProductPage}

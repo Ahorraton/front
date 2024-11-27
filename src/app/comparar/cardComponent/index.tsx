@@ -14,10 +14,12 @@ import React from "react";
 import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
 import { Product } from "@/app/types/Product";
 import "./product_card.css";
+import { ListItemType } from "@/app/types/ListItem";
 
 interface cardComponentProps {
   product_items: ProductItems;
   products: Product[];
+  savedProducts: ListItemType[];
   addProduct: (product: ProductItems) => void;
   removeProduct: (product: ProductItems) => void;
   setProductPage: (product: ProductItems) => void;
@@ -26,14 +28,22 @@ interface cardComponentProps {
 const ProductCardSearch: React.FC<cardComponentProps> = ({
   product_items,
   products,
+  savedProducts,
   addProduct,
   removeProduct,
   setProductPage,
 }) => {
-  const [added, setAdded] = React.useState<boolean>(false);
+
+  let added = false;
 
   const cheapestProduct = products[0];
   const product_image = product_items.image_url;
+  const saved_eans = savedProducts.map((product) => product.ean);
+
+
+  if (saved_eans.includes(cheapestProduct.ean) ){
+    added = true;
+  }
 
   return (
     <Card
@@ -85,7 +95,6 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
           id="remove-to-list-action-area"
           onClick={() => {
             removeProduct(product_items);
-            setAdded(false);
           }}
         >
           <CardContent
@@ -108,7 +117,6 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
         id="add-to-list-action-area"
         onClick={() => {
           addProduct(product_items);
-          setAdded(true);
         }}
       >
         <CardContent
