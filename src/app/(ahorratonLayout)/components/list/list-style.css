@@ -42,16 +42,27 @@
 .select-list-container {
   display: flex;
   flex-direction: column;
-  min-width: 170px;
-  max-width: 170px;
+  /* min-width: 170px;
+  max-width: 170px; */
 }
 
 .list-item-card {
   width: auto;
+  height: 90px;
+  /* border-bottom: 1px solid #000; */
 }
 
 .action-buttons {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+}
+
+.total-price-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  border-top: 1px solid #000;
   align-items: center;
 }
