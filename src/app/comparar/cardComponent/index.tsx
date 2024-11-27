@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { Card } from "@mui/material";
 import React from "react";
-import { process_prod_item } from "../utils/process_prod_item";
 import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
 import { Product } from "@/app/types/Product";
 import "./product_card.css";
@@ -20,6 +19,7 @@ interface cardComponentProps {
   product_items: ProductItems;
   products: Product[];
   addProduct: (product: ProductItems) => void;
+  removeProduct: (product: ProductItems) => void;
   setProductPage: (product: ProductItems) => void;
 }
 
@@ -27,8 +27,11 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
   product_items,
   products,
   addProduct,
+  removeProduct,
   setProductPage,
 }) => {
+  const [added, setAdded] = React.useState<boolean>(false);
+
   const cheapestProduct = products[0];
   const product_image = product_items.image_url;
 
@@ -77,25 +80,52 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
           </Box>
         </CardContent>
       </CardActionArea>
+      {added? (
+        <CardActionArea
+          id="remove-to-list-action-area"
+          onClick={() => {
+            removeProduct(product_items);
+            setAdded(false);
+          }}
+        >
+          <CardContent
+            id="remove-to-list-button-container"
+            className="remove-to-list-button-container"
+          >
+            <Typography
+              variant="h6"
+              id="button-text"
+            className="button-text"
+            >
+              Quitar de la lista
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      
+
+      ):(
       <CardActionArea
         id="add-to-list-action-area"
         onClick={() => {
           addProduct(product_items);
+          setAdded(true);
         }}
       >
         <CardContent
           id="add-to-list-button-container"
-          className="add-to-list-button-container"
+          className="add-to-list-button-container"  
         >
           <Typography
             variant="h6"
-            id="add-to-list-button-text"
-            className="add-to-list-button-text"
+            id="button-text"
+            className="button-text"
           >
-            {"Agregar a la lista"}
+            Agregar a la lista
           </Typography>
         </CardContent>
       </CardActionArea>
+      ) 
+    }
     </Card>
   );
 };

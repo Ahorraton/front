@@ -18,7 +18,7 @@ import "./compare.css";
 import { useSearchParams } from "next/navigation";
 import ProductCardSearch from "./cardComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "@/redux/store/listSlice";
+import { addItem, deleteItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
 
@@ -125,6 +125,18 @@ const Compare = () => {
     setSuccessStatus(true);
   };
 
+  const handleRemoveProduct = (productItem: ProductItems) => {
+    const prod: Product[] = process_prod_item(productItem);
+
+    const cheapestProducts: ListItemType[] = getCheapestItems(prod);
+    const ean_to_remove =cheapestProducts[0].ean;
+
+    dispatch(deleteItem(ean_to_remove));
+    setShowAlert(true);
+    setAlertMessage("Quitado de lista");
+    setSuccessStatus(true);
+  };
+
   const getFilteredProducts = (markets: string[]) => {
     let filtered_products = products.map((product) => {
       const marketPrices = product.market_price.split(", ");
@@ -212,6 +224,7 @@ const Compare = () => {
                         product_items={product}
                         products={products}
                         addProduct={handleAddProduct}
+                        removeProduct={handleRemoveProduct}
                         setProductPage={setProductPage}
                       />
                     </Grid>

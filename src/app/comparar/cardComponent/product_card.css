@@ -49,7 +49,14 @@
   background-color: lightblue;
 }
 
-.add-to-list-button-text {
+.remove-to-list-button-container {
+  width: 100%;
+  height: 100%;
+  padding: 0%;
+  background-color: #e6a39e;
+}
+
+.button-text {
   color: white;
   text-align: center;
 }
