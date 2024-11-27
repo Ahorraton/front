@@ -257,7 +257,7 @@ const Compare = () => {
 };
 
 const CompareWithSuspense = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense>
     <Compare />
   </Suspense>
 );
