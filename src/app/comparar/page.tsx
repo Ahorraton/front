@@ -99,14 +99,14 @@ const Compare = () => {
   };
 
   const handleAddProduct = (productItem: ProductItems) => {
-    if (!user.isLoggedIn) {
-      console.error("Not logged in");
-      setShowAlert(true);
-      setAlertMessage("No estas loggeado");
-      setSuccessStatus(false);
+    // if (!user.isLoggedIn) {
+    //   console.error("Not logged in");
+    //   setShowAlert(true);
+    //   setAlertMessage("No estas loggeado");
+    //   setSuccessStatus(false);
 
-      return;
-    }
+    //   return;
+    // }
     const prod: Product[] = process_prod_item(productItem);
 
     const cheapestProducts: ListItemType[] = getCheapestItems(prod);

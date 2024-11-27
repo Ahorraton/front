@@ -79,13 +79,13 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   };
 
   const onAddList = async () => {
-    if (!user.isLoggedIn) {
-      console.error("Not logged in");
-      setShowAlert(true);
-      setAlertMessage("No estas loggeado");
-      setSuccessStatus(false);
-      return;
-    }
+    // if (!user.isLoggedIn) {
+    //   console.error("Not logged in");
+    //   setShowAlert(true);
+    //   setAlertMessage("No estas loggeado");
+    //   setSuccessStatus(false);
+    //   return;
+    // }
     if (!recipe) {
       console.error("No recipe selected");
       return;

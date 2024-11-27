@@ -313,12 +313,81 @@ const ListContent = () => {
             />
           </Box>
         ) : (
-          <Box
-            className="no-user-found-container"
-            id="no-user-found-container"
-            role="presentation"
-          >
-            <LogInOrSignUpAlert />
+          <Box className="list-content" id="list-content" role="presentation">
+            <Grid container className="action-buttons">
+              {/* <CreateListButton setCreateNewList={setCreateNewList} />
+              <SelectListComponent /> */}
+              {/* <SaveListButton
+                listName={listName}
+                list={listItems}
+                onListNameChange={(
+                  event: React.ChangeEvent<HTMLInputElement>
+                ) => dispatch(setListName(event.target.value))}
+                onClearList={() => setClearDialogOpen(true)}
+                onSaveList={handleSaveList}
+                isLoggedIn={user.isLoggedIn}
+              /> */}
+
+              <MoreOptions />
+            </Grid>
+
+            <List id="list-items-container" className="list-items-container">
+              {listItems.map((item: ListItemType) => (
+                <ListItemComponent
+                  key={item.ean}
+                  item={item}
+                  onAdd={handleAddItem}
+                  onRemove={handleRemoveItem}
+                  onDelete={handleDeleteItem}
+                />
+              ))}
+            </List>
+
+            <Box mt={1.5}>
+              <TotalPrice totalPrice={totalPrice} />
+
+              <SaveListButton
+                listName={listName}
+                list={listItems}
+                onListNameChange={(
+                  event: React.ChangeEvent<HTMLInputElement>
+                ) => dispatch(setListName(event.target.value))}
+                onClearList={() => setClearDialogOpen(true)}
+                onSaveList={handleSaveList}
+                isLoggedIn={user.isLoggedIn}
+              />
+            </Box>
+
+            <ConfirmDialog
+              open={dialogOpen}
+              onClose={() => setDialogOpen(false)}
+              onConfirm={confirmDeleteItem}
+              title="Borrar Item"
+              description="Quieres eliminar el producto de tu lista?"
+              confirmText="Borrar"
+            />
+            <ConfirmDialog
+              open={clearDialogOpen}
+              onClose={() => setClearDialogOpen(false)}
+              onConfirm={confirmClearList}
+              title="Borrar Lista"
+              description="Quieres borrar toda tu lista?"
+              confirmText="Borrar"
+            />
+            <AuthChoiceModal
+              open={authChoiceDialogOpen}
+              onClose={() => setAuthChoiceDialogOpen(false)}
+              onLogin={handleLogin}
+              onRegister={handleRegister}
+            />
+            <LoginModal
+              open={loginDialogOpen}
+              onClose={() => setLoginDialogOpen(false)}
+            />
+            <RegisterModal
+              open={registerDialogOpen}
+              onClose={() => setRegisterDialogOpen(false)}
+            />
           </Box>
         )}
       </Grid>

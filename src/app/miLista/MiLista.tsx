@@ -3,12 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { Box, Button, FormControl, InputLabel } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -48,11 +43,11 @@ const MiLista: React.FC = () => {
   const [modalMessage, setModalMessage] = useState<string>(""); // State variable for modal message
   const [openModal, setOpenModal] = useState<boolean>(false); // State variable for modal visibility
 
-  useEffect(() => {
-    if (!user.isLoggedIn) {
-      window.location.href = "/";
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user.isLoggedIn) {
+  //     window.location.href = "/";
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -109,10 +104,10 @@ const MiLista: React.FC = () => {
       }));
 
       const payload = {
-            user_id,
-            grocery_list_id: selectedListId,
-            products: productsToSave,
-          };
+        user_id,
+        grocery_list_id: selectedListId,
+        products: productsToSave,
+      };
 
       const response = await axios.post("/api/list/updateList", payload);
 
@@ -188,11 +183,11 @@ const MiLista: React.FC = () => {
           <TotalPrice totalPrice={totalPrice} />
         </Box>
         <FormControl fullWidth>
-            <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
-            <ListSelector/>
-          </FormControl>
+          <InputLabel id="list-selector-label">Seleccionar lista</InputLabel>
+          <ListSelector />
+        </FormControl>
       </Box>
-      <Box display="flex" justifyContent="space-between" margin='1%'>
+      <Box display="flex" justifyContent="space-between" margin="1%">
         <Button
           variant="contained"
           color="error"
@@ -229,11 +224,9 @@ const MiLista: React.FC = () => {
         cancelText="Cancelar"
       />
       <NewListModal
-            userId={user.userInfo?.id ?? 0}
-            open={openNewListDialog}
-            onClose={() => 
-              setOpenNewListDialog(false)
-            }
+        userId={user.userInfo?.id ?? 0}
+        open={openNewListDialog}
+        onClose={() => setOpenNewListDialog(false)}
       />
       <NotificationDialog
         open={openModal}
