@@ -18,7 +18,7 @@ import "./compare.css";
 import { useSearchParams } from "next/navigation";
 import ProductCardSearch from "./cardComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "@/redux/store/listSlice";
+import { addItem, deleteItem } from "@/redux/store/listSlice";
 import Filters from "../miLista/Filters";
 import { ProductView } from "../(ahorratonLayout)/components/product_view/ProductView";
 
@@ -53,6 +53,7 @@ const Compare = () => {
   ]);
   const [productPage, setProductPage] = useState<ProductItems | null>(null);
   const user = useSelector((state: RootState) => state.user);
+  const savedProducts = useSelector((state: RootState) => state.list.items);
 
   const [showAlert, setShowAlert] = useState<Boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
@@ -122,6 +123,18 @@ const Compare = () => {
     dispatch(addItem(productToSave));
     setShowAlert(true);
     setAlertMessage("Agregado a lista");
+    setSuccessStatus(true);
+  };
+
+  const handleRemoveProduct = (productItem: ProductItems) => {
+    const prod: Product[] = process_prod_item(productItem);
+
+    const cheapestProducts: ListItemType[] = getCheapestItems(prod);
+    const ean_to_remove =cheapestProducts[0].ean;
+
+    dispatch(deleteItem(ean_to_remove));
+    setShowAlert(true);
+    setAlertMessage("Quitado de lista");
     setSuccessStatus(true);
   };
 
@@ -211,7 +224,9 @@ const Compare = () => {
                       <ProductCardSearch
                         product_items={product}
                         products={products}
+                        savedProducts={savedProducts}
                         addProduct={handleAddProduct}
+                        removeProduct={handleRemoveProduct}
                         setProductPage={setProductPage}
                       />
                     </Grid>
@@ -257,7 +272,7 @@ const Compare = () => {
 };
 
 const CompareWithSuspense = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense>
     <Compare />
   </Suspense>
 );

@@ -66,7 +66,7 @@ const RootLayoutWithSuspense = ({
 }: {
   children: React.ReactNode;
 }) => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense>
     <RootLayout>{children}</RootLayout>
   </Suspense>
 );

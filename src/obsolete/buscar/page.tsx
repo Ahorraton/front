@@ -117,7 +117,7 @@ const Search = () => {
 };
 
 const SearchWithSuspense = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense>
     <Search />
   </Suspense>
 );
