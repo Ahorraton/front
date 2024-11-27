@@ -7,6 +7,8 @@ import {
   Typography,
   AccordionSummary,
   Accordion,
+  Breadcrumbs,
+  Link,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
@@ -99,14 +101,14 @@ const Compare = () => {
   };
 
   const handleAddProduct = (productItem: ProductItems) => {
-    if (!user.isLoggedIn) {
-      console.error("Not logged in");
-      setShowAlert(true);
-      setAlertMessage("No estas loggeado");
-      setSuccessStatus(false);
+    // if (!user.isLoggedIn) {
+    //   console.error("Not logged in");
+    //   setShowAlert(true);
+    //   setAlertMessage("No estas loggeado");
+    //   setSuccessStatus(false);
 
-      return;
-    }
+    //   return;
+    // }
     const prod: Product[] = process_prod_item(productItem);
 
     const cheapestProducts: ListItemType[] = getCheapestItems(prod);
@@ -174,73 +176,81 @@ const Compare = () => {
       title="Comparar"
       description="Compara precios de productos"
     >
-      <Filters
-        selectedMarkets={selectedMarkets}
-        handleMarketChange={handleMarketChange}
-      />
-      <Box className="compare-layout">
-        {loading ? (
-          <Box className="loading-layout">
-            <LoadingHamsterScreen />
-          </Box>
-        ) : error ? (
-          <ErrorPage />
-        ) : filteredProducts.length === 0 && !loading && !error ? (
-          <NoProductsFound />
-        ) : (
-          <Box className="compare-layout">
-            <Grid container spacing={2} py={4}>
-              {filteredProducts.map((product: ProductItems) => {
-                const products = process_prod_item(product);
+      <Box mt={5}>
+        <Box className="compare-layout">
+          {loading ? (
+            <Box className="loading-layout">
+              <LoadingHamsterScreen />
+            </Box>
+          ) : error ? (
+            <ErrorPage />
+          ) : filteredProducts.length === 0 && !loading && !error ? (
+            <NoProductsFound />
+          ) : (
+            <Box className="compare-layout">
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" href="/">
+                  Inicio
+                </Link>
+                <Typography color="textPrimary">Comparar</Typography>
+              </Breadcrumbs>
+              <Filters
+                selectedMarkets={selectedMarkets}
+                handleMarketChange={handleMarketChange}
+              />
+              <Grid container spacing={2} py={4}>
+                {filteredProducts.map((product: ProductItems) => {
+                  const products = process_prod_item(product);
 
-                if (products.length === 0) {
-                  return <></>;
-                }
+                  if (products.length === 0) {
+                    return <></>;
+                  }
 
-                return (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
-                    <ProductCardSearch
-                      product_items={product}
-                      products={products}
-                      addProduct={handleAddProduct}
-                      setProductPage={setProductPage}
-                    />
-                  </Grid>
-                );
-              })}
-            </Grid>
+                  return (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
+                      <ProductCardSearch
+                        product_items={product}
+                        products={products}
+                        addProduct={handleAddProduct}
+                        setProductPage={setProductPage}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
 
-            {loadMore && (
-              <Box display="flex" justifyContent="center" py="1%">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={fetchMoreProducts}
-                >
-                  Cargar más
-                </Button>
-              </Box>
-            )}
-          </Box>
-        )}
+              {loadMore && (
+                <Box display="flex" justifyContent="center" py="1%">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={fetchMoreProducts}
+                  >
+                    Cargar más
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          )}
 
-        {showAlert && (
-          <Box className="alert-box" id="alert-box">
-            <SelectedItemAlert
-              setShowAlert={setShowAlert}
-              alertMessage={alertMessage}
-              success={successStatus}
+          {showAlert && (
+            <Box className="alert-box" id="alert-box">
+              <SelectedItemAlert
+                setShowAlert={setShowAlert}
+                alertMessage={alertMessage}
+                success={successStatus}
+              />
+            </Box>
+          )}
+
+          {productPage && (
+            <ProductView
+              product_items={productPage}
+              addProduct={handleAddProduct}
+              onClose={() => setProductPage(null)}
             />
-          </Box>
-        )}
-
-        {productPage && (
-          <ProductView
-            product_items={productPage}
-            addProduct={handleAddProduct}
-            onClose={() => setProductPage(null)}
-          />
-        )}
+          )}
+        </Box>
       </Box>
     </MetaDataContainer>
   );

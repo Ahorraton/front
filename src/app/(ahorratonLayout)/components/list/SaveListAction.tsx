@@ -75,8 +75,7 @@ const SaveListButton: React.FC<SaveListButtonProps> = ({
   return (
     <Box textAlign="center" m={2}>
       <IconButton color="primary" onClick={handleSaveList}>
-        <SaveIcon />
-        {isLoggedIn ? "Guardar" : "Inicia sesion para guardar"}
+        <SaveIcon /> {"Guardar"}
       </IconButton>
     </Box>
   );

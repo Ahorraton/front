@@ -1,5 +1,20 @@
-import MiLista from './MiLista';
+"use client";
+
+import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
+import MiLista from "./MiLista";
 
 export default function Page() {
-    return <MiLista />;
-  }
+  return (
+    <Box>
+      <Box mt={5}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/">
+            Inicio
+          </Link>
+          <Typography color="textPrimary">Mi lista</Typography>
+        </Breadcrumbs>
+        <MiLista />;
+      </Box>
+    </Box>
+  );
+}
