@@ -110,8 +110,6 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
             </Typography>
           </CardContent>
         </CardActionArea>
-      
-
       ):(
       <CardActionArea
         id="add-to-list-action-area"
