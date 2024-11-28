@@ -197,7 +197,7 @@ const Compare = () => {
             </Box>
           ) : error ? (
             <ErrorPage />
-          ) : filteredProducts.length === 0 && !loading && !error ? (
+          ) : products.length === 0 && !loading && !error ? (
             <NoProductsFound />
           ) : (
             <Box className="compare-layout">
