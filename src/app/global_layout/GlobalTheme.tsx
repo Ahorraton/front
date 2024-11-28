@@ -59,7 +59,7 @@ const baselightTheme = createTheme({
       lineHeight: "1.2rem",
     },
     button: {
-      textTransform: "capitalize",
+      textTransform: "none",
       fontWeight: 400,
     },
     body1: {
