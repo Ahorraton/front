@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Box, Button, FormControl, InputLabel } from "@mui/material";
@@ -19,8 +19,6 @@ import { fetchUserLists } from "../../utils/apiUtils";
 import { Product } from "@/app/types/Product";
 import { ListItemType } from "../types/ListItem";
 import NewListModal from "./NewListModal";
-import { clearSelectedList } from "../../redux/store/multipleListsSlice";
-import { clearList } from "../../redux/store/listSlice";
 import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 
 const MiLista: React.FC = () => {
@@ -187,43 +185,47 @@ const MiLista: React.FC = () => {
             selectedMarkets={selectedMarkets}
             handleMarketChange={handleMarketChange}
           />
-          <Box mt={1.5}>
+          { user.isLoggedIn && ( 
             <Box mt={1.5}>
-              <TotalPrice totalPrice={totalPrice} />
+              <Box mt={1.5}>
+                <TotalPrice totalPrice={totalPrice} />
+              </Box>
+              <FormControl fullWidth>
+                <InputLabel id="list-selector-label">
+                  Seleccionar lista
+                </InputLabel>
+                <ListSelector />
+              </FormControl>
             </Box>
-            <FormControl fullWidth>
-              <InputLabel id="list-selector-label">
-                Seleccionar lista
-              </InputLabel>
-              <ListSelector />
-            </FormControl>
-          </Box>
-          <Box display="flex" justifyContent="space-between" margin="1%">
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={() => setOpenDeleteDialog(true)}
-            >
-              Eliminar lista
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<SaveIcon />}
-              onClick={handleUpdateList}
-            >
-              Actualizar lista
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<AddIcon />}
-              onClick={() => setOpenNewListDialog(true)}
-            >
-              Nueva lista
-            </Button>
-          </Box>
+          )}
+          { selectedListId && (
+            <Box display="flex" justifyContent="space-between" margin="1%">
+                <Button
+                  variant="contained"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={() => setOpenDeleteDialog(true)}
+                >
+                  Eliminar lista
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<SaveIcon />}
+                  onClick={handleUpdateList}
+                >
+                  Actualizar lista
+                </Button>
+                {/* <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<AddIcon />}
+                  onClick={() => setOpenNewListDialog(true)}
+                >
+                  Nueva lista
+                </Button> */}
+            </Box>
+          )}
           <ProductList products={cheapestProducts} />
           <ConfirmationDialog
             open={openDeleteDialog}
