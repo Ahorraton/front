@@ -2,9 +2,7 @@ import ProductItems from "@/app/types/ProductItems";
 import IconMarket from "@/utils/storeIconMap/IconMarket";
 import {
   Box,
-  Button,
   CardActionArea,
-  CardActions,
   CardContent,
   CardHeader,
   Typography,
@@ -15,6 +13,10 @@ import { getStoreIcon } from "@/utils/storeIconMap/StoreMap";
 import { Product } from "@/app/types/Product";
 import "./product_card.css";
 import { ListItemType } from "@/app/types/ListItem";
+import { 
+  get_cheapest_product, 
+  get_image_url, get_longest_title 
+} from "../utils/getters";
 
 interface cardComponentProps {
   product_items: ProductItems;
@@ -33,22 +35,11 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
   removeProduct,
   setProductPage,
 }) => {
-
-  let added = false;
-
-  const titles = product_items.names_list.split(",");
-  const longestTitle = titles.reduce((longest, current) => {
-    return current.length > longest.length ? current : longest;
-  }, "");
-
-  const image_urls = product_items.image_urls.split(",");
-  const image_url = image_urls.find(url => !url.includes("preciosclaros"));
-
-  const cheapestProduct = products.reduce((minProduct, currentProduct) => {
-    return currentProduct.price < minProduct.price ? currentProduct : minProduct;
-  }, products[0]);
+  const longestTitle = get_longest_title(product_items);
+  const product_image = get_image_url(product_items);
+  const cheapestProduct = get_cheapest_product(products);
   
-  const product_image = image_url || product_items.image_url;
+  let added = false;
   const saved_eans = savedProducts.map((product) => product.ean);
   
   if (saved_eans.includes(cheapestProduct.ean) ){
