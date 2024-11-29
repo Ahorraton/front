@@ -3,6 +3,7 @@ export default interface ProductItems {
   market_price: string;
   names_list: string;
   image_url: string;
+  image_urls: string;
   urls: string;
   dir_sucursal: string;
 }

@@ -36,11 +36,21 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
 
   let added = false;
 
-  const cheapestProduct = products[0];
-  const product_image = product_items.image_url;
+  const titles = product_items.names_list.split(",");
+  const longestTitle = titles.reduce((longest, current) => {
+    return current.length > longest.length ? current : longest;
+  }, "");
+
+  const image_urls = product_items.image_urls.split(",");
+  const image_url = image_urls.find(url => !url.includes("preciosclaros"));
+
+  const cheapestProduct = products.reduce((minProduct, currentProduct) => {
+    return currentProduct.price < minProduct.price ? currentProduct : minProduct;
+  }, products[0]);
+  
+  const product_image = image_url || product_items.image_url;
   const saved_eans = savedProducts.map((product) => product.ean);
-
-
+  
   if (saved_eans.includes(cheapestProduct.ean) ){
     added = true;
   }
@@ -58,7 +68,7 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
       >
         <CardContent>
           <CardHeader
-            title={cheapestProduct.name}
+            title={longestTitle}
             className="product-card-header"
           />
           <Box
@@ -85,6 +95,13 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
                   <strong>Mejor precio:</strong> ${cheapestProduct.price}{" "}
                   <IconMarket icon={cheapestProduct.market} />
                 </Typography>
+              </Box>
+              <Box marginTop={1} color={"#f2ad0c"} textAlign={"center"}>
+                { products.length > 1 && (
+                  <Typography variant="body2">
+                  {`¡Encontramos ${products.length- 1} precio/s más!`}
+                  </Typography>
+                )}
               </Box>
             </Box>
           </Box>
