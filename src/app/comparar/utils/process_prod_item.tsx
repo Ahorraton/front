@@ -28,6 +28,7 @@ export function process_prod_item(product_items: ProductItems): Product[] {
         created_at: "",
         market: markets[index],
         image_url: null,
+        image_urls: null,
         ean: product_items.ean,
         url: urls[index],
         dir_sucursal: dir_sucursal ? dir_sucursal[index] : "",

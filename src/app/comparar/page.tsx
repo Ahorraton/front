@@ -208,9 +208,9 @@ const Compare = () => {
               />
               <Grid container spacing={2} py={4}>
                 {filteredProducts.map((product: ProductItems) => {
-                  const products = process_prod_item(product);
+                  const prods = process_prod_item(product);
 
-                  if (products.length === 0) {
+                  if (prods.length === 0) {
                     return <></>;
                   }
 
@@ -218,7 +218,7 @@ const Compare = () => {
                     <Grid item xs={12} sm={6} md={4} lg={3} key={product.ean}>
                       <ProductCardSearch
                         product_items={product}
-                        products={products}
+                        products={prods}
                         savedProducts={savedProducts}
                         addProduct={handleAddProduct}
                         removeProduct={handleRemoveProduct}

@@ -5,6 +5,7 @@ export type Product = {
   created_at: string;
   market: string;
   image_url: string | null;
+  image_urls: string | null;
   ean: string;
   url: string | null;
   quantity?: number;
