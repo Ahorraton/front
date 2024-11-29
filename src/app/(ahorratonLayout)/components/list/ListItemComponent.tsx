@@ -49,35 +49,30 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
             <ListItemText
               primary={getItemNameFormated(item)}
               secondary={
-                <Box display="flex" alignItems="center">
-                  <Typography variant="body2">
-                    {item.amount} x {item.product?.price.toFixed(2)} $
-                  </Typography>
-                  {/* <IconButton
-                    id="add-item-button"
-                    aria-label="add"
-                    onClick={() => onAdd(item.ean)}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                  <Typography variant="body1" style={{ margin: "0 10px" }}>
-                    {item.amount}
-                  </Typography>
+                <Box 
+                  display="flex" 
+                  alignItems="center"
+                  justifyContent="left"
+                >
                   <IconButton
                     id="remove-item-button"
                     aria-label="remove"
                     onClick={() => onRemove(item.ean)}
                   >
-                    <RemoveIcon />
+                    <RemoveIcon fontSize="small" />
                   </IconButton>
+
+                  <Typography variant="body2">
+                    {item.amount} x ${item.product?.price.toFixed(2)} [{item.product?.market}]
+                  </Typography>
+
                   <IconButton
-                    id="delete-product-button"
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => onDelete(item.ean)}
+                    id="add-item-button"
+                    aria-label="add"
+                    onClick={() => onAdd(item.ean)}
                   >
-                    <DeleteIcon />
-                  </IconButton> */}
+                    <AddIcon fontSize="small" />
+                  </IconButton>
                 </Box>
               }
             />
@@ -86,30 +81,11 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
               <Box
                 display="flex"
                 flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                mt={2}
+                alignItems="right"
+                justifyContent="right"
+                mb={2}
               >
-                <Typography color="black" fontWeight="bold">
-                  {item.amount * Number(item.product?.price.toFixed(2))} $
-                </Typography>
-
-                <Box display="flex" alignItems="center">
-                  <IconButton
-                    id="add-item-button"
-                    aria-label="add"
-                    onClick={() => onAdd(item.ean)}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
-
-                  <IconButton
-                    id="remove-item-button"
-                    aria-label="remove"
-                    onClick={() => onRemove(item.ean)}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
+                <Box>
                   <IconButton
                     id="delete-product-button"
                     edge="end"
@@ -118,6 +94,11 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
                   >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
+                </Box>
+                <Box>
+                  <Typography color="black" fontWeight="bold" fontSize={"100%"}>
+                    $ {item.amount * Number(item.product?.price.toFixed(2))}
+                  </Typography>
                 </Box>
               </Box>
             </ListItemSecondaryAction>
