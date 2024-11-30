@@ -43,7 +43,7 @@ const MiLista: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false); // State variable for modal visibility
   const [openNoProducts, setOpenNoProducts] = useState<boolean>(false); // State variable for modal visibility
 
-  // Timer to avoid showing false NoProductsFound
+  // Timer to avoid showing false NoProductsFound 
   useEffect(() => {
     const timer = setTimeout(() => {
       setOpenNoProducts(true);
