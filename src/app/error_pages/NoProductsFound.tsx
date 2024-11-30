@@ -1,4 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
+import './error_pages.css'
 
 const NoProductsFound = () => {
   return (
