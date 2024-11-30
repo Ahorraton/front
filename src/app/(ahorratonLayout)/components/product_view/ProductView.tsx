@@ -18,9 +18,9 @@ import {
   get_min_price,
 } from "@/app/comparar/utils/process_prod_item";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ListItemType } from "@/app/types/ListItem";
-import { set } from "lodash";
+import { get_cheapest_product, get_image_url, get_longest_title } from "@/app/comparar/utils/getters";
 
 interface ProductPageDetailsProps {
   product_items: ProductItems;
@@ -41,13 +41,11 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
 }) => {
   const products: Product[] = process_prod_item(product_items);
   const [isScrollable, setIsScrollable] = useState(false);
-
-  let added = false;
-
+  
   if (!products) {
     return <></>;
   }
-
+  
   useEffect(() => {
     if (products.length > 3) {
       setIsScrollable(true);
@@ -55,10 +53,13 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
       setIsScrollable(false);
     }
   });
-
-  const product_image = product_items.image_url ?? DEFAULT_PROD_IMG;
-  const cheapestProduct = products[0];
+  
+  const name = get_longest_title(product_items);
+  const product_image = get_image_url(product_items) ?? DEFAULT_PROD_IMG;
+  const cheapestProduct = get_cheapest_product(products);
   const minPrice = get_min_price(products);
+  
+  let added = false;
   const saved_eans = savedProducts.map((product) => product.ean);
 
   if (saved_eans.includes(cheapestProduct.ean)) {
@@ -102,7 +103,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 id="selected-product-title"
                 className="selected_product-title"
               >
-                {cheapestProduct.name}
+                {name}
               </DialogTitle>
 
               <List

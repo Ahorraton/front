@@ -17,21 +17,26 @@ const AuthChoiceModal: React.FC<AuthChoiceModalProps> = ({ open, onClose, onLogi
             aria-labelledby="auth-choice-dialog-title"
             aria-describedby="auth-choice-dialog-description"
         >
-            <DialogTitle id="auth-choice-dialog-title">{"Guardar Lista"}</DialogTitle>
+            <DialogTitle id="auth-choice-dialog-title">Guardar lista</DialogTitle>
             <DialogContent>
                 <DialogContentText id="auth-choice-dialog-description">
-                    Necesitas iniciar sesión o registrarte para guardar tu lista. ¿Qué te gustaría hacer?
+                    Es necesario iniciar sesión para guardar tu lista
                 </DialogContentText>
             </DialogContent>
-            <DialogActions>
+            <DialogActions 
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
                 <Button onClick={onClose} color="primary">
                     Cancelar
                 </Button>
-                <Button onClick={onLogin} color="primary">
-                    Iniciar sesión
-                </Button>
                 <Button onClick={onRegister} color="primary" autoFocus>
-                    Registrarse
+                    Crear cuenta
+                </Button>
+                <Button onClick={onLogin} color="primary">
+                    Ingresar
                 </Button>
             </DialogActions>
         </Dialog>
