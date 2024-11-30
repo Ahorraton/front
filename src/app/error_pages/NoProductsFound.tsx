@@ -19,7 +19,7 @@ const NoProductsFound = () => {
         component="img"
         src="/images/rats/sad_rat.svg"
         alt="No products found"
-        sx={{ height: "20rem", marginRight: "4rem" }}
+        sx={{ height: "20rem", marginRight: "4rem", backgroundColor: "transparent" }}
       />
       <Typography variant="h6" id="error-title" className="error-title">
         {"¡Ups! No hemos encontrado ningún producto :(" }
