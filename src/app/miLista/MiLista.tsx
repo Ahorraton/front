@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Box, Button, FormControl, InputLabel } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ProductList from "./product_card/ProductList";
 import TotalPrice from "./TotalPrice";
@@ -18,8 +17,8 @@ import axios from "axios";
 import { fetchUserLists } from "../../utils/apiUtils";
 import { Product } from "@/app/types/Product";
 import { ListItemType } from "../types/ListItem";
-import NewListModal from "./NewListModal";
 import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
+import NoProductsFound from "../error_pages/NoProductsFound";
 
 const MiLista: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -40,16 +39,17 @@ const MiLista: React.FC = () => {
     "jumbo",
   ]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false); // New state variable for delete dialog
-  const [openNewListDialog, setOpenNewListDialog] = useState<boolean>(false); // New state variable for new list dialog
   const [modalMessage, setModalMessage] = useState<string>(""); // State variable for modal message
   const [openModal, setOpenModal] = useState<boolean>(false); // State variable for modal visibility
+  const [openNoProducts, setOpenNoProducts] = useState<boolean>(false); // State variable for modal visibility
 
-  // useEffect(() => {
-  //   if (!user.isLoggedIn) {
-  //     window.location.href = "/";
-  //   }
-  // }, [user]);
-
+  // Timer to avoid showing false NoProductsFound 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOpenNoProducts(true);
+    }, 400);
+  })
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -77,7 +77,6 @@ const MiLista: React.FC = () => {
     };
 
     fetchProducts();
-    console.log("ESTOY ACA");
     setLoading(false);
   }, [selectedList]);
 
@@ -147,9 +146,6 @@ const MiLista: React.FC = () => {
       console.log("List deleted:", response.data);
       await fetchUserLists(user_id, dispatch);
       setOpenDeleteDialog(false);
-      // dispatch(clearSelectedList());
-      // dispatch(clearList());
-
       setModalMessage("Su lista ha sido eliminada exitosamente");
       setOpenModal(true);
     } catch (error) {
@@ -181,51 +177,49 @@ const MiLista: React.FC = () => {
         <LoadingHamsterScreen />
       ) : (
         <Box>
-          <Filters
+          { products.length > 0 &&
+            <Filters
             selectedMarkets={selectedMarkets}
             handleMarketChange={handleMarketChange}
-          />
-          { user.isLoggedIn && ( 
+            />
+          } 
             <Box mt={1.5}>
-              <Box mt={1.5}>
-                <TotalPrice totalPrice={totalPrice} />
-              </Box>
-              <FormControl fullWidth>
-                <InputLabel id="list-selector-label">
-                  Seleccionar lista
-                </InputLabel>
-                <ListSelector />
-              </FormControl>
+              { cheapestProducts.length > 0 && 
+                <Box mt={1.5}>
+                  <TotalPrice totalPrice={totalPrice} />
+                </Box>
+              }
+              { user.isLoggedIn && ( 
+                <FormControl fullWidth>
+                  <InputLabel id="list-selector-label">
+                    Seleccionar lista
+                  </InputLabel>
+                  <ListSelector />
+                </FormControl>
+              )}
             </Box>
-          )}
-          { selectedListId && (
-            <Box display="flex" justifyContent="space-between" margin="1%">
+          <Box display="flex" justifyContent="space-between" margin="1%">
+            { selectedListId && (
+              <>
                 <Button
                   variant="contained"
                   color="error"
                   startIcon={<DeleteIcon />}
                   onClick={() => setOpenDeleteDialog(true)}
-                >
+                  >
                   Eliminar lista
                 </Button>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<SaveIcon />}
-                  onClick={handleUpdateList}
+                variant="contained"
+                color="primary"
+                startIcon={<SaveIcon />}
+                onClick={handleUpdateList}
                 >
-                  Actualizar lista
+                Actualizar lista
                 </Button>
-                {/* <Button
-                  variant="contained"
-                  color="secondary"
-                  startIcon={<AddIcon />}
-                  onClick={() => setOpenNewListDialog(true)}
-                >
-                  Nueva lista
-                </Button> */}
-            </Box>
-          )}
+              </>
+            )}
+          </Box>
           <ProductList products={cheapestProducts} />
           <ConfirmationDialog
             open={openDeleteDialog}
@@ -235,17 +229,13 @@ const MiLista: React.FC = () => {
             content="Quieres eliminar tu lista de forma permanente?"
             confirmText="Eliminar"
             cancelText="Cancelar"
-          />
-          <NewListModal
-            userId={user.userInfo?.id ?? 0}
-            open={openNewListDialog}
-            onClose={() => setOpenNewListDialog(false)}
-          />
+            />
           <NotificationDialog
             open={openModal}
             onClose={() => setOpenModal(false)}
             message={modalMessage}
-          />
+            />
+          { (products.length == 0 || cheapestProducts.length == 0) && openNoProducts && <NoProductsFound /> } 
         </Box>
       )}
     </Box>

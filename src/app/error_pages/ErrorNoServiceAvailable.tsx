@@ -14,7 +14,7 @@ export default function ErrorNoServiceAvailable({
       </Typography>
       <Box
         component="img"
-        src="/images/logos/ahorraton.svg"
+        src="/images/rats/ahorraton.svg"
         alt="Ahorraton Logo"
         sx={{ display: "block", margin: "0 auto", backgroundColor: "black" }}
       />

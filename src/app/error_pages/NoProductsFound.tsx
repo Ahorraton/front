@@ -1,20 +1,30 @@
-import { styled, Typography } from "@mui/material";
-
-const NoProductFoundStyle = styled("div")(() => ({
-  display: "flex",
-  flexDirection: "column",
-  minHeight: "100vh",
-  justifyContent: "center",
-}));
+import { Box, styled, Typography } from "@mui/material";
 
 const NoProductsFound = () => {
   return (
-    <NoProductFoundStyle
-      className="noproductfoundstyle"
-      id="no-product-found-style"
+    <Box
+      id="error-page-container"
+      className="error-page-container"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "70vh", 
+        textAlign: "center", 
+        marginBottom: "4.5rem", 
+      }}
     >
-      <Typography variant="h5">No se encontraron productos</Typography>
-    </NoProductFoundStyle>
+      <Box
+        component="img"
+        src="/images/rats/sad_rat.svg"
+        alt="No products found"
+        sx={{ height: "20rem", marginRight: "4rem" }}
+      />
+      <Typography variant="h6" id="error-title" className="error-title">
+        {"¡Ups! No hemos encontrado ningún producto :(" }
+      </Typography>
+    </Box>
   );
 };
 

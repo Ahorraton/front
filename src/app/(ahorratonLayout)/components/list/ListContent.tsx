@@ -243,18 +243,20 @@ const ListContent = () => {
         <Box className="list-content" id="list-content" role="presentation">
           <Grid container className="action-buttons">
             { user.isLoggedIn && 
+              <>
               <CreateListButton setCreateNewList={setCreateNewList}/>
+              <SaveListButton
+                listName={listName}
+                list={listItems}
+                onListNameChange={(
+                  event: React.ChangeEvent<HTMLInputElement>
+                  ) => dispatch(setListName(event.target.value))}
+                onClearList={() => setClearDialogOpen(true)}
+                onSaveList={handleSaveList}
+                isLoggedIn={user.isLoggedIn}
+                />
+              </>
             }
-            <SaveListButton
-              listName={listName}
-              list={listItems}
-              onListNameChange={(
-                event: React.ChangeEvent<HTMLInputElement>
-              ) => dispatch(setListName(event.target.value))}
-              onClearList={() => setClearDialogOpen(true)}
-              onSaveList={handleSaveList}
-              isLoggedIn={user.isLoggedIn}
-            />
 
             <MoreOptions isLoggedIn={user.isLoggedIn} />
           </Grid>

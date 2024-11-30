@@ -192,7 +192,7 @@ const Compare = () => {
             </Box>
           ) : error ? (
             <ErrorPage />
-          ) : products.length === 0 && !loading && !error ? (
+          ) : products.length === 0 ? (
             <NoProductsFound />
           ) : (
             <Box className="compare-layout">
@@ -206,6 +206,9 @@ const Compare = () => {
                 selectedMarkets={selectedMarkets}
                 handleMarketChange={handleMarketChange}
               />
+              { filteredProducts.length === 0 && (
+                <NoProductsFound />
+              )}
               <Grid container spacing={2} py={4}>
                 {filteredProducts.map((product: ProductItems) => {
                   const prods = process_prod_item(product);
