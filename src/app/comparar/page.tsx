@@ -62,7 +62,7 @@ const Compare = () => {
     if (onlyOnlineFilter) {
       query_params += `&is_online=true`;
     }
-    if (selectedMarkets.length > 0) {
+    if (selectedMarkets.length >= 0) {
       query_params += `&markets=${selectedMarkets.join(",")}`;
     }
     return query_params;

@@ -7,12 +7,12 @@ import PriceFilter from "./price_filter/PriceFilter";
 type FiltersProps = {
   selectedMarkets: string[];
   handleMarketChange: (market: string) => void;
-  minPrice: number | undefined;
-  maxPrice: number | undefined;
-  onlyOnlineMarkets: boolean;
-  handleMinPriceChange: (price: number, type: string) => void;
-  handleMaxPriceChange: (price: number, type: string) => void;
-  handleOnlineMarketChange: () => void;
+  minPrice?: number;
+  maxPrice?: number;
+  onlyOnlineMarkets?: boolean;
+  handleMinPriceChange?: (price: number, type: string) => void;
+  handleMaxPriceChange?: (price: number, type: string) => void;
+  handleOnlineMarketChange?: () => void;
 };
 
 const Filters: React.FC<FiltersProps> = ({
@@ -25,6 +25,12 @@ const Filters: React.FC<FiltersProps> = ({
   handleMaxPriceChange,
   handleOnlineMarketChange,
 }) => {
+  const prices: boolean = (
+    onlyOnlineMarkets !== undefined &&
+    handleMinPriceChange !== undefined &&
+    handleMaxPriceChange !== undefined &&
+    handleOnlineMarketChange !== undefined
+  );
   return (
     <Box sx = {{
       display: 'flex',
@@ -60,7 +66,7 @@ const Filters: React.FC<FiltersProps> = ({
           </Box>
         ))}
       </Box>
-      {window.location.pathname === '/comparar' && (
+      {prices && (
         <PriceFilter
           minPrice={minPrice}
           maxPrice={maxPrice}

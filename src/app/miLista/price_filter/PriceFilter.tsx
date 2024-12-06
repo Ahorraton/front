@@ -3,12 +3,12 @@ import { Box, TextField, Checkbox, Typography } from '@mui/material';
 import './price_filter.css';
 
 type PriceFilterProps = {
-    minPrice: number | undefined;
-    maxPrice: number | undefined;
-    onlyOnlineMarkets: boolean;
-    handleMinPriceChange: (price: number, type: string) => void;
-    handleMaxPriceChange: (price: number, type: string) => void;
-    handleOnlineMarketChange: () => void;
+    minPrice?: number | undefined;
+    maxPrice?: number | undefined;
+    onlyOnlineMarkets?: boolean;
+    handleMinPriceChange?: (price: number, type: string) => void;
+    handleMaxPriceChange?: (price: number, type: string) => void;
+    handleOnlineMarketChange?: () => void;
 };
 
 const PriceFilter: React.FC<PriceFilterProps> = ({
@@ -31,7 +31,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                         type='number'
                         label='Precio Minimo'
                         value={minPrice}
-                        onChange={(e) => handleMinPriceChange(parseInt(e.target.value), 'min')}
+                        onChange={(e) => handleMinPriceChange && handleMinPriceChange(parseInt(e.target.value), 'min')}
                         inputProps={{
                             min: 0,
                             inputMode: 'numeric',
@@ -48,6 +48,13 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                             },
                             '& .MuiInputLabel-root.Mui-focused': {
                                 color: '#0289d1',
+                            },
+                            '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button': {
+                                appearance: 'none',
+                                margin: 0,
+                            },
+                            '& input[type=number]': {
+                                appearance: 'textfield',
                             },
                         }}
                     />
@@ -58,7 +65,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                         type='number'
                         label='Precio Maximo'
                         value={maxPrice}
-                        onChange={(e) => handleMaxPriceChange(parseInt(e.target.value), 'max')}
+                        onChange={(e) => handleMaxPriceChange && handleMaxPriceChange(parseInt(e.target.value), 'max')}
                         inputProps={{
                             min: 0,
                             inputMode: 'numeric',
@@ -76,6 +83,13 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                             '& .MuiInputLabel-root.Mui-focused': {
                                 color: '#0289d1',
                             },
+                            '& input[type=number]::-webkit-inner-spin-button, & input[type=number]::-webkit-outer-spin-button': {
+                                appearance: 'none',
+                                margin: 0,
+                            },
+                            '& input[type=number]': {
+                                appearance: 'textfield',
+                            },
                         }}
                     />
                 </Box>
@@ -83,7 +97,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
             <Box className='checkbox-container'>
                 <Box
                     className='checkbox'
-                    onClick={() => handleOnlineMarketChange()}
+                    onClick={() => handleOnlineMarketChange && handleOnlineMarketChange()}
                     sx={{ cursor: 'pointer' }}
                 >
                     <Box>
