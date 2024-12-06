@@ -12,7 +12,6 @@ import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
 import ProductItems from "../types/ProductItems";
 import "./compare.css";
-import { useSearchParams } from "next/navigation";
 import ProductCardSearch from "./cardComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, deleteItem } from "@/redux/store/listSlice";
@@ -37,7 +36,7 @@ const Compare = () => {
   const [error, setError] = useState<string | null>(null);
   const [loadMore, setLoadMore] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const query = useSearchParams().get("query");
+  const query = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("query") || "" : "";
   const [selectedMarkets, setSelectedMarkets] = useState<string[]>([
     "carrefour",
     "coto",
@@ -263,9 +262,7 @@ const Compare = () => {
 };
 
 const CompareWithSuspense = () => (
-  <Suspense>
-    <Compare />
-  </Suspense>
+  <Compare />
 );
 
 export default CompareWithSuspense;

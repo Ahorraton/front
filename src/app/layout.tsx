@@ -4,10 +4,9 @@ import { baselightTheme } from "./global_layout/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled, Container, Typography, Box } from "@mui/material";
-import React, { Suspense } from "react";
+import React from "react";
 import NavBar from "./global_layout/navBar/NavBar";
 import Footer from "./global_layout/footer/Footer";
-import { useSearchParams } from "next/navigation";
 import { Provider } from "react-redux";
 import { store, persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
@@ -30,8 +29,7 @@ const FooterStyle = styled("div")(() => ({
 }));
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query") || "";
+  const query = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("query") || "" : "";
 
   return (
     <html lang="en">
@@ -66,9 +64,7 @@ const RootLayoutWithSuspense = ({
 }: {
   children: React.ReactNode;
 }) => (
-  <Suspense>
-    <RootLayout>{children}</RootLayout>
-  </Suspense>
+  <RootLayout>{children}</RootLayout>
 );
 
 export default RootLayoutWithSuspense;
