@@ -52,33 +52,43 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
           className="selected-recipe-img"
         />
 
-        <Grid
-          container
-          spacing={2}
+        <Box
           className="selected-recipe-view-grid"
           id="selected-recipe-grid"
         >
-          <Typography id="ingredients-title" variant="h6" gutterBottom>
-            Ingredients:
-          </Typography>
+          <Box>
+            <Typography id="ingredients-title" variant="h6" gutterBottom>
+              Ingredientes:
+            </Typography>
+          </Box>
 
           <Box id="ingredients-and-add-button">
-            <Box id="ingredients-div" mt="5%" sx={{ alignItems: "center" }}>
+            <Box id="ingredients-div" sx={{ alignItems: "center" }}>
               <List
                 id="selected-recipe-list-prices"
                 className="selected-recipe-list-prices"
               >
                 {recipe.ingredients.map((item, index) => (
                   <ListItem key={index} className="recipe-item-layout">
-                    <Typography gutterBottom>
-                      {item.name}: {item.amount}
-                    </Typography>
+                    <Box id='ingredient' className='ingredient-layout'>
+                      <Box>
+                      <Typography gutterBottom>
+                        <strong>- </strong>{item.name}:
+                      </Typography>
+                      </Box>
+                      <Box>
+                        <Typography gutterBottom>
+                          <strong>{item.amount}</strong>
+                        </Typography>
+                      </Box>
+                    </Box>
+
                   </ListItem>
                 ))}
               </List>
             </Box>
           </Box>
-        </Grid>
+        </Box>
 
         <DialogActions id="add-to-list-action-button">
           <Box

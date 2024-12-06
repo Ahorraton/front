@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import ProductItems from "@/app/types/ProductItems";
 import { Product } from "@/app/types/Product";
-import "./product_view.css";
 import { getStoreIcon } from "../../../../utils/storeIconMap/StoreMap";
 import PriceView from "./PriceView";
 import {
@@ -21,6 +20,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useEffect, useState } from "react";
 import { ListItemType } from "@/app/types/ListItem";
 import { get_cheapest_product, get_image_url, get_longest_title } from "@/app/comparar/utils/getters";
+import "./product_view.css";
 
 interface ProductPageDetailsProps {
   product_items: ProductItems;
@@ -144,6 +144,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 removeProduct(product_items);
                 added = false;
               }}
+              className='remove-to-list-button-container'
             >
               <Button
                 id="remove-to-list-button-container"
@@ -165,6 +166,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 addProduct(product_items);
                 added = true;
               }}
+              className='add-to-list-button-container'
             >
               <Button
                 id="add-to-list-button-container"
