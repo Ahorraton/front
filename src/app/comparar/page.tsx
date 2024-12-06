@@ -12,7 +12,6 @@ import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
 import ProductItems from "../types/ProductItems";
 import "./compare.css";
-import { useSearchParams } from "next/navigation";
 import ProductCardSearch from "./cardComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, deleteItem } from "@/redux/store/listSlice";
@@ -34,11 +33,10 @@ const LIMIT = 8;
 const Compare = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<ProductItems[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ProductItems[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loadMore, setLoadMore] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const query = useSearchParams().get("query");
+  const query = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("query") || "" : "";
   const [selectedMarkets, setSelectedMarkets] = useState<string[]>([
     "carrefour",
     "coto",
@@ -49,35 +47,43 @@ const Compare = () => {
   ]);
   const [productPage, setProductPage] = useState<ProductItems | null>(null);
   const savedProducts = useSelector((state: RootState) => state.list.items);
-
   const [showAlert, setShowAlert] = useState<Boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
   const [successStatus, setSuccessStatus] = useState<boolean>(false);
-
+  const buildQueryParams = () => {
+    let query_params = `limit=${LIMIT}`;
+    if (minPrice) {
+      query_params += `&min_price=${minPrice}`;
+    }
+    if (maxPrice) {
+      query_params += `&max_price=${maxPrice}`;
+    }
+    if (onlyOnlineFilter) {
+      query_params += `&is_online=true`;
+    }
+    if (selectedMarkets.length >= 0) {
+      query_params += `&markets=${selectedMarkets.join(",")}`;
+    }
+    return query_params;
+  }
   useEffect(() => {
     fetchProducts();
   }, []);
-
-  useEffect(() => {
-    const filtered_products = getFilteredProducts();
-    setFilteredProducts(filtered_products);
-
-  }, [selectedMarkets, products]);
 
   const fetchProducts = async () => {
     setProducts([]);
     if (query === null) {
       return;
     }
-
     try {
+      const query_params = buildQueryParams()
       const res = await fetch_async(
-        `/products_ean/${query}?offset=0&limit=${LIMIT}`
+        `/products_ean/${query}?offset=0&${query_params}`
       );
       const products_result: ProductItems[] = res.products ? res.products : [];
       setLoading(false);
       setLoadMore(products.length + products_result.length < res.count);
-      setProducts([...products, ...products_result]);
+      setProducts(products_result);
     } catch (e: unknown) {
       setError("error");
       setLoading(false);
@@ -87,8 +93,9 @@ const Compare = () => {
 
   const fetchMoreProducts = async () => {
     try {
+      const query_params = buildQueryParams()
       const res = await fetch_async(
-        `/products_ean/${query}?offset=${products.length}&limit=${LIMIT}`
+        `/products_ean/${query}${query_params}&offset=${products.length}`
       );
       const products_result: ProductItems[] = res.products ? res.products : [];
       setLoadMore(products.length + products_result.length < res.count);
@@ -113,7 +120,7 @@ const Compare = () => {
     };
     dispatch(addItem(productToSave));
     setShowAlert(true);
-    setAlertMessage("Agregado a lista");
+    setAlertMessage("Se agrego el producto a la lista.");
     setSuccessStatus(true);
   };
 
@@ -125,49 +132,23 @@ const Compare = () => {
 
     dispatch(deleteItem(ean_to_remove));
     setShowAlert(true);
-    setAlertMessage("Quitado de lista");
+    setAlertMessage("Se quitó el producto de la lista.");
     setSuccessStatus(true);
   };
 
-  const getFilteredProducts = () => {
-    const selected_markets = selectedMarkets;
-    const all_products = products;
+  const [onlyOnlineFilter, setOnlyOnlineFilter] = useState<boolean>(true);
+  const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
+  const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
+  useEffect(() => {
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      fetchProducts();
+    }, 1000);
+  
+    return () => clearTimeout(timeout);
+  
+  }, [minPrice, maxPrice, onlyOnlineFilter, selectedMarkets]);
 
-    let filtered_products = all_products.map((product) => {
-
-      // TODO: Por acá está rancio
-      const marketPrices = product.market_price.split(", ");
-      const namesList = product.names_list.split(", ");
-      const urls = product.urls.split(", ");
-
-      const filteredMarkets: string[] = [];
-      const filteredNames: string[] = [];
-      const filteredUrls: string[] = [];
-
-      marketPrices.forEach((price, index) => {
-        const [market] = price.split(" ");
-        if (selected_markets.includes(market)) {
-          filteredMarkets.push(price);
-          filteredNames.push(namesList[index] || "");
-          filteredUrls.push(urls[index] || "");
-        }
-      });
-      // MMMMMM, dijo la muda
-
-      if (filteredMarkets.length == 0) {
-        return null;
-      }
-
-      product.names_list = filteredNames.join(", ");
-      product.market_price = filteredMarkets.join(", ");
-      product.urls = filteredUrls.join(", ");
-
-      return product;
-    });
-
-    filtered_products = filtered_products.filter((p) => p !== null);
-    return filtered_products as ProductItems[];
-  };
 
   const handleMarketChange = (selectedMarket: string) => {
     let markets = [];
@@ -186,6 +167,25 @@ const Compare = () => {
     >
       <Box mt={5}>
         <Box className="compare-layout">
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link color="inherit" href="/">
+              Inicio
+            </Link>
+            <Typography color="textPrimary">Comparar</Typography>
+          </Breadcrumbs>
+          <hr />
+          <Filters
+            selectedMarkets={selectedMarkets}
+            handleMarketChange={handleMarketChange}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            onlyOnlineMarkets={onlyOnlineFilter}
+            handleMinPriceChange={(price) => setMinPrice(price)}
+            handleMaxPriceChange={(price) => setMaxPrice(price)}
+            handleOnlineMarketChange={() =>
+              setOnlyOnlineFilter(!onlyOnlineFilter)
+            }
+          />
           {loading ? (
             <Box className="loading-layout">
               <LoadingHamsterScreen />
@@ -196,21 +196,11 @@ const Compare = () => {
             <NoProductsFound />
           ) : (
             <Box className="compare-layout">
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link color="inherit" href="/">
-                  Inicio
-                </Link>
-                <Typography color="textPrimary">Comparar</Typography>
-              </Breadcrumbs>
-              <Filters
-                selectedMarkets={selectedMarkets}
-                handleMarketChange={handleMarketChange}
-              />
-              { filteredProducts.length === 0 && (
+              { products.length === 0 && (
                 <NoProductsFound />
               )}
               <Grid container spacing={2} py={4}>
-                {filteredProducts.map((product: ProductItems) => {
+                {products.map((product: ProductItems) => {
                   const prods = process_prod_item(product);
 
                   if (prods.length === 0) {
@@ -272,9 +262,7 @@ const Compare = () => {
 };
 
 const CompareWithSuspense = () => (
-  <Suspense>
-    <Compare />
-  </Suspense>
+  <Compare />
 );
 
 export default CompareWithSuspense;

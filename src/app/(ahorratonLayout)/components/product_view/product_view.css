@@ -68,15 +68,14 @@
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  background-color: lightblue;
 }
 
 .add-to-list-button-container {
-  background-color: lightblue;
+  background-color: #0289d1;
 }
 
 .remove-to-list-button-container {
-  background-color: #e6a39e;
+  background-color: #e77c74;
 }
 
 .button-text {

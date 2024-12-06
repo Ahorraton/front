@@ -87,7 +87,7 @@ const baselightTheme = createTheme({
       styleOverrides: {
         body: {
           backgroundColor: "#6CACE4",
-          backgroundImage: `linear-gradient(#6CACE4 10%, #FFFFFF 100%)`,
+          backgroundImage: `linear-gradient(#6CACE4 10%, #FFFFFF 80%)`,
           backgroundAttachment: "fixed",
         },
       },

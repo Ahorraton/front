@@ -7,7 +7,7 @@ interface AlertComponentProps {
   success: boolean;
 }
 
-const ALERT_TIMEOUT = 3000;
+const ALERT_TIMEOUT = 1000;
 
 const SelectedItemAlert: React.FC<AlertComponentProps> = ({
   setShowAlert,
@@ -24,7 +24,8 @@ const SelectedItemAlert: React.FC<AlertComponentProps> = ({
 
   return (
     <Alert
-      severity={success ? "success" : "error"}
+      severity={success ? "success" : "error"}	
+      variant='filled'
       onClose={() => setShowAlert(false)}
     >
       {alertMessage}

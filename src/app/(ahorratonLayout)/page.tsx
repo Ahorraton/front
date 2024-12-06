@@ -8,7 +8,6 @@ import FeaturedProducts from "@/app/(ahorratonLayout)/components/product_search/
 import "./landing_page.css";
 import { Recipe } from "../types/Recipe";
 import SearchBar from "../global_layout/navBar/SearchBar";
-import { useSearchParams } from "next/navigation";
 import FeaturedRecipes from "./components/featuredRecipes/FeaturedRecipes";
 import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 import ErrorNoServiceAvailable from "@/app/error_pages/ErrorNoServiceAvailable";
@@ -66,8 +65,7 @@ export default function Home() {
     }
   }, [selectedFeaturedProduct]);
 
-  const searchParams = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get("query") || "");
+  const [query, setQuery] = useState(typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("query") || "" : "");
 
   return (
     <MetaDataContainer title="Ahorraton" description="Ahorra en grande">

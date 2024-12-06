@@ -1,6 +1,5 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { Box, Typography, Button } from "@mui/material";
 import MetaDataContainer from "../../app/global_layout/MetaDataContainer";
 import ProductFilters from "../../app/(ahorratonLayout)/components/product_search/GridFilter";
@@ -36,8 +35,7 @@ const Search = () => {
     min_price: null,
     max_price: null,
   });
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query");
+  const query = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("query") || "" : "";
 
   useEffect(() => {
     fetchProducts();
@@ -117,9 +115,7 @@ const Search = () => {
 };
 
 const SearchWithSuspense = () => (
-  <Suspense>
-    <Search />
-  </Suspense>
+  <Search />
 );
 
 export default SearchWithSuspense;
