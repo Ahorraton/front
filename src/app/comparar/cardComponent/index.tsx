@@ -82,10 +82,14 @@ const ProductCardSearch: React.FC<cardComponentProps> = ({
                 id="product-card-price"
                 className="product-card-price"
               >
-                <Typography variant="body1">
-                  <strong>Mejor precio:</strong> ${cheapestProduct.price}{" "}
+                <Box>
+                  <Typography variant="body1">
+                    <strong>Mejor precio:</strong> ${cheapestProduct.price}{" "}
+                  </Typography>
+                </Box>
+                <Box marginLeft={1}>
                   <IconMarket icon={cheapestProduct.market} />
-                </Typography>
+                </Box>
               </Box>
               <Box marginTop={1} color={"#f2ad0c"} textAlign={"center"}>
                 { products.length > 1 && (
