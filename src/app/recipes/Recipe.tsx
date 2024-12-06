@@ -81,13 +81,7 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   };
 
   const onAddList = async () => {
-    // if (!user.isLoggedIn) {
-    //   console.error("Not logged in");
-    //   setShowAlert(true);
-    //   setAlertMessage("No estas loggeado");
-    //   setSuccessStatus(false);
-    //   return;
-    // }
+
     if (!recipe) {
       console.error("No recipe selected");
       return;
@@ -96,11 +90,6 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
     var products: Product[] = await fetchRecipeProducts(
       recipe.items.map((i: Item) => i.ean)
     );
-
-    // products = products.map((p: Product) => {
-    //   p.amount = recipe.items.find((i: Item) => i.ean === p.ean)?.amount;
-    //   return p;
-    // });
 
     const items: ListItemType[] = recipe.items.map((i: Item) => ({
       name: i.name,
@@ -113,6 +102,7 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
     setShowAlert(true);
     setAlertMessage("Agregado a lista");
     setSuccessStatus(true);
+    setRecipe(null);
   };
 
   return (
@@ -148,6 +138,9 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="div">
                       {recipe.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {recipe.description}
                     </Typography>
                   </CardContent>
                 </Card>

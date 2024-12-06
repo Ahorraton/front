@@ -79,11 +79,12 @@ const ListItemComponent: React.FC<ListItemComponentProps> = ({
 
             <ListItemSecondaryAction>
               <Box
+                id='delete_and_price_action'
                 display="flex"
                 flexDirection="column"
-                alignItems="right"
+                alignItems="center"
                 justifyContent="right"
-                mb={2}
+                marginBottom={2}
               >
                 <Box>
                   <IconButton
