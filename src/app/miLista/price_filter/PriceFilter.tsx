@@ -105,7 +105,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                     </Box>
                     <hr />
                     <Box>
-                        <Typography variant='body1'>Solo en Supermercados Online</Typography>
+                        <Typography variant='body1'>Solo en supermercados online</Typography>
                     </Box>
                 </Box>
             </Box>

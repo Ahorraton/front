@@ -11,7 +11,7 @@ export default function Page() {
           <Link color="inherit" href="/">
           <strong>Inicio</strong>
           </Link>
-          <Typography color="textPrimary"><strong>Mi Lista</strong></Typography>
+          <Typography color="textPrimary"><strong>Mi lista</strong></Typography>
         </Breadcrumbs>
         <MiLista />
       </Box>
