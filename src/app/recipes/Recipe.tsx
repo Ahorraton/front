@@ -27,7 +27,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 
 export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
   const urlParams = new URLSearchParams(window.location.search);
-  const recipeIdFromUrl = urlParams.get('recipeId');
+  const recipeIdFromUrl = Number(urlParams.get('recipeId'));
   const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(recipeIdFromUrl);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loadingSelectedRecipe, setSelectedLoading] = useState(true);
