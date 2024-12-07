@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, Link } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, Link, Typography } from "@mui/material";
 import React from "react";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import "./recipe.css";
@@ -22,9 +22,13 @@ export default function GoToAllRecipesItem() {
         >
           <CardContent
             id="see-more-recipes-card-content"
-            className="see-more-recipes"
+            className="see-more-recipes-layout"
           >
-            <MenuBookIcon />
+            <Box className='see-more-recipes'>
+              <MenuBookIcon />
+              <br />
+              <Typography variant="h6">Ver todas las recetas</Typography>
+            </Box>
           </CardContent>
         </CardActionArea>
       </Link>

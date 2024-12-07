@@ -73,7 +73,7 @@ const SaveListButton: React.FC<SaveListButtonProps> = ({
   };
 
   return (
-    <Box textAlign="center" m={2}>
+    <Box textAlign="center">
       <IconButton color="primary" onClick={handleSaveList}>
         <SaveIcon />
       </IconButton>

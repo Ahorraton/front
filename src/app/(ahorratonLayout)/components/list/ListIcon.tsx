@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Drawer, IconButton, useMediaQuery } from "@mui/material";
+import { Box, Drawer, IconButton, Typography, useMediaQuery } from "@mui/material";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import ListContent from "./ListContent";
 import "./list-style.css";
