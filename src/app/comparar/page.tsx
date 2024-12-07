@@ -7,7 +7,9 @@ import {
   Typography,
   Breadcrumbs,
   Link,
+  Modal,
 } from "@mui/material";
+import TuneIcon from '@mui/icons-material/Tune';
 import MetaDataContainer from "@/app/global_layout/MetaDataContainer";
 import { fetch_async } from "@/utils/common/fetch_async";
 import ProductItems from "../types/ProductItems";
@@ -37,18 +39,12 @@ const Compare = () => {
   const [loadMore, setLoadMore] = useState<boolean>(false);
   const dispatch = useDispatch();
   const query = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("query") || "" : "";
-  const [selectedMarkets, setSelectedMarkets] = useState<string[]>([
-    "carrefour",
-    "coto",
-    "dia",
-    "vea",
-    "disco",
-    "jumbo",
-  ]);
+  const [selectedMarkets, setSelectedMarkets] = useState<string[]>([]);
   const [productPage, setProductPage] = useState<ProductItems | null>(null);
   const savedProducts = useSelector((state: RootState) => state.list.items);
   const [showAlert, setShowAlert] = useState<Boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
+  const [filterModal, setFilterModal] = useState<boolean>(false);
   const [successStatus, setSuccessStatus] = useState<boolean>(false);
   const buildQueryParams = () => {
     let query_params = `limit=${LIMIT}`;
@@ -151,13 +147,11 @@ const Compare = () => {
 
 
   const handleMarketChange = (selectedMarket: string) => {
-    let markets = [];
     if (selectedMarkets.includes(selectedMarket)) {
-      markets = selectedMarkets.filter((m) => m !== selectedMarket);
+      setSelectedMarkets(selectedMarkets.filter((m) => m !== selectedMarket));
     } else {
-      markets = [...selectedMarkets, selectedMarket];
+      setSelectedMarkets([...selectedMarkets, selectedMarket]);
     }
-    setSelectedMarkets(markets);
   };
 
   return (
@@ -167,25 +161,58 @@ const Compare = () => {
     >
       <Box mt={5}>
         <Box className="compare-layout">
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link color="inherit" href="/">
-              <strong>Inicio</strong>
-            </Link>
-            <Typography color="textPrimary"><strong>Comparar</strong></Typography>
-          </Breadcrumbs>
+          <Box 
+            id='breadcrums_and_filter'
+            display='flex'
+            flexDirection='row'
+            justifyContent='space-between'
+            alignItems='center'>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" href="/">
+                <strong>Inicio</strong>
+              </Link>
+              <Typography color="textPrimary"><strong>Comparar</strong></Typography>
+            </Breadcrumbs>
+            <Button 
+              variant="contained"
+              onClick={() => setFilterModal(true)} 
+              sx={{
+              '&:hover': {
+                backgroundColor: 'darkblue',
+              },
+            }}
+            >
+              <TuneIcon />
+              Filtros
+            </Button>
+          </Box>
           <hr />
-          <Filters
-            selectedMarkets={selectedMarkets}
-            handleMarketChange={handleMarketChange}
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            onlyOnlineMarkets={onlyOnlineFilter}
-            handleMinPriceChange={(price) => setMinPrice(price)}
-            handleMaxPriceChange={(price) => setMaxPrice(price)}
-            handleOnlineMarketChange={() =>
-              setOnlyOnlineFilter(!onlyOnlineFilter)
-            }
-          />
+          <Modal
+            open={filterModal}
+            onClose={() => setFilterModal(false)}
+            sx={{
+              position: { sm: 'block' },
+              display: { sm: 'flex' },
+              alignItems: { sm: 'center' },
+              justifyContent: { sm: 'center' },
+              boxShadow: 24,
+              overflow: 'scroll',
+            }}
+            >
+            <Filters
+              selectedMarkets={selectedMarkets}
+              handleMarketChange={handleMarketChange}
+              closeFilterModal={() => setFilterModal(false)}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onlyOnlineMarkets={onlyOnlineFilter}
+              handleMinPriceChange={(price) => setMinPrice(price)}
+              handleMaxPriceChange={(price) => setMaxPrice(price)}
+              handleOnlineMarketChange={() =>
+                setOnlyOnlineFilter(!onlyOnlineFilter)
+              }
+            />
+            </Modal>
           {loading ? (
             <Box className="loading-layout">
               <LoadingHamsterScreen />

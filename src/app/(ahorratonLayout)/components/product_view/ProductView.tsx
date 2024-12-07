@@ -39,6 +39,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
   addProduct,
   onClose,
 }) => {
+  const isMobile = window.innerWidth < 768;
   const products: Product[] = process_prod_item(product_items);
   const [isScrollable, setIsScrollable] = useState(false);
   
@@ -85,15 +86,17 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
             id="selected-producto-img-container"
             className="selected-product-container"
           >
-            <Box
-              component="img"
-              src={product_image}
-              onError={(e) => {
-                e.currentTarget.src = DEFAULT_PROD_IMG;
-              }}
-              id="selected-product-img"
-              className="selected-product-img"
-            />
+            {!isMobile && (
+              <Box
+                component="img"
+                src={product_image}
+                onError={(e) => {
+                  e.currentTarget.src = DEFAULT_PROD_IMG;
+                }}
+                id="selected-product-img"
+                className="selected-product-img"
+              />
+            )}
 
             <Box
               id="selected-product-title-prices-container"

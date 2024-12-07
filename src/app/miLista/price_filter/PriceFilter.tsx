@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, TextField, Checkbox, Typography } from '@mui/material';
+import React from 'react';
+import { Box, TextField, Checkbox, Typography, Button } from '@mui/material';
 import './price_filter.css';
 
 type PriceFilterProps = {
@@ -19,7 +19,6 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
     handleMaxPriceChange,
     handleOnlineMarketChange,
 }) => {
-
 
     return (
         <Box id='filtro-precios' className='price-filter-layout'>
@@ -93,19 +92,19 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
                         }}
                     />
                 </Box>
-            </Box>
-            <Box className='checkbox-container'>
-                <Box
-                    className='checkbox'
-                    onClick={() => handleOnlineMarketChange && handleOnlineMarketChange()}
-                    sx={{ cursor: 'pointer' }}
-                >
-                    <Box>
-                        <Checkbox checked={onlyOnlineMarkets} color={'info'} />
-                    </Box>
-                    <hr />
-                    <Box>
-                        <Typography variant='body1'>Solo en supermercados online</Typography>
+                <Box className='checkbox-container'>
+                    <Box
+                        className='checkbox'
+                        onClick={() => handleOnlineMarketChange && handleOnlineMarketChange()}
+                        sx={{ cursor: 'pointer' }}
+                    >
+                        <Box>
+                            <Checkbox checked={onlyOnlineMarkets} color={'info'} />
+                        </Box>
+                        <hr />
+                        <Box>
+                            <Typography variant='body1'>Solo en supermercados online</Typography>
+                        </Box>
                     </Box>
                 </Box>
             </Box>

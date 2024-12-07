@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import IconMarket from "@/utils/storeIconMap/IconMarket";
 import PriceFilter from "./price_filter/PriceFilter";
 
@@ -7,6 +7,7 @@ import PriceFilter from "./price_filter/PriceFilter";
 type FiltersProps = {
   selectedMarkets: string[];
   handleMarketChange: (market: string) => void;
+  closeFilterModal?: () => void;
   minPrice?: number;
   maxPrice?: number;
   onlyOnlineMarkets?: boolean;
@@ -18,6 +19,7 @@ type FiltersProps = {
 const Filters: React.FC<FiltersProps> = ({
   selectedMarkets,
   handleMarketChange,
+  closeFilterModal,
   minPrice,
   maxPrice,
   onlyOnlineMarkets,
@@ -39,6 +41,7 @@ const Filters: React.FC<FiltersProps> = ({
       backgroundColor: 'rgba(255, 255, 255, 1)',
       boxShadow: 3,
     }}>
+      <Typography variant='h5' sx={{paddingTop: 2}}>Filtros</Typography>
       <Box
         sx={{
           display: "flex",
@@ -56,7 +59,8 @@ const Filters: React.FC<FiltersProps> = ({
               cursor: "pointer",
               border: selectedMarkets.includes(market)
                 ? "2px solid green"
-                : "2px solid transparent",
+                : "2px solid grey",
+              opacity: selectedMarkets.includes(market) ? 1 : 0.5,
               padding: "30px",
               borderRadius: "50%",
             }}
@@ -75,6 +79,15 @@ const Filters: React.FC<FiltersProps> = ({
           handleMaxPriceChange={handleMaxPriceChange}
           handleOnlineMarketChange={handleOnlineMarketChange}
         />
+      )}
+      {closeFilterModal && (
+        <Box paddingBottom={1}>
+          <Button
+            variant='contained'
+            onClick={() => closeFilterModal()}>
+            Hecho
+          </Button>
+        </Box>
       )}
     </Box>
   );

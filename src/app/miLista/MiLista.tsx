@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Box, Button, FormControl, InputLabel, Typography } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, Typography, Modal } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ProductList from "./product_card/ProductList";
@@ -21,7 +21,15 @@ import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHa
 import NoProductsFound from "../error_pages/NoProductsFound";
 import { clearList } from "@/redux/store/listSlice";
 
-const MiLista: React.FC = () => {
+type MiListaProps = {
+  showFilterModal: boolean;
+  setFilterModal: (value: boolean) => void;
+};
+
+const MiLista: React.FC<MiListaProps> = ({
+  showFilterModal,
+  setFilterModal,
+}) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const selectedList = useSelector((state: RootState) => state.list.items);
@@ -180,10 +188,24 @@ const MiLista: React.FC = () => {
       ) : (
         <Box>
           { products.length > 0 &&
+          <Modal
+            open={showFilterModal}
+            onClose={() => setFilterModal(false)}
+            sx={{
+              position: 'block',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: 24,
+              overflow: 'scroll',
+            }}
+            >
             <Filters
             selectedMarkets={selectedMarkets}
             handleMarketChange={handleMarketChange}
+            closeFilterModal={() => setFilterModal(false)}
             />
+          </Modal>
           } 
             <Box mt={1.5}>
               { cheapestProducts.length > 0 && 
