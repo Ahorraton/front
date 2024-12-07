@@ -9,14 +9,33 @@ export default function Footer() {
   return (
     <Box className="footer" component="footer" id="footer">
       <Container maxWidth="sm">
-        <Typography variant="body2" color="text.secondary" align="center">
-          {"Hecho con cariño por "}
-          <Link color="inherit" href="https://github.com/Ahorraton">
-            Ahorratón
-          </Link>{" "}
-          {new Date().getFullYear()}
-          {"."}
-        </Typography>
+        <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
+          <Box>
+            <Typography marginRight={1}>
+              🤍
+            </Typography>
+          </Box>
+          <Box>
+            <Box>
+              <Typography variant="body2" color="black" align="center">
+                {"Hecho con cariño"}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="body2" color="black" align="center">
+                {"por "}
+                <Link color="inherit" href="https://github.com/Ahorraton">
+                  Ahorratón
+                </Link>{" "}
+              </Typography>
+            </Box>
+          </Box>
+          <Box>
+            <Typography marginLeft={1}>
+              🤍
+            </Typography>
+          </Box>
+        </Box>
       </Container>
     </Box>
   );

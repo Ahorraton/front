@@ -5,7 +5,8 @@
   justify-content: space-between;
   padding-top: 1%;
   padding-bottom: 1%;
-  background-color: inherit;
+  background-color: #0289d1;
+  border-bottom: 3px solid #FFB81C;
 }
 
 .nav-bar-mobile {
@@ -36,5 +37,5 @@
 }
 
 .title-hover:hover .spin-on-hover {
-  animation: spin 0.3s linear;
+  animation: spin 0.8s ease;
 }

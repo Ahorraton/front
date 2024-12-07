@@ -29,13 +29,6 @@ const NavBarMobile: React.FC<NavBarProps> = ({
               className="title-button"
               sx={{ flexGrow: 1, textAlign: "center" }}
             >
-              <Typography
-                variant="h6"
-                className="title-text"
-                sx={{ fontSize: "1.5rem" }}
-              >
-                🐭
-              </Typography>
             </ButtonBase>
 
             <UserIcon />
@@ -57,13 +50,15 @@ const NavBarMobile: React.FC<NavBarProps> = ({
               className="title-button"
               sx={{ flexGrow: 1, textAlign: "center" }}
             >
-              <Typography
-                variant="h6"
-                className="title-text"
-                sx={{ fontSize: "1.5rem" }}
-              >
-                Ahorratón 🐭
-              </Typography>
+              <Box display='flex' flexDirection='row' alignItems='center'>
+                <Typography
+                  variant="h6"
+                  className="title-text"
+                  sx={{ fontSize: "1.5rem" }}
+                >
+                  Ahorratón
+                </Typography>
+              </Box>
             </ButtonBase>
 
             <UserIcon />
