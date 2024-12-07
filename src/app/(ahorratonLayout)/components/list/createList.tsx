@@ -8,7 +8,7 @@ interface NewListProps {
 
 const CreateListButton: React.FC<NewListProps> = ({ setCreateNewList }) => {
   return (
-    <Box textAlign="center" m={2}>
+    <Box textAlign="center">
       <IconButton color="primary" onClick={() => setCreateNewList(true)}>
         <AddIcon />
       </IconButton>

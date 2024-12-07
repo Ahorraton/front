@@ -20,6 +20,7 @@ const MainWrapper = styled("div")(() => ({
 const BodyStyle = styled("div")(() => ({
   alignContent: "center",
   maxWidth: "xl",
+  minHeight: '77vh',
 }));
 
 const FooterStyle = styled("div")(() => ({

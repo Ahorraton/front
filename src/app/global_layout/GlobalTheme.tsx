@@ -6,7 +6,7 @@ const baselightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#6CACE4",
+      main: "#0289d1",
       light: "#255cab",
       dark: "#bcdaf4",
     },
@@ -87,7 +87,7 @@ const baselightTheme = createTheme({
       styleOverrides: {
         body: {
           backgroundColor: "#6CACE4",
-          backgroundImage: `linear-gradient(#6CACE4 10%, #FFFFFF 80%)`,
+          backgroundImage: `linear-gradient(#6CACE4 0%, #FFFFFF 80%)`,
           backgroundAttachment: "fixed",
         },
       },

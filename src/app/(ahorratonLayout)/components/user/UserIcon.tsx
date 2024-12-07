@@ -2,6 +2,7 @@ import React, { useState, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Menu,
+  Box,
   MenuItem,
   IconButton,
   Avatar,
@@ -82,18 +83,20 @@ const UserIcon: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        {isLoggedIn ? (
-          <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
-        ) : (
-          [
-            <MenuItem key="login" onClick={handleLoginOpen}>
-              Ingresar
-            </MenuItem>,
-            <MenuItem key="register" onClick={handleRegisterOpen}>
-              Crear cuenta
-            </MenuItem>,
-          ]
-        )}
+        <Box display='flex' flexDirection='column' alignItems='center'>
+          {isLoggedIn ? (
+            <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
+          ) : (
+            [
+              <MenuItem key="login" onClick={handleLoginOpen}>
+                Ingresar
+              </MenuItem>,
+              <MenuItem key="register" onClick={handleRegisterOpen}>
+                Crear cuenta
+              </MenuItem>,
+            ]
+          )}
+        </Box>
       </Menu>
       <RegisterModal open={isRegisterModalOpen} onClose={handleRegisterClose} />
       <LoginModal open={isLoginModalOpen} onClose={handleLoginClose} />

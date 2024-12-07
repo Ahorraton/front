@@ -5,10 +5,10 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 export default function MoreOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
-    <Box textAlign="center" m={2}>
+    <Box textAlign="center">
       <Link href="/miLista">
         <IconButton color="primary">
-          {isLoggedIn ? <SettingsIcon /> : <FilterAltIcon />}
+          <FilterAltIcon />
         </IconButton>
       </Link>
     </Box>

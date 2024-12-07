@@ -9,9 +9,9 @@ export default function Page() {
       <Box mt={5}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/">
-            Inicio
+          <strong>Inicio</strong>
           </Link>
-          <Typography color="textPrimary">Mi lista</Typography>
+          <Typography color="textPrimary"><strong>Mi Lista</strong></Typography>
         </Breadcrumbs>
         <MiLista />
       </Box>

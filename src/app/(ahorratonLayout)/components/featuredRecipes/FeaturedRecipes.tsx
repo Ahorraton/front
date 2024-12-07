@@ -17,7 +17,7 @@ const FeaturedRecipes = ({ recipes }: { recipes: Recipe[] }) => {
             <Grid item key={index} xs={12} sm={6} md={4}>
               <RecipeCard
                 recipe={recipe}
-                onClick={() => (window.location.href = `/recipes`)}
+                onClick={() => (window.location.href = `/recipes/?recipeId=${recipe.id}`)}
               />
             </Grid>
           ))}

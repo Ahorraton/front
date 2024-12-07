@@ -3,14 +3,21 @@ import { Box, ButtonBase, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
 import UserIcon from "../../(ahorratonLayout)/components/user/UserIcon";
 import ListIcon from "../../(ahorratonLayout)/components/list/ListIcon";
-import "./nav_bar.css";
+import { useSelector } from "react-redux";
 import NavBarProps from "./NavBarProps";
+import "./nav_bar.css";
+import { RootState } from "@/redux/store";
 
 const NavBarDesktop: React.FC<NavBarProps> = ({
   query,
   setQuery,
   isHomeScreen,
 }) => {
+  const user = useSelector((state: RootState) => state.user);
+  console.log(
+    "Hola desde NavBarDesktop.tsx, user.userInfo?.username: ",
+    user
+  )
   return (
     <Box>
       {isHomeScreen ? (
@@ -22,19 +29,31 @@ const NavBarDesktop: React.FC<NavBarProps> = ({
             justifyContent="right"
             padding="10px"
           >
-            <Box mr={4}>
+            <Box display='flex' flexDirection='column' alignItems='center' marginRight={5}>
               <ListIcon />
+              <Typography variant="h6" className="title-text" marginTop={1}>
+                Mi Lista
+              </Typography>
             </Box>
-            <UserIcon />
+            <Box display='flex' flexDirection='column' alignItems='center'>
+              <UserIcon />
+              <Typography variant="h6" className="title-text" marginTop={1}>
+                Mi usuario
+              </Typography>              
+            </Box>
           </Box>
         </Box>
       ) : (
         <Box className="nav-bar-desktop" id="nav-bar-desktop-style">
           <Box className="title-layout" flex="1">
             <ButtonBase disableRipple href="/" className="title-hover">
-              <Typography variant="h1" className="spin-on-hover">
-                🐭
-              </Typography>
+              <Box
+                component="img"
+                src="/images/rats/fucking-rat.svg"
+                alt="No products found"
+                sx={{ height: "5rem", width: "auto", marginRight: "10px", filter: "invert(1)"}}
+                className="spin-on-hover"
+              />
               <Typography variant="h1">Ahorratón</Typography>
             </ButtonBase>
           </Box>
@@ -45,14 +64,22 @@ const NavBarDesktop: React.FC<NavBarProps> = ({
             className="about-us-layout"
             flex="0.8"
             display="flex"
-            justifyContent="center"
+            justifyContent="space-evenly"
             alignItems="center"
             padding="10px"
           >
-            <Box mr={4}>
+            <Box display='flex' flexDirection='column' alignItems='center'>
               <ListIcon />
+              <Typography variant="h6" className="title-text" marginTop={1}>
+                Mi Lista
+              </Typography>
             </Box>
-            <UserIcon />
+            <Box display='flex' flexDirection='column' alignItems='center'>
+              <UserIcon />
+              <Typography variant="h6" className="title-text" marginTop={1}>
+                Mi usuario
+              </Typography>              
+            </Box>
           </Box>
         </Box>
       )}

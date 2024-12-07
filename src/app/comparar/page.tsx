@@ -169,9 +169,9 @@ const Compare = () => {
         <Box className="compare-layout">
           <Breadcrumbs aria-label="breadcrumb">
             <Link color="inherit" href="/">
-              Inicio
+              <strong>Inicio</strong>
             </Link>
-            <Typography color="textPrimary">Comparar</Typography>
+            <Typography color="textPrimary"><strong>Comparar</strong></Typography>
           </Breadcrumbs>
           <hr />
           <Filters

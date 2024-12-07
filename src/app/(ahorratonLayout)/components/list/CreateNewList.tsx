@@ -157,7 +157,7 @@ export const CreateNewList: React.FC<CreateNewListProps> = ({
             cursor: "pointer",
             width: "100%",
             height: "100%",
-            backgroundColor: "lightblue",
+            backgroundColor: "#0289d1",
           }}
           onClick={handleCreateNewList}
         >

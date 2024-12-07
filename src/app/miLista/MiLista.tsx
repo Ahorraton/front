@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Box, Button, FormControl, InputLabel } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, Typography } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ProductList from "./product_card/ProductList";
@@ -19,6 +19,7 @@ import { Product } from "@/app/types/Product";
 import { ListItemType } from "../types/ListItem";
 import { LoadingHamsterScreen } from "../loadingScreens/loadingHamster/LoadingHamster";
 import NoProductsFound from "../error_pages/NoProductsFound";
+import { clearList } from "@/redux/store/listSlice";
 
 const MiLista: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -132,6 +133,7 @@ const MiLista: React.FC = () => {
 
   const handleDeleteList = async () => {
     try {
+      dispatch(clearList());
       const user_id = user.userInfo?.id;
       if (user_id === undefined || user_id === null) {
         console.error("User ID is not defined");
@@ -191,9 +193,10 @@ const MiLista: React.FC = () => {
               }
               { user.isLoggedIn && ( 
                 <FormControl fullWidth>
-                  <InputLabel id="list-selector-label">
+                  <Typography variant="h6" component="h6">
                     Seleccionar lista
-                  </InputLabel>
+                  </Typography>
+                  <InputLabel id="list-selector-label" />
                   <ListSelector />
                 </FormControl>
               )}

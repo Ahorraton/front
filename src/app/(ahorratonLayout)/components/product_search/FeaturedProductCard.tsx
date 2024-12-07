@@ -45,7 +45,7 @@ export const FeaturedProductCard = ({
               className="featured-product-title"
               id="featured-product-title"
             >
-              {product.name}
+              <strong>{product.name}</strong>
             </Typography>
           </Box>
         </Paper>
