@@ -42,15 +42,17 @@ const RecipeDetails: React.FC<RecipeDetailsProps> = ({
     >
       <DialogContent id="dialog-content-div" className="selected-recipe-layout">
         <DialogTitle id="recipe-dialog-title">{recipe?.title}</DialogTitle>
-        <Box
-          component="img"
-          src={recipe.img_url}
-          onError={(e) => {
-            e.currentTarget.src = DEFAULT_PROD_IMG;
-          }}
-          id="selected-recipe-img"
-          className="selected-recipe-img"
-        />
+        <Box className='image-container'>
+          <Box
+            component="img"
+            src={recipe.img_url}
+            onError={(e) => {
+              e.currentTarget.src = DEFAULT_PROD_IMG;
+            }}
+            id="selected-recipe-img"
+            className="selected-recipe-img"
+          />
+        </Box>
 
         <Box
           className="selected-recipe-view-grid"

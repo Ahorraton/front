@@ -21,8 +21,13 @@
 .selected-recipe-layout {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   flex-direction: column;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
 }
 
 .ingredient-layout {
