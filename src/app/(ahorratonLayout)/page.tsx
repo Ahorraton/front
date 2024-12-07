@@ -79,19 +79,23 @@ export default function Home() {
         </Box>
       ) : (
         <Box component="div" id="outsideBox" className="home-screen-layout">
-          <Box
+            <Box
             display="flex"
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-          >
-            <Typography variant="h1" className="spin-on-hover">
-              🐭
-            </Typography>
+            >
+            <Box
+              component="img"
+              src="/images/rats/fucking-rat.svg"
+              alt="No products found"
+              sx={{ height: "5rem", width: "auto"}}
+              className="spin-on-hover"
+            />
             <Typography variant="h1">Ahorratón</Typography>
             <br />
             <SearchBar starting_query={query} set={setQuery} />
-          </Box>
+            </Box>
 
           <Box
             component="div"
