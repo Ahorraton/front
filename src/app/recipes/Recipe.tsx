@@ -26,7 +26,9 @@ import { RootState } from "@/redux/store";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 
 export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
-  const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
+  const urlParams = new URLSearchParams(window.location.search);
+  const recipeIdFromUrl = urlParams.get('recipeId');
+  const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(recipeIdFromUrl);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loadingSelectedRecipe, setSelectedLoading] = useState(true);
   const [errorLoadingRecipe, setErrorLoadingRecipe] = useState<string | null>(
@@ -110,9 +112,9 @@ export default function RecipePage({ recipes }: { recipes: Recipe[] }) {
       <Box mt={5}>
         <Breadcrumbs aria-label="breadcrumb">
           <Link color="inherit" href="/">
-            Inicio
+          <strong>Inicio</strong>
           </Link>
-          <Typography color="textPrimary">Recetas</Typography>
+          <Typography color="textPrimary"><strong>Recetas</strong></Typography>
         </Breadcrumbs>
 
         <Box className="recipe-layout" mt={5}>
