@@ -32,7 +32,7 @@ const NavBarDesktop: React.FC<NavBarProps> = ({
             <Box display='flex' flexDirection='column' alignItems='center' marginRight={5}>
               <ListIcon />
               <Typography variant="h6" className="title-text" marginTop={1}>
-                Mi Lista
+                Mi lista
               </Typography>
             </Box>
             <Box display='flex' flexDirection='column' alignItems='center'>
@@ -71,7 +71,7 @@ const NavBarDesktop: React.FC<NavBarProps> = ({
             <Box display='flex' flexDirection='column' alignItems='center'>
               <ListIcon />
               <Typography variant="h6" className="title-text" marginTop={1}>
-                Mi Lista
+                Mi lista
               </Typography>
             </Box>
             <Box display='flex' flexDirection='column' alignItems='center'>
