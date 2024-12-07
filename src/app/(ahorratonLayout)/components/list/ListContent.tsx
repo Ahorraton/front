@@ -239,26 +239,42 @@ const ListContent = () => {
 
   return (
     <Box>
-      <Grid container className="slider-view-grid" id="slider-view-grid">
+      <Grid container className="slider-view-grid" id="slider-view-grid" marginTop={3}>
         <Box className="list-content" id="list-content" role="presentation">
           <Grid container className="action-buttons">
             { user.isLoggedIn && 
               <>
-              <CreateListButton setCreateNewList={setCreateNewList}/>
-              <SaveListButton
-                listName={listName}
-                list={listItems}
-                onListNameChange={(
-                  event: React.ChangeEvent<HTMLInputElement>
-                  ) => dispatch(setListName(event.target.value))}
-                onClearList={() => setClearDialogOpen(true)}
-                onSaveList={handleSaveList}
-                isLoggedIn={user.isLoggedIn}
-                />
+              <Box display='flex' flexDirection='column' alignItems='center'>
+                <CreateListButton setCreateNewList={setCreateNewList}/>
+                <Box>
+                  <Typography variant="h6">
+                    Crear
+                  </Typography>
+                </Box>
+              </Box>
+              <Box>
+                <SaveListButton
+                  listName={listName}
+                  list={listItems}
+                  onListNameChange={(
+                    event: React.ChangeEvent<HTMLInputElement>
+                    ) => dispatch(setListName(event.target.value))}
+                  onClearList={() => setClearDialogOpen(true)}
+                  onSaveList={handleSaveList}
+                  isLoggedIn={user.isLoggedIn}
+                  />
+                  <Typography variant="h6">
+                    Guardar
+                  </Typography>
+              </Box>
               </>
             }
-
-            <MoreOptions isLoggedIn={user.isLoggedIn} />
+            <Box display='flex' flexDirection='column' alignItems='center'>
+              <MoreOptions isLoggedIn={user.isLoggedIn} />
+              <Typography variant="h6">
+                Filtrar
+              </Typography>
+            </Box>
           </Grid>
 
           { user.isLoggedIn && 
