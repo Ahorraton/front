@@ -235,7 +235,7 @@ const Compare = () => {
                   }
 
                   return (
-                    <Grid display='flex' alignItems='center' item xs={12} sm={6} md={4} lg={3} key={product.ean}>
+                    <Grid display='flex' justifyContent='center' item xs={12} sm={6} md={4} lg={3} key={product.ean}>
                       <ProductCardSearch
                         product_items={product}
                         products={prods}
