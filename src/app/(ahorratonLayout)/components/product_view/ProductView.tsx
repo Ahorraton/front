@@ -114,6 +114,7 @@ export const ProductView: React.FC<ProductPageDetailsProps> = ({
                 className="selected-product-list-prices"
               >
                 {products.map((product: Product) => {
+                  console.log(`EAN: ${product.ean}`);
                   return (
                     <PriceView
                       key={product.ean + product.name + product.market}
