@@ -26,3 +26,8 @@ Otherwise, run the following commands:
 `docker run -p 3000:3000 -v $(pwd):/app frontend`
 
 Then open [http://localhost:3000](http://localhost:3000) with your browser to check out the front-end.
+
+* Note
+    - When we attach the volume `-v $(pwd):/app`, Docker overwrites the content inside the working directory 
+    `/app`, with the content inside the volume. So it will use the local `node_modules` folder.
+    - If you want docker to install these packages on a new container, run without this volume attachment. This will make the content static, so live updates will be lost.
