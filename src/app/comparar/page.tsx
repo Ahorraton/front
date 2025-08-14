@@ -132,7 +132,7 @@ const Compare = () => {
     setSuccessStatus(true);
   };
 
-  const [onlyOnlineFilter, setOnlyOnlineFilter] = useState<boolean>(true);
+  const [onlyOnlineFilter, setOnlyOnlineFilter] = useState<boolean>(false);
   const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
   const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
   useEffect(() => {
