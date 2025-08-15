@@ -17,13 +17,25 @@ Make sure the script has the appropriate permissions.
 
 Otherwise, run the following commands:
 
-1. Build the image
+1. Create internal docker network
+
+```
+docker network create backend
+```
+
+__[Docker IPv6](https://docs.docker.com/engine/daemon/ipv6/) is only supported on Docker daemons running on Linux hosts.__
+
+```
+docker network create --ipv6 backend
+```
+
+2. Build the image
 
 `docker build -t frontend -f Dockerfile .`
 
-2. Run the image
+3. Run the image
 
-`docker run -p 3000:3000 -v $(pwd):/app frontend`
+`docker run -p 3000:3000 -v $(pwd):/app --network backend frontend`
 
 Then open [http://localhost:3000](http://localhost:3000) with your browser to check out the front-end.
 
