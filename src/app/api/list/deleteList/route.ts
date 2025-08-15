@@ -1,4 +1,4 @@
-import { GATEWAY_URI } from '@/connections';
+import { DEV_GATEWAY_URI } from '@/connections';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -13,7 +13,7 @@ export async function DELETE(req: NextRequest) {
     }
     const DELETE_LIST = `/grocery_lists/${grocery_list_id}/delete_list`;
     
-    const baseUrl: string = process.env.NEXT_PUBLIC_GATEWAY_URI || GATEWAY_URI;
+    const baseUrl: string = process.env.NEXT_PUBLIC_GATEWAY_URI || DEV_GATEWAY_URI;
     const backendEndpoint: string = baseUrl + DELETE_LIST;
 
     try {

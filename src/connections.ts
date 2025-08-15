@@ -1,4 +1,4 @@
-const gatewayHost = process.env.GATEWAY_HOST || "gateway";
+const gatewayHost = process.env.GATEWAY_HOST || "localhost";
 const gatewayPort = process.env.GATEWAY_PORT || "8000";
 
-export const GATEWAY_URI = `http://${gatewayHost}:${gatewayPort}`;
+export const DEV_GATEWAY_URI = `http://${gatewayHost}:${gatewayPort}`;
