@@ -1,4 +1,4 @@
-import { DEV_GATEWAY_URI } from '@/connections';
+import { DEV_GATEWAY_URI } from '@/utils/connections';
 import axios from 'axios';
 
 // Configurar encabezados por defecto para todas las solicitudes

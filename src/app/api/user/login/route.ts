@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 import { serialize } from 'cookie';
-import { DEV_GATEWAY_URI } from '@/connections';
+import { DEV_GATEWAY_URI } from '@/utils/connections';
 
 const LOGIN = "/login";
 const COOKIE_NAME = 'Ahorraton';

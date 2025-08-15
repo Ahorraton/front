@@ -1,4 +1,4 @@
-import { DEV_GATEWAY_URI } from '@/connections';
+import { DEV_GATEWAY_URI } from '@/utils/connections';
 import axios, { AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
