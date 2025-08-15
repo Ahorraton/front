@@ -1,4 +1,4 @@
-import { NEXT_PUBLIC_GATEWAY_URI } from "@/connections";
+import { GATEWAY_URI } from "@/connections";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,7 +6,7 @@ const SAVE_LIST = "/save_list";
 
 export async function POST(req: NextRequest) {
   const { list, username } = await req.json();
-  const baseUrl: string = NEXT_PUBLIC_GATEWAY_URI;
+  const baseUrl: string = process.env.NEXT_PUBLIC_GATEWAY_URI || GATEWAY_URI;
   const backendEndpoint: string = baseUrl + SAVE_LIST;
 
   console.log("Received save list request for user:", username);

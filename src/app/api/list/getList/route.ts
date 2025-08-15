@@ -1,4 +1,4 @@
-import { NEXT_PUBLIC_GATEWAY_URI } from '@/connections';
+import { GATEWAY_URI } from '@/connections';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     }
     const GET_PRODUCTS = `/grocery_lists/${grocery_list_id}/get_products`;
     
-    const baseUrl: string = NEXT_PUBLIC_GATEWAY_URI;
+    const baseUrl: string = process.env.NEXT_PUBLIC_GATEWAY_URI || GATEWAY_URI;
     const backendEndpoint: string = baseUrl + GET_PRODUCTS;
 
     try {

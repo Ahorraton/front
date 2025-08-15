@@ -1,4 +1,4 @@
-import { NEXT_PUBLIC_GATEWAY_URI } from "@/connections";
+import { GATEWAY_URI } from "@/connections";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,7 +6,7 @@ const ADD_PRODUCTS = "/grocery_lists/add_prods_to_my_list";
 
 export async function POST(req: NextRequest) {
   const { products_eans } = await req.json();
-  const baseUrl: string = NEXT_PUBLIC_GATEWAY_URI;
+  const baseUrl: string = process.env.NEXT_PUBLIC_GATEWAY_URI || GATEWAY_URI;
   const backendEndpoint: string = baseUrl + ADD_PRODUCTS;
 
   try {

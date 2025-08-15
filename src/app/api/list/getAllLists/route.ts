@@ -1,4 +1,4 @@
-import { NEXT_PUBLIC_GATEWAY_URI } from '@/connections';
+import { GATEWAY_URI } from '@/connections';
 import axios, { AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -6,7 +6,7 @@ const GET_USER_LISTS = "/grocery_lists/get_lists";
 
 export async function GET(req: NextRequest) {
     const user_id = req.nextUrl.searchParams.getAll('user_id')[0];
-    const baseUrl: string = NEXT_PUBLIC_GATEWAY_URI;
+    const baseUrl: string = process.env.NEXT_PUBLIC_GATEWAY_URI || GATEWAY_URI;
     const backendEndpoint: string = baseUrl + GET_USER_LISTS;
 
     try {
