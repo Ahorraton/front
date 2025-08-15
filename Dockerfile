@@ -8,8 +8,9 @@ RUN npm install
 
 COPY . .
 
-ENV NEXT_PUBLIC_API_URL=http://localhost:8000
-ENV NEXT_PUBLIC_BACKEND_ENDPOINT=http://gateway:8000
+ENV GATEWAY_HOST=gateway
+ENV GATEWAY_PORT=8000
+
 EXPOSE 3000
 
 CMD ["npm", "run", "dev"]

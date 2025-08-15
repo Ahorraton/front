@@ -18,7 +18,7 @@ export async function GET() {
 
     try {
         console.log("Logging out from backend...");
-        // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000"}${LOGOUT}`);
+        // await axios.post(`${GATEWAY_URI || "http://gateway:8000"}${LOGOUT}`);
     } catch (error) {
         console.error("Error logging out from backend:", error);
     }

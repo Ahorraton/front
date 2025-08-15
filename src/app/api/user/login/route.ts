@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 import { serialize } from 'cookie';
+import { GATEWAY_URI } from '@/connections';
 
 const LOGIN = "/login";
 const COOKIE_NAME = 'Ahorraton';
@@ -8,8 +9,8 @@ const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
 
 export async function POST(req: NextRequest) {
     const { username, password } = await req.json();
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
-    const backendEndpoint = baseUrl + LOGIN;
+    const baseUrl: string = GATEWAY_URI;
+    const backendEndpoint: string = baseUrl + LOGIN;
 
     console.log("Received login request with username:", username);
 

@@ -1,3 +1,4 @@
+import { GATEWAY_URI } from '@/connections';
 import axios, { AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -6,8 +7,8 @@ export async function GET(req: NextRequest) {
 
     const GET_RECIPE_BY_ID = `/recipe`;
 
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
-    const backendEndpoint = baseUrl + GET_RECIPE_BY_ID;
+    const baseUrl: string = GATEWAY_URI;
+    const backendEndpoint: string = baseUrl + GET_RECIPE_BY_ID;
 
     try {
         const response: AxiosResponse = await axios.get(backendEndpoint, {

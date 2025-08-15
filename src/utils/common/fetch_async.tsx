@@ -1,10 +1,11 @@
+import { GATEWAY_URI } from '@/connections';
 import axios from 'axios';
 
 // Configurar encabezados por defecto para todas las solicitudes
 
 // Instancia para el microservicio de contenido
 const gatewayService = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
+  baseURL: `${GATEWAY_URI}`,
 });
 
 //gatewayService.defaults.headers.common.clientToken = `${process.env.NEXT_PUBLIC_ADMIN_TOKEN}`;

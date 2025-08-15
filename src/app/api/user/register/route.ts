@@ -1,3 +1,4 @@
+import { GATEWAY_URI } from '@/connections';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -5,8 +6,8 @@ const REGISTER = "/register" // Move this to a constants/endpoints file
 
 export async function POST(req: NextRequest) {
     const { username, password } = await req.json();
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_ENDPOINT || "http://gateway:8000";
-    const backendEndpoint = baseUrl + REGISTER
+    const baseUrl: string = GATEWAY_URI;
+    const backendEndpoint: string = baseUrl + REGISTER
     console.log("Received registration. Posting to:", backendEndpoint);
 
     try {
